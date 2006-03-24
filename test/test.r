@@ -1,3 +1,3 @@
-library(Rggobi2)
+library(rggobi)
 library(butler)
 test_all()

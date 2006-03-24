@@ -21,7 +21,7 @@ others---they will not share linked plots.  If you want to add
 another dataset to an existing ggobi, please see \code{\link{[<-.ggobi}}
 
 There are currently three basic types of functions that you
-can use with Rggobi2:
+can use with rggobi:
 
 \itemize{
 \item Data getting and setting: see \code{\link{[.ggobi}}, and \code{\link{[.ggobiDataset}}

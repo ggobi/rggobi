@@ -1,5 +1,5 @@
-library(Rggobi2); library(butler)
+library(rggobi); library(butler)
 
-lapply(dir("~/ggobi/Rggobi2/R", "\\.[Sr]$", full.name=T), source)
+lapply(dir("~/ggobi/rggobi/R", "\\.[Sr]$", full.name=T), source)
 
 

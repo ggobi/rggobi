@@ -7,7 +7,7 @@
 # another dataset to an existing ggobi, please see \code{\link{[<-.ggobi}}
 # 
 # There are currently three basic types of functions that you
-# can use with Rggobi2:
+# can use with rggobi:
 # 
 # \itemize{
 #   \item Data getting and setting: see \code{\link{[.ggobi}}, and \code{\link{[.ggobiDataset}}
@@ -49,7 +49,7 @@ ggobi <- function(data, args=character(0), mode=character(0), name = deparse(sys
 
 	args <- c(getwd(), "--keepalive", as.character(args), as.character(mode), filename)
   
-	ok <- .Call(.ggobi.symbol("init"), args, TRUE, PACKAGE = "Rggobi2")
+	ok <- .Call(.ggobi.symbol("init"), args, TRUE, PACKAGE = "rggobi")
 
 	if(!is.null(ok) && !missing(data) && length(filename) == 0) {
 	  name <- force(name)

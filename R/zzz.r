@@ -17,8 +17,8 @@
 # @keyword programming
 # @keyword internal 
 ggobi_check_structs <- function() {
-	ours   <- .Call(.ggobi.symbol("getStructSizes"), TRUE,  PACKAGE = "Rggobi2")
-	theirs <- .Call(.ggobi.symbol("getStructSizes"), FALSE, PACKAGE = "Rggobi2")
+	ours   <- .Call(.ggobi.symbol("getStructSizes"), TRUE,  PACKAGE = "rggobi")
+	theirs <- .Call(.ggobi.symbol("getStructSizes"), FALSE, PACKAGE = "rggobi")
 
 	which <- match(names(ours), names(theirs))
 	if(any(is.na(which)))
@@ -36,7 +36,7 @@ ggobi_check_structs <- function() {
 
 .onLoad <- function(libname, pkgname) {
 	library(methods)
-	library.dynam("Rggobi2", pkgname, libname)
+	library.dynam("rggobi", pkgname, libname)
 
 	ggobi_check_structs()
 

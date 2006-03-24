@@ -40,12 +40,12 @@
 # @keyword internal
 .GGobiCall <- function(.name, ..., .gobi = ggobi_get(), .test=TRUE) {
 	if (.test && !is.null(.gobi) && !valid_ggobi(.gobi)) stop("Invalid ggobi reference", call.=FALSE)
-	.Call(.ggobi.symbol(.name), ..., .gobi, PACKAGE = "Rggobi2")
+	.Call(.ggobi.symbol(.name), ..., .gobi, PACKAGE = "rggobi")
 }
 
 .GGobiC <- function(.name, ..., .gobi = ggobi_get(), .test=TRUE) {
 	if (.test && !is.null(.gobi) && !valid_ggobi(.gobi)) stop("Invalid ggobi reference", call.=FALSE)
-	.C(.ggobi.symbol(.name), ..., .gobi, PACKAGE = "Rggobi2")
+	.C(.ggobi.symbol(.name), ..., .gobi, PACKAGE = "rggobi")
 }
 
 # Determines whether a reference to an internal ggobi object is valid

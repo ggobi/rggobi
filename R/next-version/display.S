@@ -69,7 +69,7 @@ getDisplayWindow.ggobi <- function(display = 1, .gobi = getDefaultGGobi(), expan
   if(!inherits(display, "ggobiDisplay"))
     stop("Need an object of class ggobiDisplay")
   
-  dpy <- .Call(.ggobi.symbol("getDisplayWindow"), display, PACKAGE = "Rggobi2")
+  dpy <- .Call(.ggobi.symbol("getDisplayWindow"), display, PACKAGE = "rggobi")
   dpy
 }  
 
@@ -85,7 +85,7 @@ getPlotWidgets.ggobiDisplay <- function(dpy, expandClasses = TRUE)   {
  if(!inherits(dpy, "ggobiDisplay"))
     stop("Object must be of class ggobiDisplay")
 
- els <- .Call(.ggobi.symbol("getDisplayPlotWidgets"), dpy, PACKAGE = "Rggobi2")
+ els <- .Call(.ggobi.symbol("getDisplayPlotWidgets"), dpy, PACKAGE = "rggobi")
 
  els
 }

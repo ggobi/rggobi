@@ -43,7 +43,7 @@ function(..., mfrow = NULL, cells = NULL, .data = 1, .gobi=getDefaultGGobi(), di
  }
 
  val <- .Call(.ggobi.symbol("createPlots"), plots, as.integer(mfrow), as.integer(cells-1),
-               .gobi, display, .data, PACKAGE = "Rggobi2")
+               .gobi, display, .data, PACKAGE = "rggobi")
 
  gdk.flush()
 
