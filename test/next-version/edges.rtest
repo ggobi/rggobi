@@ -1,0 +1,66 @@
+x <- matrix(c(1,2,1, 1,2,2), 3, 2, dimnames = list(letters[1:3], c("X", "Y")))
+gg <- ggobi(x)
+
+y <- matrix(rnorm(15), 5,3, dimnames = list(letters[1:5], LETTERS[1:3]))
+gg$setData(y, name = "dfs")
+
+edges <- rbind(c("a", "b"), c("b", "c"), c("a", "c"))
+
+gg$setEdges(edges, edgeset = gg[[1]])
+
+
+# y <-  cbind(rnorm(2), rnorm(2))
+
+
+x <- matrix(c(1,2,1, 1,2,2), 3, 2, dimnames = list(letters[1:3], c("X", "Y")))
+x <- matrix(c(1,2,1, 1,2,2), 3, 2, dimnames = list(c("foo", "bar", "gaga"), c("X", "Y")))
+edges <- rbind(c("foo", "bar"), c("bar", "gaga"))
+gg <- ggobi(x, id = c("foo", "bar", "gaga"))
+  # Won't open ggobi, says this:
+    Error in ggobi(x, id = c("foo", "bar", "gaga")) :
+        unused argument(s) (id ...)
+setEdges.ggobi(edges)
+
+
+
+
+# Different test!
+g <- ggobi(mtcars[1:26, ])
+g$setRowNames(letters)
+d <- createEdgeDataset.ggobi(10)
+ed <- cbind(rownames(mtcars)[1:10], rownames(mtcars)[11:20])
+setEdges.ggobi(ed, edgeset = d)
+
+
+# Checking that 5 edges are matched, 5 not.
+g <- ggobi(mtcars[1:26, ])
+d <- createEdgeDataset.ggobi(10)
+ed <- cbind(c(rownames(mtcars)[1:5], letters[1:5]), rownames(mtcars)[11:20])
+setEdges.ggobi(ed, append = FALSE, .data = d)
+
+
+# Checking that no edges are matched.
+g <- ggobi(mtcars[1:26, ])
+d <- createEdgeDataset.ggobi(10)
+ed <- cbind(letters[1:10], rownames(mtcars)[11:20])
+setEdges.ggobi(ed, append = FALSE, .data = d)
+
+
+x <- matrix(c(1,2,1, 1,2,2), 3, 2,
+        dimnames = list(c("foo", "bar", "gaga"), c("X", "Y")))
+gg <- ggobi(x)
+edges <- rbind(c("foo", "bar"), c("bar", "gaga"), c("foo","gaga"))
+
+nodes = matrix(rnorm(20), 10, 2)
+rownames(nodes) <- letters[1:nrow(nodes)]
+
+e = cbind(c("a", "b", "c", "d"), sample(letters[1:10], 4))
+colnames(e) = c("src", "dest")
+
+e2 = cbind(c("a", "b", "c", "d"), sample(letters[1:10], 4))
+colnames(e2) = c("src", "dest")
+
+g = ggobi(nodes)
+d2 = g$createEdgeData(nrow(e), name = "edges")
+g$setEdges(e, edgeset = d2)
+g$setEdges(e2, edgeset = d2)

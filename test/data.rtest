@@ -1,0 +1,22 @@
+test_load_frame <- function() {
+	check_data <- function(dataset) {
+		g <- ggobi()
+		g[[1]] <- dataset
+		assert_equal(dataset, as.data.frame(g[[1]]))
+		close(g)
+	}
+	
+	lapply(list(mtcars), check_data)
+}
+
+test_load_file <- function() {
+	files <- dir(ggobi.find.file("data"), "\.xml$", full=TRUE)
+	
+	lapply(files, function(x) {
+		assert_error({
+			g <- ggobi(x)
+			close(g)
+			print(x)
+		})
+	})
+}

@@ -1,0 +1,4 @@
+
+PKG_CPPFLAGS=-g -DUSE_EXT_PTR=1 -D_R_=1 -I../inst/include @GGOBI_CFLAGS@
+PKG_LIBS=@GGOBI_LIBS@
+

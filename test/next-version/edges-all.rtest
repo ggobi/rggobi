@@ -1,0 +1,154 @@
+#----------------------------------------------------------------------
+# Example 1
+#----------------------------------------------------------------------
+
+x <- matrix(c(1,2,1, 1,2,2), 3, 2, dimnames = list(letters[1:3], c("X", "Y")))
+gg <- ggobi(x)
+
+# A simple way of adding edges, especially when the
+# number of edges = the number of points.  It just adds the edges
+# to the dataset that already exists in ggobi.  Notice that the
+# argument 'edgeset' refers to the dataset to which the edges
+# are going to be added.
+e1 <- rbind(c("a", "b"), c("b", "c"), c("a","c"))
+gg$setEdges(e1, edgeset=gg[[1]])
+
+# Another way of adding edges, constructing a new dataset in ggobi
+# and adding the edges to that second dataset.  (Since the second
+# dataset has no variables, it doesn't appear in the variable
+# selection panel.  It does, however, show up in the variable
+# manipulation table.)
+gg$createEdgeData(2, name="edges")
+e2 <- rbind(c("a", "b"), c("b", "c"))
+gg$setEdges(e2, edgeset = gg[[2]])
+
+#----------------------------------------------------------------------
+# Example 2
+#----------------------------------------------------------------------
+
+#. two datasets, add edges to the second one
+
+x <- matrix(c(1,2,1,0, 1,2,2,3, 1,4,2,0), 4, 3,
+  dimnames = list(letters[1:4], c("X", "Y", "Z")))
+gg <- ggobi(x)
+
+z <- matrix(c(1,2,1, 1,2,2), 3, 2,
+  dimnames = list(letters[10:12], c("X", "Y")))
+gg$setData(z, name="z")
+
+e1 <- rbind(c("a", "b"), c("b", "c"), c("a", "d"))
+gg$setEdges(e1, edgeset=gg[[2]])
+
+# Notice that after adding these edges, the data in z
+# correspond to the edges.  Set up two scatterplots:
+#  the data in x, with z's edges displayed
+#  the data in z
+# Now brushing on the points in the z scatterplot will cause
+# the edges in the x scatterplot to be brushed as well.
+
+#----------------------------------------------------------------------
+# Example 3
+#----------------------------------------------------------------------
+
+data(mtcars)
+g <- ggobi(mtcars[1:26, ], name="cars")
+g$setRowNames(letters)
+
+d <- createEdgeDataset.ggobi(10, name="edges")
+ed <- cbind(rownames(mtcars)[1:10], rownames(mtcars)[11:20])
+setEdges.ggobi(ed, edgeset = d)
+
+# The correspondance between edges and nodes is determined
+# by the row id, which is the same as the row name by default.
+# In this example, however, we change the row names of the
+# point dataset to letters while leaving the row ids unchanged:
+# they're still automobile names.  That's why the correspondance
+# between the edges and the rows works though you might think
+# it wouldn't.
+
+#----------------------------------------------------------------------
+# Example 4
+#----------------------------------------------------------------------
+
+# Checking that 5 edges are matched, 5 not.
+data(mtcars)
+g <- ggobi(mtcars[1:26, ])
+d <- createEdgeDataset.ggobi(10)
+ed <- cbind(c(rownames(mtcars)[1:5], letters[1:5]), rownames(mtcars)[11:20])
+setEdges.ggobi(ed, edgeset = d)
+
+#----------------------------------------------------------------------
+# Example 5
+#----------------------------------------------------------------------
+
+# Checking that no edges are matched.
+g <- ggobi(mtcars[1:26, ])
+d <- createEdgeDataset.ggobi(10)
+ed <- cbind(letters[1:10], rownames(mtcars)[11:20])
+setEdges.ggobi(ed, edgeset = d)
+
+#------------------------------------------------------------------
+#------------------------------------------------------------------
+
+#------------------------------------------------------------------
+# Example A
+#------------------------------------------------------------------
+
+# Simplest case: one set of points, one set of edges; no data
+# associated with edges.  In this case, the result is a simple
+# 3D geometric object.
+
+# Nodes
+x <- matrix(c(0,0,2,1, 0,2,0,1, 0,0,0,1), 4, 3,
+  dimnames = list(letters[1:4], c("X", "Y", "Z")))
+gg <- ggobi(x)
+
+# Edges
+d2 <- gg$createEdgeData(6, name="edges")
+e2 <- rbind(c("a", "b"), c("b", "c"), c("a","c"),
+   c("a","d"), c("b","d"), c("c","d"))
+gg$setEdges(e2, edgeset = d2)
+
+#------------------------------------------------------------------
+# Example B
+#------------------------------------------------------------------
+
+# One set of nodes, two alternative sets of edges.  The Edges
+# menu on a scatterplot of the nodes will appear and then grow
+# with each subsequent edge set.  Use that menu to specify which
+# edge set you want to see.
+
+# Nodes
+x <- matrix(c(0,0,1,1, 0,1,0,1), 4, 2,
+  dimnames = list(letters[1:4], c("X", "Y")))
+gg <- ggobi(x)
+
+# The first set of edges
+d1 <- gg$createEdgeData(4, name="edges1")
+e1 <- rbind(c("a", "b"), c("b", "d"), c("c","d"), c("c", "a"))
+gg$setEdges(e1, edgeset = d1)
+# The second set
+d2 <- gg$createEdgeData(2, name="edges2")
+e2 <- rbind(c("a", "d"), c("b", "c"))
+gg$setEdges(e2, edgeset = d2)
+
+#------------------------------------------------------------------
+# Example C
+#------------------------------------------------------------------
+
+# One set of nodes, one set of edges; there are variables
+# associated with the edges.   
+
+x <- matrix(c(1,2,1,0, 1,2,2,3, 1,4,2,0), 4, 3,
+  dimnames = list(letters[1:4], c("X", "Y", "Z")))
+gg <- ggobi(x)
+
+# Add the second dataset
+z <- matrix(c(1,2,1, 1,2,2), 3, 2,
+  dimnames = list(letters[10:12], c("X", "Y")))
+d2 <- gg$setData(z, name="z")
+
+# Add edges to the second dataset
+e1 <- rbind(c("a", "b"), c("b", "c"), c("a", "d"))
+gg$setEdges(e1, edgeset=gg[[2]])
+# or gg$setEdges(e1, edgeset=gg[["z"]])

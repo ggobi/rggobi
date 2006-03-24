@@ -1,0 +1,19 @@
+dnl This just builds Rggobi assuming GGobi is already installed.
+
+AC_INIT(src/brush.c)
+
+AC_ARG_WITH(ggobi,Specify where ggobi pkgconfig file is located, GGOBI_ROOT=$withval)
+
+dnl Get the compiler flags.
+
+dnl If the GGOBI_ROOT contains a ggobi.pc, we reference that
+if ! test -z "${GGOBI_ROOT}"; then
+	export PKG_CONFIG_PATH=${GGOBI_ROOT}:$PKG_CONFIG_PATH
+fi
+
+PKG_CHECK_MODULES(GGOBI, [ggobi], [HAVE_GGOBI=1], [HAVE_GGOBI=0])
+
+AC_SUBST(GGOBI_CFLAGS)
+AC_SUBST(GGOBI_LIBS)
+
+AC_OUTPUT(src/Makevars)
