@@ -47,7 +47,7 @@ ggobi <- function(data, args=character(0), mode=character(0), name = deparse(sys
 		filename <- path.expand(data)
 	}
 
-	args <- c(getwd(), "--keepalive", as.character(args), as.character(mode), filename)
+	args <- c(file.path(getwd(),"rggobi"), "--keepalive", as.character(args), as.character(mode), filename)
   
 	ok <- .Call(.ggobi.symbol("init"), args, TRUE, PACKAGE = "rggobi")
 
