@@ -69,8 +69,12 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
      c_args[i] = CHAR_DEREF(STRING_ELT(args, i));
    }
    if(LOGICAL_DATA(createInstance)[0]) {
+     ggobid *gg;
      which = GGOBI(main)(n, c_args, false);
-     ans = RS_ggobiInstance(ggobi_get(which-1));
+     gg = ggobi_get(which-1);
+     gtk_action_set_visible(gtk_ui_manager_get_action(gg->main_menu_manager, 
+      "/menubar/File/Quit"), false);
+     ans = RS_ggobiInstance(gg);
    } else {
       ggobiInit(&n, &c_args);
       ans = NEW_LOGICAL(1);
@@ -87,7 +91,7 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
 
 	//registerErrorHandlers();
   GGobi_setMissingValueIdentifier(isMissingValue);
-	
+
   gdk_flush();    
 
   return(ans);
@@ -282,11 +286,11 @@ RS_GGOBI(close)(USER_OBJECT_ gobi)
   which is called when a window is deleted or explicitly
   closed.
  */
-void
+/*void
 quit_ggobi(ggobid *gg)
 {
   GGOBI(close)(gg, true);
-}
+}*/
 
 #ifdef G_OS_WIN32
 
