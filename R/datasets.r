@@ -216,9 +216,6 @@ ggobi_data_set_variables <- function(x, values, var, update = TRUE) {
 	x
 }
 
-ids <- function(x) UseMethod("ids", x)
-"ids<-" <- function(x, value) UseMethod("ids<-", x)
-
 # Row ids
 # Retrive row ids from a ggobiDataset
 # 
@@ -226,7 +223,7 @@ ids <- function(x) UseMethod("ids", x)
 # @arguments ggobiDataset
 # @keyword manip 
 # @seealso \code{\link{ids<-}}
-ids.ggobiDataset <- function(x) {
+rownames.ggobiDataset <- function(x) {
   .GGobiCall("getCaseIds", x)
 }  
 
@@ -238,7 +235,7 @@ ids.ggobiDataset <- function(x) {
 # @arguments new values
 # @keyword manip 
 # @seealso \code{\link{ids}}
-"ids<-.ggobiDataset" <- function(x, value) {
+"rownames<-.ggobiDataset" <- function(x, value) {
 	.GGobiCall("setIDs", as.character(value), .data=x)
 	x
 }
