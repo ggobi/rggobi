@@ -154,9 +154,6 @@ summary.ggobiDataset <- function(object, ...) {
 	as.data.frame(x)[[i]]
 }
 
-"$<-.ggobiDataset" <- "[[<-.ggobiDataset" <- function(x, i, value) {
-	as.data.frame(x)[[i]]
-}
 
 # Conversion methods
 # Convert a ggobiDataset to a regular R data.frame or matrix
@@ -203,10 +200,21 @@ summary.ggobiDataset <- function(object, ...) {
 	
 	data[i, j] <- value
 	for(i in unique(j)) {
-		ggobi_data_set_variables(x, data[,i], i)
+		ggobi_data_set_variable(x, data[,i], i)
 	}
 	x
 }
+
+"$<-.ggobiDataset" <- "[[<-.ggobiDataset" <- function(x, i, value) {
+	df <- as.data.frame(x)
+	if(is.null(df[[i]])) {
+		ggobi_data_add_variable(x, value, i)
+	} else {
+		ggobi_data_set_variable(x, value, i)
+		
+	}
+}
+
 
 # Set variable values
 # Set the variable values for a column in a ggobiDataset
@@ -217,11 +225,11 @@ summary.ggobiDataset <- function(object, ...) {
 # @arguments update?
 # @keyword manip 
 # @keyword internal 
-ggobi_data_set_variable <- function(x, values, var, update = TRUE) {
+ggobi_data_set_variable <- function(x, vals, var, update = TRUE) {
 	varId <- variable_index(x, var)
 	if(any(is.na(varId))) stop("Invalid variable")
 
-	.GGobiCall("setVariableValues", as.numeric(values), as.integer(1:length(values) - 1), varId, as.logical(update), x)
+	.GGobiCall("setVariableValues", as.numeric(vals), as.integer(1:length(vals) - 1), varId, as.logical(update), x)
 	x
 }
 
@@ -233,7 +241,7 @@ ggobi_data_set_variable <- function(x, values, var, update = TRUE) {
 # @arguments values to add
 # @arguments name of column to add
 # @keyword manip 
-ggobi_data_set_add_variable <- function(x, vals, name, ...) {
+ggobi_data_add_variable <- function(x, vals, name, ...) {
 	if (!(is.factor(vals) || is.numeric(vals))) stop("Variable must be a factor or numeric")
 	if (length(vals) != nrow(x)) stop("Variable must be same length as existing data set")
 
