@@ -5,7 +5,7 @@ USER_OBJECT_
 RS_GGOBI(getActivePlot)(USER_OBJECT_ ggobiId)
 {
   USER_OBJECT_ ans;
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
 
   PROTECT(ans = NEW_INTEGER(2));
 
@@ -26,7 +26,7 @@ RS_GGOBI(getActivePlot)(USER_OBJECT_ ggobiId)
 USER_OBJECT_
 RS_GGOBI(setActivePlot)(USER_OBJECT_ which, USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   gint n;
   USER_OBJECT_ ans;
 

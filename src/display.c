@@ -159,7 +159,7 @@ RS_GGOBI(setDisplayWidth)(USER_OBJECT_ newDims, USER_OBJECT_ displayId, USER_OBJ
  displayd *dpy; 
  USER_OBJECT_ ans = NULL_USER_OBJECT;
 
- gg = GGOBI_GGOBI(toGGobi(ggobiID));
+ gg = toGGobi(ggobiID);
  dpy = GGOBI(getDisplay)(INTEGER_DATA(displayId)[0], gg);
 
  if(GGOBI_IS_WINDOW_DISPLAY(dpy)) {
@@ -262,7 +262,7 @@ RS_GGOBI(getNumPlotsInDisplay)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId)
 USER_OBJECT_
 RS_GGOBI(getDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   USER_OBJECT_ ans, names;
   gint NumOptions = 8;
   gint displayNum;
@@ -340,7 +340,7 @@ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values,
 	  /* XXX */
      options = GGOBI(getDefaultDisplayOptions)();
   } else {
-     gg = GGOBI_GGOBI(toGGobi(ggobiId));
+     gg = toGGobi(ggobiId);
      displayNum = INTEGER_DATA(which)[0];
      options = GGOBI(getDisplayOptions)(displayNum, gg);
 
@@ -447,14 +447,14 @@ RS_displayInstance(displayd *display, ggobid *gg, int which)
 USER_OBJECT_ 
 RS_GGOBI(closeDisplay)(USER_OBJECT_ ref, USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   USER_OBJECT_ ans = NEW_LOGICAL(1);
   displayd *display;
 
   if(!gg)
     return(ans);
 
-  display  = (displayd*) (long) NUMERIC_DATA(ref)[0];
+  display  = (displayd *) R_ExternalPtrAddr(ref); 
   display = ValidateDisplayRef(display, gg, false);
   if(display) {
     display_free(display, true, gg);
@@ -475,7 +475,7 @@ GetDisplay(USER_OBJECT_ rdisplay, USER_OBJECT_ ggobiId, ggobid **setgg)
  ggobid *gg;
  displayd *display = NULL;
 
-  gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  gg = toGGobi(ggobiId);
   if(gg == NULL)
     return(NULL);
 

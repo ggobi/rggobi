@@ -18,7 +18,7 @@ get_RGtk2_display <- function(g, i) {
 
 save_display <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
 	if (plot.only) {
-		disp <- display$getChildren()[[2]]$getChildren()[[3]][["widget"]]
+		disp <- display$getChildren()[[2]]$getChildren()[[3]][["widget"]][["window"]]
 	} else {
 		disp <- display[["window"]]
 	}

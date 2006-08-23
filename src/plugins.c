@@ -5,7 +5,7 @@ USER_OBJECT_
 RS_GGOBI(getPlugins)(USER_OBJECT_ gobiId)
 {
 
-  ggobid *gg = GGOBI_GGOBI(toGGobi(gobiId));
+  ggobid *gg = toGGobi(gobiId);
   USER_OBJECT_ ans, names;
   GList *tmp;
   gint n, i;

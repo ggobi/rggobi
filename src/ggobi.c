@@ -85,6 +85,8 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
 #ifdef G_OS_WIN32 
    R_tcldo = R_gtk_handle_events;
 #else
+  if (!gdk_display)
+    error("GDK display not found - please make sure X11 is running");
   addInputHandler (R_InputHandlers, ConnectionNumber(gdk_display),
                    RS_GGOBI(event_handle), -1);
 #endif
@@ -188,7 +190,7 @@ RS_ggobiInstance(ggobid *gg) {
 USER_OBJECT_
 RS_GGOBI(getDescription)(USER_OBJECT_ ggobiId)
 {
- ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+ ggobid *gg = toGGobi(ggobiId);
  GGobiData *d;
  gint numSlots = 3, numDatasets, i;
  DataMode mode;
@@ -271,7 +273,7 @@ RS_GGOBI(getNumGGobiInstances)(glong *ans)
 USER_OBJECT_
 RS_GGOBI(close)(USER_OBJECT_ gobi)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(gobi));
+  ggobid *gg = toGGobi(gobi);
   USER_OBJECT_ ans = NEW_LOGICAL(1);
   if(gg) {
     LOGICAL_DATA(ans)[0] = GGOBI(close)(gg, true);

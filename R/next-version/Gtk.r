@@ -15,12 +15,10 @@ function(.gobi = getDefaultGGobi())
 
 
 
-asGObject <-
-function(obj)
+as.RGtkObject <- 
+function(x)
 {
- w <- unclass(obj)$ref
- if(require(RGtk2)) {
-	 class(w) <- c(class(w), "RGtkObject")
- }
- w
+ if(require(RGtk2))
+	 class(x) <- c(class(x), "RGtkObject")
+ x
 }

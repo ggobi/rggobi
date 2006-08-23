@@ -37,7 +37,7 @@ RS_GGOBI(createScatterPlot)(USER_OBJECT_ dims, USER_OBJECT_ display, USER_OBJECT
 	USER_OBJECT_ ans;
 	gint els[] = {0,1};
 
-	gg = GGOBI_GGOBI(toGGobi(ggobiId));
+	gg = toGGobi(ggobiId);
 
 	if(GET_LENGTH(display)) {
   	   odpy = GetDisplay(display, ggobiId, &gg);

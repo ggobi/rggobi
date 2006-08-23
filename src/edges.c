@@ -77,7 +77,7 @@ RS_GGOBI(getConnectedEdges)(USER_OBJECT_ edgesetId, USER_OBJECT_ datasetId)
 USER_OBJECT_
 RS_GGOBI(createEdgeDataset)(USER_OBJECT_ numPoints, USER_OBJECT_ sname, USER_OBJECT_ ggobiId)
 {
-   ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+   ggobid *gg = toGGobi(ggobiId);
    GGobiData *d;
 
    if(!gg) {
@@ -213,7 +213,7 @@ RS_GGOBI(setDisplayEdges)(USER_OBJECT_ dpys, USER_OBJECT_ edgeData, USER_OBJECT_
     USER_OBJECT_ ans;
     displayd *gdpy;
     GGobiData *edge;
-    ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+    ggobid *gg = toGGobi(ggobiId);
 
     edge = GGOBI_DATA(toData(edgeData));
     if(!edge && LOGICAL_DATA(On)[0] == TRUE)

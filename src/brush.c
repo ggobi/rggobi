@@ -67,7 +67,7 @@ USER_OBJECT_
 RS_GGOBI(setBrushColor)(USER_OBJECT_ cid, USER_OBJECT_ ggobiId)
 {
   USER_OBJECT_ ans = NULL_USER_OBJECT;
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   if(gg) {
    ans = RS_GGOBI(getBrushColor)(ggobiId);
    (void) GGOBI(setBrushColor)(INTEGER_DATA(cid)[0], gg);
@@ -81,7 +81,7 @@ RS_GGOBI(setBrushColor)(USER_OBJECT_ cid, USER_OBJECT_ ggobiId)
 USER_OBJECT_
 RS_GGOBI(getBrushColor)(USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   if(gg) {
     USER_OBJECT_ ans;
     gint cid;
@@ -99,7 +99,7 @@ RS_GGOBI(getBrushColor)(USER_OBJECT_ ggobiId)
 USER_OBJECT_
 RS_GGOBI(setBrushGlyph)(USER_OBJECT_ vals, USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   if(gg) {
     GGOBI(setBrushGlyph)(INTEGER_DATA(vals)[0], INTEGER_DATA(vals)[1], gg);
     brush_reset(gg->current_display, 0);
@@ -113,7 +113,7 @@ RS_GGOBI(getBrushGlyph)(USER_OBJECT_ ggobiId)
   gint t, s;
   ggobid *gg;
   USER_OBJECT_ ans;
-  gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  gg = toGGobi(ggobiId);
   if(gg) {
    GGOBI(getBrushGlyph)(&t, &s, gg);
    ans = NEW_INTEGER(2);

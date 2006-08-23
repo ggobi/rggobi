@@ -10,7 +10,7 @@ RS_GGOBI(writeDatasetsXML)(USER_OBJECT_ filename,	USER_OBJECT_ datasetIds, USER_
 	ggobid *gg;
 	gint i;
 	
-	gg = GGOBI_GGOBI(toGGobi(gobiId)); 
+	gg = toGGobi(gobiId); 
 	f = fopen(CHAR_DEREF(STRING_ELT(filename, 0)), "w");
 	
 	gg->save.edges_p = TRUE;

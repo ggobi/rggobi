@@ -1,18 +1,14 @@
-getDisplays.ggobi <-
-function(describe = FALSE, .gobi = getDefaultGGobi())
+displays <- function(x) UseMethod("displays", x)
+displays.ggobi <-
+function(x)
 {
-  dpys = .GGobiCall("getDisplays", as.logical(describe), .gobi = .gobi)
-
-  lapply(dpys, function(d)  { class(d$ref) = gtkObjectGetClasses(d$ref, FALSE)
-                              d
-                            })
-  
+  .Call("RS_GGOBI_getDisplays", .gobi = x)
 }
 
 # contains functions for manipulating GGobi displays
 
 createDisplay.ggobi <- function(type, vars, .data = 1, .gobi = getDefaultGGobi()) {
-  if(!inherits(type, "GtkType")) {
+  if(!inherits(type, "GType")) {
     types <- getDisplayTypes.ggobi()
     id <- match(type, names(types))
     if(is.na(id)) {
@@ -26,7 +22,7 @@ createDisplay.ggobi <- function(type, vars, .data = 1, .gobi = getDefaultGGobi()
   }
 
   if(mode(.data) == "numeric" || mode(.data) == "character")
-    .data <- dataset(.data, .gobi)
+    .data <- dataset(.data, .gobi)[[1]]
 
   if(is.character(vars)) {
      vars = match(vars, names(.data))

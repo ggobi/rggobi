@@ -19,7 +19,7 @@ RS_INTERNAL_GGOBI(identifyHandler)(void *user_data, gint k, splotd *sp, GtkWidge
 USER_OBJECT_
 RS_GGOBI(setIdentifyHandler)(USER_OBJECT_ func, USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   USER_OBJECT_ ans = NULL_USER_OBJECT;
 
   if(gg == NULL) {

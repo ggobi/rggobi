@@ -62,15 +62,12 @@ RS_INTERNAL_GGOBI(getVariableNames)(GGobiData *d)
   return(ans);
 }
 
-/* this gets the case ids only for the records that are in the current plot
-	i think this should just get all the ids
-*/
 USER_OBJECT_
 RS_GGOBI(getCaseIds)(USER_OBJECT_ datasetId)
 {
  GGobiData *d;
  USER_OBJECT_ ans;
- int i, n, m;
+ int n, m;
 
  d = GGOBI_DATA(toData(datasetId));
 
@@ -84,13 +81,12 @@ RS_GGOBI(getCaseIds)(USER_OBJECT_ datasetId)
  }
 
 
- n = d->nrows_in_plot;
+ n = d->nrows;
 
  PROTECT(ans = NEW_CHARACTER(n));
  for(m = 0; m < n ; m++) {
-   i = d->rows_in_plot.els[m];
-    if(d->rowIds[i])
-     SET_STRING_ELT(ans, m, COPY_TO_USER_STRING(d->rowIds[i]));
+    if(d->rowIds[m])
+     SET_STRING_ELT(ans, m, COPY_TO_USER_STRING(d->rowIds[m]));
  }
 
  UNPROTECT(1);
@@ -105,7 +101,7 @@ RS_GGOBI(getSelectedIndices)(USER_OBJECT_ datasetId)
  GGobiData *d;
  USER_OBJECT_ ans, names;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
   if(d) {
     gint nr, i, m, ctr;
    gchar *name;
@@ -136,24 +132,22 @@ RS_GGOBI(getSelectedIndices)(USER_OBJECT_ datasetId)
  return (ans);
 }
 
-/* only gets the rownames in the current plot - why? */
 USER_OBJECT_
 RS_GGOBI(getRowNames)(USER_OBJECT_ data)
 {
   USER_OBJECT_ ans = NULL_USER_OBJECT;
-  gint nr, i, m;
+  gint nr, m;
   GGobiData *d;
   
  d = GGOBI_DATA(toData(data));
 
   if(d) {
-    nr = d->nrows_in_plot;
+    nr = d->nrows;
     PROTECT(ans = NEW_CHARACTER(nr));
 
     for (m = 0 ; m < nr ; m++) {
-      i = d->rows_in_plot.els[m];
       SET_STRING_ELT(ans, m,
-      COPY_TO_USER_STRING((gchar *) g_array_index (d->rowlab, gchar *, i)));
+      COPY_TO_USER_STRING(g_array_index (d->rowlab, gchar *, m)));
     }
     UNPROTECT(1);
   }
@@ -293,12 +287,11 @@ RS_GGOBI(getCasesHidden)(USER_OBJECT_ datasetId)
   d = GGOBI_DATA(toData(datasetId));
   gg = d->gg;
     if(d) {
-      gint num = d->nrows_in_plot, i, m;
+      gint num = d->nrows, m;
 
       PROTECT(ans = NEW_LOGICAL(num));
       for(m = 0; m < num; m++) {
-        i = d->rows_in_plot.els[m];
-        LOGICAL_DATA(ans)[m] = GGOBI(getCaseHidden)(i, d, gg);
+        LOGICAL_DATA(ans)[m] = GGOBI(getCaseHidden)(m, d, gg);
       }
 
       UNPROTECT(1);
@@ -531,7 +524,7 @@ RS_GGOBI(getVariables)(USER_OBJECT_ which, USER_OBJECT_ datasetId)
 USER_OBJECT_
 RS_GGOBI(createEmptyData)(USER_OBJECT_ snrow, USER_OBJECT_ name, USER_OBJECT_ description, USER_OBJECT_ gobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(gobiId));
+  ggobid *gg = toGGobi(gobiId);
   GGobiData *d;
 
   if((gg = ValidateGGobiRef(gg, false)) == NULL) {
@@ -648,7 +641,7 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
 {
   InputDescription *desc;
 
-  ggobid *gg = GGOBI_GGOBI(toGGobi(gobiID)); 
+  ggobid *gg = toGGobi(gobiID); 
   GGobiData *d = NULL;
   gint i, j, n;
 

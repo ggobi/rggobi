@@ -4,7 +4,7 @@
 USER_OBJECT_
 RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   int len;
   USER_OBJECT_ ans = NEW_INTEGER(1);
   if(gg) {
@@ -18,7 +18,7 @@ RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId)
 USER_OBJECT_
 RS_GGOBI(getCurrentDisplayType)(USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   USER_OBJECT_ ans;
   const gchar *name = GGOBI(getCurrentDisplayType)(gg);
 
@@ -134,14 +134,14 @@ RS_INTERNAL_GGOBI(getDisplays)(ggobid *gg)
 USER_OBJECT_
 RS_GGOBI(getDisplays)(USER_OBJECT_ ggobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(ggobiId));
+  ggobid *gg = toGGobi(ggobiId);
   return(RS_INTERNAL_GGOBI(getDisplays)(gg));
 }
 
 USER_OBJECT_
 RS_GGOBI(getCurrentDisplay)(USER_OBJECT_ gobiId)
 {
-  ggobid *gg = GGOBI_GGOBI(toGGobi(gobiId));
+  ggobid *gg = toGGobi(gobiId);
   USER_OBJECT_ ans;
 
   ans = toRPointer(gg->current_display, "GtkWidget");
