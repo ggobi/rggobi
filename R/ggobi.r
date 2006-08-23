@@ -1,8 +1,8 @@
 # New ggobi
 # Creates a new ggobi instance
 # 
-# Create a new instance of GGobi with or without new data.  Use 
-# function whenever you want to create a new GGobi indepdent of the 
+# This function creates a new instance of GGobi with or without new data.  Use 
+# this function whenever you want to create a new GGobi indepdent of the 
 # others---they will not share linked plots.  If you want to add
 # another dataset to an existing ggobi, please see \code{\link{[<-.ggobi}}
 # 
@@ -33,6 +33,7 @@
 # @arguments the name to use in GGobi for the dataset, if one is specified
 # @value A ggobi object 
 # @keyword dynamic 
+# @alias rggobi
 #X ggobi(ggobi.find.file("data", "flea.csv"))
 #X ggobi(ggobi.find.file("data", "flea.xml"))
 #X ggobi(mtcars)

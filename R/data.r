@@ -84,29 +84,6 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 	.data
 }
 
-# Add variable
-# Add variable to a ggobiDataset
-# 
-# @alias addVariable
-# @arguments ggobiDataset
-# @arguments values to add
-# @arguments name of column to add
-# @keyword manip 
-addVariable.ggobiDataset <- function(x, vals, name, ...) {
-	if (!(is.factor(vals) || is.numeric(vals))) stop("Variable must be a factor or numeric")
-	if (length(vals) != nrow(x)) stop("Variable must be same length as existing data set")
-
-	levels <- NULL
-	values <- NULL
-
-	if(is.factor(vals)) {
-		levels <- summary(vals[!is.na(vals)])
-		values <- sort(unique(as.integer(vals)))
-	}
-
-	.GGobiCall("addVariable", as.numeric(vals), as.character(name), levels, values, x)
-}
-addVariable <- function(x, ...) UseMethod("addVariable", x)
 
 # Get data
 # ===================================================================

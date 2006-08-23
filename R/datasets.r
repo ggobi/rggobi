@@ -154,6 +154,10 @@ summary.ggobiDataset <- function(object, ...) {
 	as.data.frame(x)[[i]]
 }
 
+"$<-.ggobiDataset" <- "[[<-.ggobiDataset" <- function(x, i, value) {
+	as.data.frame(x)[[i]]
+}
+
 # Conversion methods
 # Convert a ggobiDataset to a regular R data.frame or matrix
 # 
@@ -162,7 +166,10 @@ summary.ggobiDataset <- function(object, ...) {
 # @keyword internal
 # @alias as.matrix.ggobiDataset
 "as.data.frame.ggobiDataset" <- function(x, ...) {
-	as.data.frame(.GGobiCall("getData", x))
+	gd <- .GGobiCall("getData", x)
+	df <- as.data.frame(gd)
+	rownames(df) <- rownames(x)
+	df
 }
 
 "as.matrix.ggobiDataset" <- function(x, ...) {
@@ -192,6 +199,8 @@ summary.ggobiDataset <- function(object, ...) {
 "[<-.ggobiDataset" <- function(x, i, j, value) {
 	data <- as.data.frame(x)
 
+	# figure out if any new columns have been added and add them.
+	
 	data[i, j] <- value
 	for(i in unique(j)) {
 		ggobi_data_set_variables(x, data[,i], i)
@@ -208,13 +217,40 @@ summary.ggobiDataset <- function(object, ...) {
 # @arguments update?
 # @keyword manip 
 # @keyword internal 
-ggobi_data_set_variables <- function(x, values, var, update = TRUE) {
+ggobi_data_set_variable <- function(x, values, var, update = TRUE) {
 	varId <- variable_index(x, var)
 	if(any(is.na(varId))) stop("Invalid variable")
 
 	.GGobiCall("setVariableValues", as.numeric(values), as.integer(1:length(values) - 1), varId, as.logical(update), x)
 	x
 }
+
+# Add variable
+# Add variable to a ggobiDataset
+# 
+# @alias addVariable
+# @arguments ggobiDataset
+# @arguments values to add
+# @arguments name of column to add
+# @keyword manip 
+ggobi_data_set_add_variable <- function(x, vals, name, ...) {
+	if (!(is.factor(vals) || is.numeric(vals))) stop("Variable must be a factor or numeric")
+	if (length(vals) != nrow(x)) stop("Variable must be same length as existing data set")
+
+	levels <- NULL
+	values <- NULL
+
+	if(is.factor(vals)) {
+		levels <- summary(vals[!is.na(vals)])
+		values <- sort(unique(as.integer(vals)))
+	}
+
+	.GGobiCall("addVariable", as.numeric(vals), as.character(name), levels, values, x)
+}
+
+
+ids <- function(x) UseMethod("ids", x)
+"ids<-" <- function(x, value) UseMethod("ids<-", x)
 
 # Row ids
 # Retrive row ids from a ggobiDataset
@@ -223,7 +259,7 @@ ggobi_data_set_variables <- function(x, values, var, update = TRUE) {
 # @arguments ggobiDataset
 # @keyword manip 
 # @seealso \code{\link{ids<-}}
-rownames.ggobiDataset <- function(x) {
+ids.ggobiDataset <- function(x) {
   .GGobiCall("getCaseIds", x)
 }  
 
@@ -235,7 +271,7 @@ rownames.ggobiDataset <- function(x) {
 # @arguments new values
 # @keyword manip 
 # @seealso \code{\link{ids}}
-"rownames<-.ggobiDataset" <- function(x, value) {
+"ids<-.ggobiDataset" <- function(x, value) {
 	.GGobiCall("setIDs", as.character(value), .data=x)
 	x
 }
