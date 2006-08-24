@@ -98,7 +98,7 @@ RS_GGOBI(createEdgeDataset)(USER_OBJECT_ numPoints, USER_OBJECT_ sname, USER_OBJ
    GGobi_setDataName(CHAR_DEREF(STRING_ELT(sname, 0)), d);
    pipeline_init(d, gg);
 
-   return(RS_datasetInstance(d, gg));
+   return(RS_datasetInstance(d));
 }
 
 USER_OBJECT_
@@ -140,7 +140,7 @@ RS_GGOBI(setEdges)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append, USER_OBJ
   }
   gdk_flush();
 
-  ans = RS_datasetInstance(e, gg);
+  ans = RS_datasetInstance(e);
   
   return(ans);
 }
@@ -206,7 +206,7 @@ RS_GGOBI(setEdgeIndices)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append,
   displays_plot(NULL, FULL, gg);
   gdk_flush();
 
-  ans = RS_datasetInstance(e, gg);
+  ans = RS_datasetInstance(e);
 
   return(ans);
 }
@@ -239,7 +239,7 @@ RS_GGOBI(setDisplayEdges)(USER_OBJECT_ dpys, USER_OBJECT_ edgeData, USER_OBJECT_
 	    if(edge) {
         old = setDisplayEdge(gdpy, edge);
         if(old) {
-          SET_VECTOR_ELT(ans, i, RS_datasetInstance(old, old->gg));
+          SET_VECTOR_ELT(ans, i, RS_datasetInstance(old));
 	      }
 	    }
     }

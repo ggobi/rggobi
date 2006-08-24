@@ -23,7 +23,7 @@ RSggobi_directPrintHandler(PrintOptions *options, displayd *dpy, ggobid *gg, GGo
   PROTECT(e = allocVector(LANGSXP, 3));
   SETCAR(e, printHandler->userData);
 
-  opts = RS_displayInstance(dpy, gg, -1);
+  opts = RS_displayInstance(dpy);
   SETCAR(CDR(e), opts);
 
   opts = RSGggobi_convertPrintOptions(options);

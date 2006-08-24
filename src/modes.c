@@ -3,46 +3,34 @@
 /* we need to split this stuff into interaction and projection modes */
 
 USER_OBJECT_
-RS_GGOBI(setIMode)(USER_OBJECT_ name, USER_OBJECT_ ggobiId)
+RS_GGOBI(setIMode)(USER_OBJECT_ name, USER_OBJECT_ s_display)
 {
-  ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
-  if(gg) {
-    GGOBI(setIMode)(CHAR_DEREF(STRING_ELT(name, 0)), gg);
-    /* Trying to get the main window updated so that the changes to the control
-       panel are visible without having to move the mouse into the window to generate
-       another event. */
-    //gtk_widget_queue_draw(gg->main_window);
-    //gtk_widget_queue_draw(gg->current_control_panel);
-/*    gtk_widget_draw(gg->main_window); */
-  }
+  displayd *display = toDisplay(s_display);
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  GGOBI(setIMode)(CHAR_DEREF(STRING_ELT(name, 0)), display->ggobi);
   
   gdk_flush();
 
   return(NULL_USER_OBJECT);
 }
 USER_OBJECT_
-RS_GGOBI(setPMode)(USER_OBJECT_ name, USER_OBJECT_ ggobiId)
+RS_GGOBI(setPMode)(USER_OBJECT_ name, USER_OBJECT_ s_display)
 {
-  ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
-  if(gg) {
-    GGOBI(setPMode)(CHAR_DEREF(STRING_ELT(name, 0)), gg);
-  }
+  displayd *display = toDisplay(s_display);
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  GGOBI(setPMode)(CHAR_DEREF(STRING_ELT(name, 0)), display->ggobi);
   
-  //gdk_flush();
-
   return(NULL_USER_OBJECT);
 }
 
 USER_OBJECT_
-RS_GGOBI(getIModeName)(USER_OBJECT_ ggobiId)
+RS_GGOBI(getIModeName)(USER_OBJECT_ s_display)
 {
   USER_OBJECT_ ans;
   const gchar *tmp;
-  ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
-  tmp = GGOBI(getIModeName)(imode_get(gg));
+  displayd *display = toDisplay(s_display);
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  tmp = GGOBI(getIModeName)(imode_get(display->ggobi));
 
   PROTECT(ans = NEW_CHARACTER(1));
   if(tmp && tmp[0])
@@ -51,13 +39,13 @@ RS_GGOBI(getIModeName)(USER_OBJECT_ ggobiId)
   return(ans);
 }
 USER_OBJECT_
-RS_GGOBI(getPModeName)(USER_OBJECT_ ggobiId)
+RS_GGOBI(getPModeName)(USER_OBJECT_ s_display)
 {
   USER_OBJECT_ ans;
   const gchar *tmp;
-  ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
-  tmp = GGOBI(getPModeName)(pmode_get(gg->current_display, gg));
+  displayd *display = toDisplay(s_display);
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  tmp = GGOBI(getPModeName)(pmode_get(display, display->ggobi));
 
   PROTECT(ans = NEW_CHARACTER(1));
   if(tmp && tmp[0])

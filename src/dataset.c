@@ -1,16 +1,11 @@
 #include "RSGGobi.h"
 
-/*
-  Creates an R/S object which refers to a GGobiData object.
-  Eventually this will return an object of the actual GObject class (GGobiData)
-  but for now we'll just use ggobiDataset so that R is happy
- */
 USER_OBJECT_
-RS_datasetInstance(GGobiData *d, ggobid *gg) 
+RS_datasetInstance(GGobiData *d) 
 {
   USER_OBJECT_ ans;
   
-  ans = toRPointer(d, "ggobiDataset");
+  ans = toRPointer(d, "GGobiData");
  
   return(ans);
 }
@@ -18,13 +13,13 @@ RS_datasetInstance(GGobiData *d, ggobid *gg)
 GGobiData *
 toData(USER_OBJECT_ d)
 {
-  if(inherits(d, "ggobiDataset")) {
+  if(inherits(d, "GGobiData")) {
     GGobiData *data = getPtrValue(d);
     g_return_val_if_fail(GGOBI_IS_DATA(data), NULL);
     g_return_val_if_fail(ValidateGGobiRef(data->gg, false) != NULL, NULL);
     return(ValidateDatadRef(data, data->gg, false));
   }
-  g_critical("An R GGobi dataset object must inherit from ggobiDataset");
+  g_critical("An R GGobi dataset object must inherit from GGobiData");
   return(NULL);
 }
 
@@ -561,7 +556,7 @@ RS_GGOBI(createEmptyData)(USER_OBJECT_ snrow, USER_OBJECT_ name, USER_OBJECT_ de
   pipeline_init(d, gg);
   rows_in_plot_set (d, gg);
 
-  return(RS_datasetInstance(d, gg));
+  return(RS_datasetInstance(d));
 }
 
 

@@ -184,7 +184,7 @@ RS_GGOBI(blockingLoop)(void)
 
 USER_OBJECT_
 RS_ggobiInstance(ggobid *gg) {
-	return(toRPointer(gg, "ggobi"));
+	return(toRPointer(gg, "GGobiGGobi"));
 }
 
 USER_OBJECT_
@@ -256,12 +256,12 @@ RS_GGOBI(isValid)(USER_OBJECT_ gobi)
 ggobid *
 toGGobi(USER_OBJECT_ s_ggobi)
 {
-  if(inherits(s_ggobi, "ggobi")) {
+  if(inherits(s_ggobi, "GGobiGGobi")) {
     ggobid *gg;
     gg = ValidateGGobiRef(getPtrValue(s_ggobi), false);
     return(gg);
   }
-  g_critical("A GGobi R object must inherit from class 'ggobi'");
+  g_critical("A GGobi R object must inherit from class 'GGobiGGobi'");
   return(NULL);
 }
 

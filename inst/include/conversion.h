@@ -178,9 +178,9 @@ GGobiData *toData(USER_OBJECT_ d);
 displayd *toDisplay(USER_OBJECT_ rdisplay);
 
 /* Wrapping GGobi objects as SEXP's */
-USER_OBJECT_ RS_datasetInstance(GGobiData *d, ggobid *gg) ;
+USER_OBJECT_ RS_datasetInstance(GGobiData *d) ;
 USER_OBJECT_ RS_ggobiInstance(ggobid *gg);
-USER_OBJECT_ RS_displayInstance(displayd *display, ggobid *gg, int which);
+USER_OBJECT_ RS_displayInstance(displayd *display);
 
 #endif
 

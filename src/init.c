@@ -28,7 +28,6 @@ static R_CallMethodDef callMethods[] =
    CENTRY(getActiveColorScheme, 1),
    CENTRY(setActiveColorScheme, 2),
 
-   CENTRY(setDisplaySize, 3),
    CENTRY(setEdges, 5),
 
    CENTRY(getVariables, 3),
@@ -113,14 +112,6 @@ static R_CallMethodDef callMethods[] =
    
    CENTRY(setVariableTypes, 4),
    CENTRY(setAsTimeVariables, 4)  
-
-#if 0
-   ,
-   CENTRY(updateDisplay, 2),
-   CENTRY(createPlots, 6),
-   CENTRY(setPlotVariables, 4),
-   CENTRY(getDisplayType, 2)
-#endif
 
    , {NULL}
 };

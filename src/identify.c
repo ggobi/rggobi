@@ -67,7 +67,7 @@ RS_INTERNAL_GGOBI(identifyHandler)(void *user_data, gint k, splotd *sp, GtkWidge
   SETCAR(CDR(e), tmp = NEW_INTEGER(1));
   INTEGER_DATA(tmp)[0] = k;
 
-  SETCAR(CDR(CDR(e)), RS_displayInstance(sp->displayptr, gg, -1));
+  SETCAR(CDR(CDR(e)), RS_displayInstance(sp->displayptr));
 
   eval(e, R_GlobalEnv); 
 

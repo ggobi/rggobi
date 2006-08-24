@@ -133,7 +133,7 @@ RS_GGOBI(getDataset)(USER_OBJECT_ which, USER_OBJECT_ gobiID)
     int val = INTEGER_DATA(which)[i];
     GGobiData *d = (GGobiData *) g_slist_nth_data(gg->d, val);
     if(d) {
-      SET_VECTOR_ELT(ans, i, RS_datasetInstance(d, gg));
+      SET_VECTOR_ELT(ans, i, RS_datasetInstance(d));
     }
   }
   UNPROTECT(1);

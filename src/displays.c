@@ -121,7 +121,7 @@ RS_INTERNAL_GGOBI(getDisplays)(ggobid *gg)
   PROTECT(ans = NEW_LIST(n));
   i = 0;
   for (dlist = gg->displays; dlist ; dlist = dlist->next, i++) {
-    SET_VECTOR_ELT(ans, i, RS_displayInstance((displayd*)dlist->data, gg, -1));
+    SET_VECTOR_ELT(ans, i, RS_displayInstance((displayd*)dlist->data));
   }
   UNPROTECT(1);
 
