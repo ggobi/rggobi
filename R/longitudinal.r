@@ -9,9 +9,10 @@
 #X data(Oxboys, package="nlme")
 #X ggobi_longitudinal(Oxboys, Occasion, Subject)
 #X example adding an id, if not present
-ggobi_longitudinal <- function(data, time=1:nrow(data), obsUnit=1) {
-	time <- eval(time, data)
-	obsUnit <- eval(obsUnit, data)
+ggobi_longitudinal <- function(data, time=1:rows, obsUnit=rep(1, rows)) {
+	rows <- nrow(data)
+	time <- eval(substitute(time), data)
+	obsUnit <- eval(substitute(obsUnit), data)
 
 	or <- order(obsUnit, time)
 	tmp <- data[or, ]
