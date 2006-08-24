@@ -3,7 +3,7 @@ setOldClass("GGobiData")
 # Set data
 # ===================================================================
 
-# [<-.GGobiGGobi
+# [<-.GGobi
 # Add data to ggobi instance.
 # 
 # This function allows you to add (and eventually) replace
@@ -12,13 +12,13 @@ setOldClass("GGobiData")
 # @arguments ggobi instance
 # @arguments name of data frame
 # @arguments data.frame, or string to path of file to load
-# @alias $<-.GGobiGGobi
+# @alias $<-.GGobi
 # @returns GGobiData
 # @keyword manip 
 #X g <- ggobi()
 #X g["a"] <- mtcars
 #X g$b <- mtcars
-"[<-.GGobiGGobi" <- function(x, i, value) {
+"[<-.GGobi" <- function(x, i, value) {
 	if (inherits(value, "GGobiData")) return(x)
 	if (length(i) != 1) stop("You may only add or replace one dataset at a time")
 	replace <- (i %in% names(x))
@@ -34,7 +34,7 @@ setOldClass("GGobiData")
 	}
 	x
 }
-"$<-.GGobiGGobi" <- function(x, i, value) {
+"$<-.GGobi" <- function(x, i, value) {
   x[i] <- value
   x
 }
@@ -99,17 +99,17 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 # @arguments GGobi object
 # @arguments name of dataset to retrive
 # @keyword manip 
-# @alias [.GGobiGGobi
+# @alias [.GGobi
 #X g <- ggobi(ChickWeight)
 #X g["cars"] <- mtcars
 #X g[1:2]
 #X g["ChickWeight"]
 #X g["cars"]
 #X g$cars
-"$.GGobiGGobi" <- function(x, i) {
+"$.GGobi" <- function(x, i) {
   x[i]
 }
-"[.GGobiGGobi" <- function(x, i, ..., drop=TRUE) {
+"[.GGobi" <- function(x, i, ..., drop=TRUE) {
 	d <- dataset(clean.ggobi(i), .gobi = x)
 	if (drop && length(d) == 1 ) {
 		d[[1]]

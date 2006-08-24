@@ -184,7 +184,7 @@ RS_GGOBI(blockingLoop)(void)
 
 USER_OBJECT_
 RS_ggobiInstance(ggobid *gg) {
-	return(toRPointer(gg, "GGobiGGobi"));
+	return(toRPointer(gg, "GGobi"));
 }
 
 USER_OBJECT_
@@ -256,7 +256,7 @@ RS_GGOBI(isValid)(USER_OBJECT_ gobi)
 ggobid *
 toGGobi(USER_OBJECT_ s_ggobi)
 {
-  if(inherits(s_ggobi, "GGobiGGobi")) {
+  if(inherits(s_ggobi, "GGobi")) {
     ggobid *gg;
     gg = ValidateGGobiRef(getPtrValue(s_ggobi), false);
     return(gg);

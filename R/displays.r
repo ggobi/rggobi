@@ -1,22 +1,21 @@
 # Get GGobi displays
 # Get's list of displays in the specified GGobi instance
 # 
-# @alias displays.GGobiGGobi
+# @alias displays.GGobi
 # @arguments GGobi object
 # TODO: add displays method for datasets
 displays <- function(x) UseMethod("displays", x)
-displays.GGobiGGobi <- function(x) {
+displays.GGobi <- function(x) {
  .GGobiCall("getDisplays", .gobi = x)
 }
 
-# FIXME: Incorrect reference to ggobid.
 dataset.GGobiDisplay <- function(gd) {
  .GGobiCall("getDisplayDataset", gd)
 }
 
 # FIXME: how do we do this now from R?
 ggobi.GGobiDisplay <- function(gd) {
-	gd$ggobi
+	.GGobiCall("getGGobiForDisplay", gd)
 }
 
 print.GGobiDisplay <- function(gd) {
@@ -36,7 +35,6 @@ summary.GGobiDisplay <- function(x) {
 
 # This tells the number of plots within  a given display 
 # window within a ggobi instance.
-# FIXME: Incorrect reference to ggobid.
 length.GGobiDisplay <- function(gd) {
 	.GGobiCall("getNumPlotsInDisplay",  gd)
 }
@@ -61,8 +59,6 @@ plot.GGobiDisplay <- function(display, path="ggobi_display.png", filetype="png",
 
 display <- function(x, ...) UseMethod("display", x)
 
-
-# FIXME: invalid class cast from (NULL) pointer to `GGobiExtendedDisplay'
 display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
 	type <- ggobi_display_get_type(type)
 
@@ -72,7 +68,7 @@ display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
 		 stop("Incorrect variables specified")
 	}
 
-	.GGobiCall("createPlot", type, as.integer(vars), x)
+	.GGobiCall("createDisplay", type, as.integer(vars), x)
 }
 
 
@@ -91,13 +87,13 @@ display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
 #
 # Need to sort current if specified.
 #
-setDisplayOptions.GGobiGGobi <- function(points,
+setDisplayOptions.GGobi <- function(points,
          axes, axesLabels, axesValues,
          directed, undirected, arrowheads,
          whiskers,
          current = NULL,
           display = 1, .gobi = ggobi_get()) {
-  old <- getDisplayOptions.GGobiGGobi(display, .gobi=.gobi)
+  old <- getDisplayOptions.GGobi(display, .gobi=.gobi)
   
   if(is.null(current)) {
     current = old
@@ -161,7 +157,7 @@ setDisplayOptions.GGobiGGobi <- function(points,
 # which - the display number within the specified ggobi instance.
 #
 
-getDisplayOptions.GGobiGGobi <- function(which = 1, .gobi = ggobi_get()) {
+getDisplayOptions.GGobi <- function(which = 1, .gobi = ggobi_get()) {
   ans = .GGobiCall("getDisplayOptions", as.integer(which-1), .gobi = .gobi)
   class(ans) = "GGobiDisplayOptions"
 

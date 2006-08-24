@@ -6,95 +6,7 @@
 #include "vars.h"
 
 USER_OBJECT_
-RS_GGOBI(newScatterplot)(USER_OBJECT_ variables, USER_OBJECT_ datasetId)
-{
- ggobid *gg;
- GGobiData *d;
- USER_OBJECT_ ans;
- displayd *display;
-
-  d = toData(datasetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
-  gg = d->gg;
-
- display = GGOBI(newScatterplot)(INTEGER_DATA(variables)[0],
-                                 INTEGER_DATA(variables)[1],
-                                 d, gg);
- display_add(display, gg);  
- ans = RS_displayInstance(display);
-
- return (ans);
-}
-
-
-USER_OBJECT_
-RS_GGOBI(newParcoords)(USER_OBJECT_ variables, USER_OBJECT_ datasetId)
-{
- ggobid *gg;
- GGobiData *d; 
- displayd *display;
- USER_OBJECT_ ans;
- gint *ids, n, i;
-
-  d = toData(datasetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
-  gg = d->gg;
- 
- n  = GET_LENGTH(variables);
-/*XXX make certain to free this. */
- ids = g_malloc0(n * sizeof (gint));
- for(i = 0; i < n; i++) 
-   ids[i] = INTEGER_DATA(variables)[i];
-
- display = GGOBI(newParCoords)(ids, n, d, gg);
- display_add(display, gg);  
- ans = RS_displayInstance(display);
-
- return (ans);
-}
-
-
-/*
-  Assumes the variables are specified in
-
- We want to add a general version that takes
- pairs of variables and generates the corresponding 
- plot for each of these pairs and then adds them to the
- scatter matrix.
-
- */
-USER_OBJECT_
-RS_GGOBI(newScatmat)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ datasetId)
-{
-  ggobid *gg;
-  GGobiData *d;
-  displayd *display;
-  USER_OBJECT_ ans;
-  gint *rowIds, *colIds, nr, nc, i;
-
-  d = toData(datasetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
-  gg = d->gg;
-
-  nr = GET_LENGTH(x);
-  nc = GET_LENGTH(y);
- 
-  rowIds = g_malloc0 (nr * sizeof (gint));
-  colIds = g_malloc0 (nc * sizeof (gint));
-  for (i = 0; i < nr; i++) 
-    rowIds[i] = INTEGER_DATA(x)[i];
-
-  for (i = 0; i < nc; i++) 
-    colIds[i] = INTEGER_DATA(y)[i];
-
-  display = GGOBI(newScatmat)(rowIds, colIds, nr, nc, d, gg);
-  display_add(display, gg);  
-  ans = RS_displayInstance(display);
-
-  return(ans);
-}
-USER_OBJECT_
-RS_GGOBI(createPlot)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ datasetId)
+RS_GGOBI(createDisplay)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ datasetId)
 {
   GGobiData *d;
   ggobid *gg;
@@ -106,7 +18,7 @@ RS_GGOBI(createPlot)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ datase
   g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
-  type = (GType) NUMERIC_DATA(stype)[0];
+  type = g_type_from_name(asCString(stype));
   klass = GGOBI_EXTENDED_DISPLAY_CLASS(g_type_class_peek(type));
 
   if(!klass) {
@@ -131,30 +43,9 @@ RS_GGOBI(createPlot)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ datase
 
   display_add(display, gg);
 
+  gdk_flush();
+  
   return(RS_displayInstance(display));
-}
-
-USER_OBJECT_
-RS_GGOBI(createDisplay)(USER_OBJECT_ smissing, USER_OBJECT_ dataset)
-{
-  ggobid *gg;
-  GGobiData *data = NULL;
-  displayd *dpy;
-  USER_OBJECT_ ans;
-
-
-  data = toData(dataset);
-  g_return_val_if_fail(GGOBI_IS_DATA(data), NULL_USER_OBJECT);
-  gg = data->gg;
-
-  dpy = g_object_new(GGOBI_TYPE_EMBEDDED_DISPLAY, NULL);
-  display_set_values(dpy, data, gg);
-
-  display_add(dpy, gg);
-
-  ans = toRPointer(dpy, "GGobiDisplay");
-
-  return(ans);
 }
 
 /**
@@ -180,6 +71,17 @@ RS_GGOBI(updateDisplay)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId)
   
   LOGICAL_DATA(ans)[0] = TRUE;
   return(ans);
+}
+
+/* Ideally the GGobi would be a property of the display, allowing access
+  with RGtk2, but this is not so... */
+USER_OBJECT_
+RS_GGOBI(getGGobiForDisplay)(USER_OBJECT_ s_display)
+{
+  displayd *display = toDisplay(s_display);
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  
+  return RS_ggobiInstance(display->ggobi);
 }
 
 /*
@@ -358,19 +260,4 @@ toDisplay(USER_OBJECT_ rdisplay)
   }
   g_critical("An R GGobi display object must inherit from class 'GGobiDisplay'");
   return(NULL);
-}
-
-/**
- Probably should be deprecated.
- */
-void
-RS_GGOBI(raiseDisplay)(glong *plotId, glong *numEls, glong *raiseOrIcon,
-  glong *up, glong *ggobiId)
-{
-  ggobid *gg = ggobi_get(*ggobiId);
-  gint i;
-
-  for (i = 0; i < *numEls; i++) {
-    plotId[i] = GGOBI(raiseWindow)(plotId[i], raiseOrIcon[0], up[0], gg);
-  }
 }

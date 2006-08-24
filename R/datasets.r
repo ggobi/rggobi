@@ -259,7 +259,7 @@ ggobi_data_add_variable <- function(x, vals, name, ...) {
 # @keyword internal
 # 
 ggobi_data_remove_variable <- function(x, var) {
- which <- getVariableIndex.GGobiGGobi(..., .gobi=.gobi)
+ which <- getVariableIndex.GGobi(..., .gobi=.gobi)
 
  .GGobiC("removeVariables", which, .data)[[1]]
 }

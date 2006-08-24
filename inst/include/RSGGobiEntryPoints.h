@@ -7,7 +7,7 @@ USER_OBJECT_ RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(getNumberedKeyHandler)(USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(setNumberedKeyHandler)(USER_OBJECT_ handler, USER_OBJECT_ sdescription, USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ plotId, USER_OBJECT_ ggobiId);
-USER_OBJECT_ RS_GGOBI(getNumPlotsInDisplay)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId);
+USER_OBJECT_ RS_GGOBI(getNumPlotsInDisplay)(USER_OBJECT_ dpy);
 SEXP RS_GGOBI(getDisplayType)(SEXP dpy, SEXP ggobiId);
 USER_OBJECT_ RS_GGOBI(getDisplayTypes)();
 USER_OBJECT_ RS_GGOBI(updateDisplay)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId);
@@ -71,11 +71,11 @@ USER_OBJECT_ RS_GGOBI(setFile)(USER_OBJECT_ fileName, USER_OBJECT_ smode, USER_O
 
 USER_OBJECT_ RS_GGOBI(getNumDatasets)(USER_OBJECT_ gobiID);
 USER_OBJECT_ RS_GGOBI(getSourceName)(USER_OBJECT_ datasetId);
-USER_OBJECT_ RS_GGOBI(getDisplayDataset)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId);
+USER_OBJECT_ RS_GGOBI(getDisplayDataset)(USER_OBJECT_ dpy);
 USER_OBJECT_ RS_GGOBI(getDataset)(USER_OBJECT_ which, USER_OBJECT_ gobiID);
 USER_OBJECT_ RS_GGOBI(getCurrentDisplayType)(USER_OBJECT_ ggobiId);
-USER_OBJECT_ RS_GGOBI(getDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ ggobiId);
-USER_OBJECT_ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values, USER_OBJECT_ ggobiId);
+USER_OBJECT_ RS_GGOBI(getDisplayOptions)(USER_OBJECT_ which);
+USER_OBJECT_ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values);
 
 USER_OBJECT_ RS_GGOBI(getActivePlot)(USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(setActivePlot)(USER_OBJECT_ which, USER_OBJECT_ ggobiId);
