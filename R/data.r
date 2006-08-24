@@ -118,6 +118,8 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 	}
 }
 
+dataset <- function(x, ...) UseMethod("dataset", x)
+
 # Get ggobi dataset.
 # Get an object representing an internal ggobi dataset
 #
@@ -132,16 +134,8 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 # @seealso \code{link{.ggobi}} 
 # @keyword manip 
 # @keyword internal
-dataset <- function(which, .gobi = ggobi_get()) {
-	if (is.character(which)) {
-		id <- match(which, names(.gobi))
-		if (any(is.na(id))) {
-			stop(paste("Unrecognized dataset name", which[is.na(id)]))
-		}
-		which <- id
-	}
-
-	refs <- .GGobiCall("getDataset", as.integer(which-1), .gobi=.gobi)
+dataset.numeric <- function(x, .gobi = ggobi_get()) {
+	refs <- .GGobiCall("getDataset", as.integer(x-1), .gobi=.gobi)
 
 	refs <- lapply(refs, function(x) {
 		if(is.null(x)) return() 
@@ -151,4 +145,12 @@ dataset <- function(which, .gobi = ggobi_get()) {
 	}) 
 
 	refs
+}
+dataset.character <- function(x, .gobi = ggobi_get()) {
+	id <- match(x, names(.gobi))
+	if (any(is.na(id))) {
+		stop(paste("Unrecognized dataset name", x[is.na(id)]))
+	}
+	
+	dataset(id, .gobi)
 }

@@ -1,3 +1,5 @@
+ggobi <- function(data, ...) UseMethod("ggobi", data)
+
 # New ggobi
 # Creates a new ggobi instance
 # 
@@ -41,7 +43,7 @@
 #X glyph_colour(mtcarsg)
 #X glyph_colour(mtcarsg) <- ifelse(mtcarsg$cyl < 4, 1, 2)
 #X glyph_size(mtcarsg) <- mtcarsg$cyl
-ggobi <- function(data, args=character(0), mode=character(0), name = deparse(sys.call()[[2]]), ...) {
+ggobi.data.frame <- function(data, args=character(0), mode=character(0), name = deparse(sys.call()[[2]]), ...) {
 	
 	filename <- character(0)
 	if(!missing(data) && is.character(data) && file.exists(data)) {
