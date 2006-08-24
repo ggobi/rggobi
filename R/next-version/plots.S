@@ -1,5 +1,5 @@
 getActivePlot.ggobi <-
-function(.gobi = getDefaultGGobi())
+function(.gobi = ggobi_get())
 {
  as.integer(.GGobiCall("getActivePlot", display) + 1)
 }
@@ -11,15 +11,15 @@ function(display, plot=1)
 }
 
 
-setIMode.ggobi <- function(name, .gobi = getDefaultGGobi()) {
+setIMode.ggobi <- function(name, .gobi = ggobi_get()) {
  .GGobiCall("setIMode",  as.character(name), .gobi=.gobi)
 }
-setPMode.ggobi <- function(name, .gobi = getDefaultGGobi()) {
+setPMode.ggobi <- function(name, .gobi = ggobi_get()) {
  .GGobiCall("setPMode",  as.character(name), .gobi=.gobi)
 }
 
-getPMode.ggobi <- function(.gobi = getDefaultGGobi())  .GGobiCall("getPModeName", .gobi=.gobi)
-getIMode.ggobi <- function(.gobi = getDefaultGGobi())  .GGobiCall("getIModeName", .gobi=.gobi)
+getPMode.ggobi <- function(.gobi = ggobi_get())  .GGobiCall("getPModeName", .gobi=.gobi)
+getIMode.ggobi <- function(.gobi = ggobi_get())  .GGobiCall("getIModeName", .gobi=.gobi)
 
 getPModeNames.ggobi <- function() .GGobiCall("getPModeNames")
 getIModeNames.ggobi <- function() .GGobiCall("getIModeNames")

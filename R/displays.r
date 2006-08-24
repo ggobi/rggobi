@@ -3,18 +3,26 @@
 # 
 # @alias displays.ggobi
 # @arguments GGobi object
+# TODO: add displays method for datasets
 displays <- function(x) UseMethod("displays", x)
 displays.ggobi <- function(x) {
  .GGobiCall("getDisplays", .gobi = x)
 }
 
 # SEGFAULTS
-dataset.ggobiDisplay <- function(dpy) {
- .GGobiCall("getDisplayDataset", dpy)
+dataset.ggobiDisplay <- function(gd) {
+ .GGobiCall("getDisplayDataset", gd)
 }
 
 ggobi.ggobiDisplay <- function(gd) {
 	gd$ggobi
+}
+
+# Close display window
+# 
+# @arguments GGobiDisplay object to close
+close.ggobiDisplay <- function(con, ...) {
+	.GGobiCall("closeDisplay", con$ref, .gobi = con$ggobi)
 }
 
 summary.ggobiDisplay <- function(x) {
@@ -37,17 +45,7 @@ save_display <- function(display, path="ggobi_display.png", filetype="png", plot
 	disp_pixbuf$save(path, filetype)
 }
 
-
-# Close display window
-# 
-# @arguments GGobiDisplay object to close
-close.ggobiDisplay <- function(con, ...) {
-	.GGobiCall("closeDisplay", con$ref, .gobi = con$ggobi)
-}
-
-
-
-createDisplay.ggobi <- function(type, vars, .data = 1, .gobi = getDefaultGGobi()) {
+createDisplay.ggobi <- function(ggobi, type, vars, .data = 1) {
   if(!inherits(type, "GType")) {
     types <- getDisplayTypes.ggobi()
     id <- match(type, names(types))
@@ -73,7 +71,7 @@ createDisplay.ggobi <- function(type, vars, .data = 1, .gobi = getDefaultGGobi()
   .GGobiCall("createPlot", type, as.integer(vars), .data, .gobi = .gobi)
 }  
 
-setDisplaySize.ggobi <- function(sz,  display = 1, .gobi = getDefaultGGobi() ) {
+setDisplaySize.ggobi <- function(sz,  display = 1, .gobi = ggobi_get() ) {
  .GGobiCall("setDisplaySize", dims = as.integer(sz), as.integer(display - 1), .gobi = .gobi)
 }
 
@@ -86,14 +84,14 @@ getDisplaySize.ggobi <- function(con) {
 # This tells the type of plot(s) in a given display 
 # window within a ggobi instance.
 # 
-getPlotType.ggobi <- function(display = 1, .gobi = getDefaultGGobi()) {
+getPlotType.ggobi <- function(display = 1, .gobi = ggobi_get()) {
 	.GGobiCall("getDisplayType",  as.integer(display-1), .gobi = .gobi)
 }
 
 
 # This tells the number of plots within  a given display 
 # window within a ggobi instance.
-length.ggobiDisplay <- function(display = 1, .gobi = getDefaultGGobi()) {
+length.ggobiDisplay <- function(display = 1, .gobi = ggobi_get()) {
 	.GGobiCall("getNumPlotsInDisplay",  as.integer(display-1), .gobi = .gobi)
 }
 
@@ -118,7 +116,7 @@ setDisplayOptions.ggobi <- function(points,
          directed, undirected, arrowheads,
          whiskers,
          current = NULL,
-          display = 1, .gobi = getDefaultGGobi()) {
+          display = 1, .gobi = ggobi_get()) {
   old <- getDisplayOptions.ggobi(display, .gobi=.gobi)
   
   if(is.null(current)) {
@@ -183,7 +181,7 @@ setDisplayOptions.ggobi <- function(points,
 # which - the display number within the specified ggobi instance.
 #
 
-getDisplayOptions.ggobi <- function(which = 1, .gobi = getDefaultGGobi()) {
+getDisplayOptions.ggobi <- function(which = 1, .gobi = ggobi_get()) {
   ans = .GGobiCall("getDisplayOptions", as.integer(which-1), .gobi = .gobi)
   class(ans) = "GGobiDisplayOptions"
 
@@ -191,7 +189,7 @@ getDisplayOptions.ggobi <- function(which = 1, .gobi = getDefaultGGobi()) {
 }
 
 
-getDisplayTypes.ggobi <- function(.gobi = getDefaultGGobi()) {
+ggobi_display_types <- function(.gobi = getGGobi()) {
  .GGobiCall("getDisplayTypes", .gobi = .gobi)
 }
 

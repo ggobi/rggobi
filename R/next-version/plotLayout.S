@@ -3,7 +3,7 @@
 #
 #
 plotLayout <-
-function(..., mfrow = NULL, cells = NULL, .data = 1, .gobi=getDefaultGGobi(), display = -1)
+function(..., mfrow = NULL, cells = NULL, .data = 1, .gobi=ggobi_get(), display = -1)
 {
  if(mode(display) == "numeric") {
    display <- as.integer(display)

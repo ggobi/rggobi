@@ -15,12 +15,12 @@ get_RGtk2_display <- function(g, i) {
 # to their signals via ie RGtk.
 
 getMainWindow.ggobi <-
-function(.gobi = getDefaultGGobi())
+function(.gobi = ggobi_get())
 {
   .GGobiCall("getMainWindow", .gobi = .gobi)
 }
 getMenuBar.ggobi <-
-function(.gobi = getDefaultGGobi())
+function(.gobi = ggobi_get())
 {
   .GGobiCall("getMenubar", .gobi = .gobi)
 }

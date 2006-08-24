@@ -71,7 +71,7 @@ resolvePlotDescription <-
 # by resolving them relative to the specified
 # dataset within the given ggobi instance
 #
-function(desc, .data = 1, .gobi = getDefaultGGobi(), isError = TRUE)
+function(desc, .data = 1, .gobi = ggobi_get(), isError = TRUE)
 {
  if(is.null(desc))
    return(NULL)

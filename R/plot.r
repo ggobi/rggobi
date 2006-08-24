@@ -1,7 +1,7 @@
 # Manipulation of individual plots within a display
 
 scatterplot.ggobi <-
-function(x, y, .data = 1, .gobi = getDefaultGGobi()) 
+function(x, y, .data = 1, .gobi = ggobi_get()) 
 {
  if(missing(y) && length(x)  > 1) {
    y <- x[2]
@@ -18,7 +18,7 @@ function(x, y, .data = 1, .gobi = getDefaultGGobi())
 }
 
 parcoords.ggobi <-
-function(..., .data = 1, .gobi = getDefaultGGobi()) 
+function(..., .data = 1, .gobi = ggobi_get()) 
 {
   x <- getVariableIndex.ggobi(..., .data=.data, .gobi = .gobi)
 
@@ -37,7 +37,7 @@ scatmat.ggobi <-
 #
 #
 #
-function(x, y, .data = 1, .gobi = getDefaultGGobi()) 
+function(x, y, .data = 1, .gobi = ggobi_get()) 
 {
   if(!inherits(.data, "ggobiDataset")) {
     .data <- dataset(.data, .gobi=.gobi)
@@ -70,7 +70,7 @@ setPlotVariables.ggobi <-
 # in a programmatically generated display that is
 # embedded within another display's window.
 #
-function(..., display = 1, .gobi = getDefaultGGobi(), plots = NULL)
+function(..., display = 1, .gobi = ggobi_get(), plots = NULL)
 {
  if(is.numeric(display))
    display <- as.integer(display)

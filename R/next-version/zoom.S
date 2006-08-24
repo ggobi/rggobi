@@ -3,7 +3,7 @@
 # I think setting the plot range belongs here, but I'm not sure
 
 setPlotRange.ggobi <-
-function(x, y, plot=1, display = 1, .gobi = getDefaultGGobi())
+function(x, y, plot=1, display = 1, .gobi = ggobi_get())
 {
  stop("This is not implemented yet")
  length(x) <- 2
@@ -17,7 +17,7 @@ function(x, y, plot=1, display = 1, .gobi = getDefaultGGobi())
 }
 
 getPlotRange.ggobi <-
-function(plot=integer(1), display = 1, .gobi = getDefaultGGobi())
+function(plot=integer(1), display = 1, .gobi = ggobi_get())
 {
  stop("This is not implemented yet")
  if(mode(display) == "numeric")
