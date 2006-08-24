@@ -223,7 +223,6 @@ summary.ggobiDataset <- function(object, ...) {
 # @arguments values of new variable
 # @arguments variable name
 # @arguments update?
-# @keyword manip 
 # @keyword internal 
 ggobi_data_set_variable <- function(x, vals, var, update = TRUE) {
 	varId <- variable_index(x, var)
@@ -240,7 +239,7 @@ ggobi_data_set_variable <- function(x, vals, var, update = TRUE) {
 # @arguments ggobiDataset
 # @arguments values to add
 # @arguments name of column to add
-# @keyword manip 
+# @keyword internal
 ggobi_data_add_variable <- function(x, vals, name, ...) {
 	if (!(is.factor(vals) || is.numeric(vals))) stop("Variable must be a factor or numeric")
 	if (length(vals) != nrow(x)) stop("Variable must be same length as existing data set")
@@ -254,6 +253,15 @@ ggobi_data_add_variable <- function(x, vals, name, ...) {
 	}
 
 	.GGobiCall("addVariable", as.numeric(vals), as.character(name), levels, values, x)
+}
+
+#
+# @keyword internal
+# 
+ggobi_data_remove_variable <- function(x, var) {
+ which <- getVariableIndex.ggobi(..., .gobi=.gobi)
+
+ .GGobiC("removeVariables", which, .data)[[1]]
 }
 
 

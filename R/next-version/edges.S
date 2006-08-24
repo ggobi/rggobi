@@ -1,3 +1,4 @@
+# FIXME: cleanup
 setDisplayEdges.ggobi <- function(displays, edgeData, directed = FALSE, on = TRUE, .gobi = getDefaultGGobi()) {
  if(missing(displays))
     displays <- getDisplays.ggobi(.gobi = .gobi)

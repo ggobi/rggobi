@@ -1,11 +1,37 @@
+# Get GGobi displays
+# Get's list of displays in the specified GGobi instance
+# 
+# @alias displays.ggobi
+# @arguments GGobi object
 displays <- function(x) UseMethod("displays", x)
-displays.ggobi <-
-function(x)
-{
-  .Call("RS_GGOBI_getDisplays", .gobi = x)
+displays.ggobi <- function(x) {
+ .GGobiCall("getDisplays", .gobi = x)
 }
 
-# contains functions for manipulating GGobi displays
+#X g <- ggobi(mtcars)
+#X save_display(get_RGtk2_display(g, 1), "test.png")
+save_display <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
+	if (plot.only) {
+		disp <- display$getChildren()[[2]]$getChildren()[[3]][["widget"]][["window"]]
+	} else {
+		disp <- display[["window"]]
+	}
+	
+	disp_size <- disp$getSize()
+	disp_pixbuf <- gdkPixbufGetFromDrawable(disp, NULL, 0, 0, 0, 0, disp_size$width, disp_size$height)
+	
+	disp_pixbuf$save(path, filetype)
+}
+
+
+# Close display window
+# 
+# @arguments GGobiDisplay object to close
+close.ggobiDisplay <- function(con, ...) {
+	.GGobiCall("closeDisplay", con$ref, .gobi = con$ggobi)
+}
+
+
 
 createDisplay.ggobi <- function(type, vars, .data = 1, .gobi = getDefaultGGobi()) {
   if(!inherits(type, "GType")) {
@@ -33,58 +59,14 @@ createDisplay.ggobi <- function(type, vars, .data = 1, .gobi = getDefaultGGobi()
   .GGobiCall("createPlot", type, as.integer(vars), .data, .gobi = .gobi)
 }  
 
-setDisplayWidth.ggobi <- function(sz,  display = 1, .gobi = getDefaultGGobi() ) {
+setDisplaySize.ggobi <- function(sz,  display = 1, .gobi = getDefaultGGobi() ) {
  .GGobiCall("setDisplayWidth", dims = as.integer(sz), as.integer(display - 1), .gobi = .gobi)
 }
 
-getDisplayWidth.ggobi <- function(display = 1, .gobi = getDefaultGGobi() ) {
-  setDisplayWidth.ggobi(NULL, display, .gobi)
+getDisplaySize.ggobi <- function(con) {
+  setDisplayWidth.ggobi(NULL, con[["ref"]], .gobi = con[["ggobi"]])
 }
 
-# Want a way to be able to create a display without
-# creating the window.
-#
-
-getDisplayWindow.ggobi <- function(display = 1, .gobi = getDefaultGGobi(), expandClasses = TRUE) {
-#
-# This returns an reference to the GtkWindow object
-# associated with the given display.
-#
-# The value of display should be either an integer
-# identifying by index the display of interest within the GGobi
-# instance (.gobi), or an object of class ggobiDisplay
-#  
-# I don't think that we should allow specifying the index of the display anymore
-
-#  if(is.numeric(display)) {
-#    display <- as.integer(display)
-#    display <- getDisplays.ggobi(FALSE, .gobi=.gobi)[[display]]
-#    
-#  }
-
-  if(!inherits(display, "ggobiDisplay"))
-    stop("Need an object of class ggobiDisplay")
-  
-  dpy <- .Call(.ggobi.symbol("getDisplayWindow"), display, PACKAGE = "rggobi")
-  dpy
-}  
-
-getPlotWidgets.ggobiDisplay <- function(dpy, expandClasses = TRUE)   {
-#
-# Get references to the GtkDrawingArea widgets
-# of the splotd objects in the given display.
-# The value of dpy should be an object of class
-# ggobiDisplay and can be obtained using a call of the
-# form
-#    getDisplays.ggobi(FALSE)[[which]]
-#  
- if(!inherits(dpy, "ggobiDisplay"))
-    stop("Object must be of class ggobiDisplay")
-
- els <- .Call(.ggobi.symbol("getDisplayPlotWidgets"), dpy, PACKAGE = "rggobi")
-
- els
-}
 
 #
 # This tells the type of plot(s) in a given display 
@@ -97,7 +79,7 @@ getPlotType.ggobi <- function(display = 1, .gobi = getDefaultGGobi()) {
 
 # This tells the number of plots within  a given display 
 # window within a ggobi instance.
-getPlotCount.ggobi <- function(display = 1, .gobi = getDefaultGGobi()) {
+length.ggobiDataset <- function(display = 1, .gobi = getDefaultGGobi()) {
 	.GGobiCall("getNumPlotsInDisplay",  as.integer(display-1), .gobi = .gobi)
 }
 
@@ -194,17 +176,11 @@ getDisplayOptions.ggobi <- function(which = 1, .gobi = getDefaultGGobi()) {
   ans
 }
 
-getDisplayDataset.ggobi <- function(dpy, .gobi = getDefaultGGobi()) {
- .GGobiCall("getDisplayDataset", dpy, .gobi = .gobi)
+display.ggobiDisplay <- function(dpy) {
+ .GGobiCall("getDisplayDataset", dpy[["ref"]], .gobi = dpy[["ggobi"]])
 }
 
 summary.ggobiDisplay <- function(x) {
-	list(type = class(x), plots = lapply(plots(x), summary), dataset = dataset(x), ggobi = ggobi(x))
+	list(type = class(x), dataset = dataset(x), ggobi = ggobi(x))
 }
 
-close.ggobiDisplay <- function(con, ...) {
-	.GGobiCall("closeDisplay", con[["ref"]], .gobi = con[["ggobi"]])
-}
-close.ggobiDisplayDescription <- function(con, ...) {
-	close(con[["display"]])
-}

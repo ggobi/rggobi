@@ -1,11 +1,11 @@
 getActivePlot.ggobi <-
 function(.gobi = getDefaultGGobi())
 {
- as.integer(.GGobiCall("getActivePlot", .gobi = .gobi)+1)
+ as.integer(.GGobiCall("getActivePlot", display) + 1)
 }
 
 setActivePlot.ggobi <-
-function(display, plot=1, .gobi = getDefaultGGobi())
+function(display, plot=1)
 {
- .GGobiCall("setActivePlot", as.integer(c(display, plot)-1), .gobi = .gobi)
+ .GGobiCall("setActivePlot", display, as.integer(plot)-1))
 }
