@@ -18,6 +18,7 @@ RS_GGOBI(setNumberedKeyHandler)(USER_OBJECT_ handler, USER_OBJECT_ sdescription,
 {
  extern void R_PreserveObject(USER_OBJECT_);
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NULL_USER_OBJECT;
 
   if(GET_LENGTH(handler)) { 
@@ -82,6 +83,7 @@ RS_GGOBI(getNumberedKeyHandler)(USER_OBJECT_ ggobiId)
  USER_OBJECT_ ans = NULL_USER_OBJECT;
 
    ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
    KeyEventHandler *h;
 
    if(gg == NULL) {

@@ -12,7 +12,8 @@ RS_GGOBI(setBrushSize)(USER_OBJECT_ dims, USER_OBJECT_ datasetId)
   gint wd, ht;
   USER_OBJECT_ ans;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   if(d) {  
@@ -44,7 +45,8 @@ RS_GGOBI(setBrushLocation)(USER_OBJECT_ loc, USER_OBJECT_ datasetId)
   ggobid *gg;
   GGobiData *d;
   USER_OBJECT_ ans;
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
   
   if(d) {
@@ -68,6 +70,7 @@ RS_GGOBI(setBrushColor)(USER_OBJECT_ cid, USER_OBJECT_ ggobiId)
 {
   USER_OBJECT_ ans = NULL_USER_OBJECT;
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
    ans = RS_GGOBI(getBrushColor)(ggobiId);
    (void) GGOBI(setBrushColor)(INTEGER_DATA(cid)[0], gg);
@@ -82,6 +85,7 @@ USER_OBJECT_
 RS_GGOBI(getBrushColor)(USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
     USER_OBJECT_ ans;
     gint cid;
@@ -100,6 +104,7 @@ USER_OBJECT_
 RS_GGOBI(setBrushGlyph)(USER_OBJECT_ vals, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
     GGOBI(setBrushGlyph)(INTEGER_DATA(vals)[0], INTEGER_DATA(vals)[1], gg);
     brush_reset(gg->current_display, 0);
@@ -114,6 +119,7 @@ RS_GGOBI(getBrushGlyph)(USER_OBJECT_ ggobiId)
   ggobid *gg;
   USER_OBJECT_ ans;
   gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
    GGOBI(getBrushGlyph)(&t, &s, gg);
    ans = NEW_INTEGER(2);

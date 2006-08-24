@@ -10,6 +10,7 @@ RS_GGOBI(setFile)(USER_OBJECT_ fileName, USER_OBJECT_ smode, USER_OBJECT_ add, U
 {
  DataMode mode;
  ggobid *gg = toGGobi(gobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
  USER_OBJECT_ ans = NEW_INTEGER(1);
  gchar *modeName = NULL;
 
@@ -49,7 +50,8 @@ USER_OBJECT_
 RS_GGOBI(getDatasetNames)(USER_OBJECT_ gobiId)
 {
   USER_OBJECT_ ans;
-  ggobid *gg = toGGobi(gobiId);  
+  ggobid *gg = toGGobi(gobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);  
   int i;
   GGobiData *d;
   GSList *tmp = gg->d;
@@ -77,7 +79,8 @@ RS_GGOBI(getData)(USER_OBJECT_ datasetId)
 
  ans = NULL_USER_OBJECT;
 
- d = GGOBI_DATA(toData(datasetId));
+ d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
  if (!d) return(NULL_USER_OBJECT);
 
  nr = d->nrows;

@@ -4,7 +4,8 @@
 USER_OBJECT_
 RS_GGOBI(getSymbolicEdges)(USER_OBJECT_ edgesetId)
 {
- GGobiData *e = GGOBI_DATA(toData(edgesetId));
+ GGobiData *e = toData(edgesetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
  USER_OBJECT_ ans, dim;
  gint i, ctr, n;
 
@@ -40,8 +41,10 @@ RS_GGOBI(getSymbolicEdges)(USER_OBJECT_ edgesetId)
 USER_OBJECT_
 RS_GGOBI(getConnectedEdges)(USER_OBJECT_ edgesetId, USER_OBJECT_ datasetId)
 {
- GGobiData *d = GGOBI_DATA(toData(datasetId));
- GGobiData *e = GGOBI_DATA(toData(edgesetId));
+ GGobiData *d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
+ GGobiData *e = toData(edgesetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
  gint ctr; 
  USER_OBJECT_ ans, dim;
  gint i, n;
@@ -78,6 +81,7 @@ USER_OBJECT_
 RS_GGOBI(createEdgeDataset)(USER_OBJECT_ numPoints, USER_OBJECT_ sname, USER_OBJECT_ ggobiId)
 {
    ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
    GGobiData *d;
 
    if(!gg) {
@@ -106,7 +110,8 @@ RS_GGOBI(setEdges)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append, USER_OBJ
   int num = GET_LENGTH(x);
   gint i;
 
-  e = GGOBI_DATA(toData(datasetId));
+  e = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
   gg = e->gg;
  
   if(!e) 
@@ -159,7 +164,8 @@ RS_GGOBI(setEdgeIndices)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append,
   GGobiData *e;
   int num = GET_LENGTH(x);
   gint i;
-  e = GGOBI_DATA(toData(datasetId));
+  e = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
 
   if(!e) 
     return(ans);
@@ -212,29 +218,30 @@ RS_GGOBI(setDisplayEdges)(USER_OBJECT_ dpys, USER_OBJECT_ edgeData, USER_OBJECT_
     int i, n;
     USER_OBJECT_ ans;
     displayd *gdpy;
-    GGobiData *edge;
+    GGobiData *edge = NULL;
     ggobid *gg = toGGobi(ggobiId);
+    g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
-    edge = GGOBI_DATA(toData(edgeData));
-    if(!edge && LOGICAL_DATA(On)[0] == TRUE)
-	return(NULL_USER_OBJECT);
-
-    n = GET_LENGTH(dpys);
+    if (asCLogical(On)) {
+      edge = toData(edgeData);
+      g_return_val_if_fail(GGOBI_IS_DATA(edge), NULL_USER_OBJECT);
+    }
+    
+    n = GET_LENGTH(dpys);                        
     PROTECT(ans = NEW_LIST(n));
     for(i = 0; i < n ; i++) {
-	gdpy = GetDisplay(VECTOR_ELT(dpys, i), ggobiId, NULL);
-        if(gdpy) {
-            GGobiData *old;
-            gdpy->options.edges_undirected_show_p = LOGICAL_DATA(On)[0];
+      GGobiData *old;
+      gdpy = toDisplay(VECTOR_ELT(dpys, i));
+      g_return_val_if_fail(GGOBI_IS_DISPLAY(gdpy), NULL_USER_OBJECT);
+      gdpy->options.edges_undirected_show_p = LOGICAL_DATA(On)[0];
 	    if(GET_LENGTH(directed))
-               gdpy->options.edges_arrowheads_show_p = LOGICAL_DATA(directed)[0];
+        gdpy->options.edges_arrowheads_show_p = LOGICAL_DATA(directed)[0];
 	    if(edge) {
- 	        old = setDisplayEdge(gdpy, edge);
-                if(old) {
-		  SET_VECTOR_ELT(ans, i, RS_datasetInstance(old, old->gg));
-	        }
+        old = setDisplayEdge(gdpy, edge);
+        if(old) {
+          SET_VECTOR_ELT(ans, i, RS_datasetInstance(old, old->gg));
+	      }
 	    }
-	}
     }
 
     UNPROTECT(1);

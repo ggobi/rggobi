@@ -20,7 +20,7 @@ RSGGobi_Internal_getSchemeFromGGobi(USER_OBJECT_ gobiId)
     if(GET_LENGTH(gobiId)) {
 		ggobid *gg;
 		gg = toGGobi(gobiId);
-		g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL);
+    g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL);
 		schemes = gg->colorSchemes;
     } else if(sessionOptions) {
 		schemes = sessionOptions->colorSchemes;
@@ -309,6 +309,7 @@ RS_GGOBI(getActiveColorScheme)(USER_OBJECT_ gobiId)
       scheme = findColorSchemeByName(sessionOptions->colorSchemes, sessionOptions->activeColorScheme);
   } else {
       ggobid *gg = toGGobi(gobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
       scheme = gg->activeColorScheme;
   }
   if(scheme)
@@ -360,6 +361,7 @@ RS_GGOBI(setActiveColorScheme)(USER_OBJECT_ id, USER_OBJECT_ gobiId)
 	}
     } else {
 	gg = toGGobi(gobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 	schemes = RSGGobi_Internal_getSchemeFromGGobi(gobiId);
 
 	if(!schemes) {

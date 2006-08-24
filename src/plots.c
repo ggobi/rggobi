@@ -6,6 +6,7 @@ RS_GGOBI(getActivePlot)(USER_OBJECT_ ggobiId)
 {
   USER_OBJECT_ ans;
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
   PROTECT(ans = NEW_INTEGER(2));
 
@@ -27,6 +28,7 @@ USER_OBJECT_
 RS_GGOBI(setActivePlot)(USER_OBJECT_ which, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   gint n;
   USER_OBJECT_ ans;
 

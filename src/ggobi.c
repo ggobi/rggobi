@@ -191,6 +191,7 @@ USER_OBJECT_
 RS_GGOBI(getDescription)(USER_OBJECT_ ggobiId)
 {
  ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
  GGobiData *d;
  gint numSlots = 3, numDatasets, i;
  DataMode mode;
@@ -255,12 +256,12 @@ RS_GGOBI(isValid)(USER_OBJECT_ gobi)
 ggobid *
 toGGobi(USER_OBJECT_ s_ggobi)
 {
- if(inherits(s_ggobi, "ggobi")) {
+  if(inherits(s_ggobi, "ggobi")) {
     ggobid *gg;
     gg = ValidateGGobiRef(getPtrValue(s_ggobi), false);
     return(gg);
- }
-
+  }
+  g_critical("A GGobi R object must inherit from class 'ggobi'");
   return(NULL);
 }
 
@@ -274,6 +275,7 @@ USER_OBJECT_
 RS_GGOBI(close)(USER_OBJECT_ gobi)
 {
   ggobid *gg = toGGobi(gobi);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NEW_LOGICAL(1);
   if(gg) {
     LOGICAL_DATA(ans)[0] = GGOBI(close)(gg, true);

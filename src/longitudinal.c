@@ -10,7 +10,8 @@ RS_GGOBI(setAsTimeVariables)(USER_OBJECT_ vars, USER_OBJECT_ values, USER_OBJECT
 
   USER_OBJECT_ ans;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
   
   num = GET_LENGTH(vars);

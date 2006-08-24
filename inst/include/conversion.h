@@ -175,6 +175,7 @@ USER_OBJECT_ toRPointer(void*, const char *name);
 /* R to C */
 ggobid *toGGobi(USER_OBJECT_ s_ggobi);
 GGobiData *toData(USER_OBJECT_ d);
+displayd *toDisplay(USER_OBJECT_ rdisplay);
 
 /* Wrapping GGobi objects as SEXP's */
 USER_OBJECT_ RS_datasetInstance(GGobiData *d, ggobid *gg) ;

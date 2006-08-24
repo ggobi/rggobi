@@ -14,7 +14,6 @@
 */
 #define RS_INTERNAL_GGOBI(a) RSint_GGOBI_##a
 
-displayd *GetDisplay(USER_OBJECT_ rdisplay, USER_OBJECT_ ggobiId, ggobid **setgg);
 USER_OBJECT_ RS_INTERNAL_GGOBI(getDisplay)(gboolean full, displayd *display, ggobid *gg);
 
 void RGGobiErrorHandler(int status);

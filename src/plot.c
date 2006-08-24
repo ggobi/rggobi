@@ -14,8 +14,12 @@ RS_GGOBI(createParcoordsPlot)(USER_OBJECT_ display, USER_OBJECT_ dims, USER_OBJE
 	displayd *dpy;
 	splotd *plot;
 	USER_OBJECT_ ans;
-    
-	dpy = GetDisplay(display, ggobiId, &gg);
+  
+  gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+
+	dpy = toDisplay(display);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(dpy), NULL_USER_OBJECT);
 
 	plot = ggobi_parcoords_splot_new(dpy, gg);
 
@@ -38,12 +42,14 @@ RS_GGOBI(createScatterPlot)(USER_OBJECT_ dims, USER_OBJECT_ display, USER_OBJECT
 	gint els[] = {0,1};
 
 	gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
 	if(GET_LENGTH(display)) {
-  	   odpy = GetDisplay(display, ggobiId, &gg);
-	   d = odpy->d;
+    odpy = toDisplay(display);
+    g_return_val_if_fail(GGOBI_IS_DISPLAY(odpy), NULL_USER_OBJECT);
+	  d = odpy->d;
 	} else
-	   d = (GGobiData *) gg->d->data;
+	  d = (GGobiData *) gg->d->data;
 
 	dpy = g_object_new(GGOBI_TYPE_EMBEDDED_DISPLAY, NULL);
 	display_set_values(dpy, d, gg);
@@ -83,10 +89,12 @@ RS_GGOBI(createPlots)(SEXP plotDescList, SEXP dims, SEXP cells, SEXP rdisplay, S
   gint *plotDims;
   gint left, top, bottom, right, ctr;
  
-  d = GGOBI_DATA(toData(dataset));
+  d = toData(dataset);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
-  display = GetDisplay(rdisplay, gobiId, NULL);
+  display = toDisplay(rdisplay);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
 
   numRows = INTEGER_DATA(dims)[0];
   numCols = INTEGER_DATA(dims)[1];
@@ -295,9 +303,8 @@ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy,
   USER_OBJECT_ ans;
   int n;
 
-  display = GetDisplay(dpy, ggobiId, NULL);
-  if(display == NULL)
-    return(NULL_USER_OBJECT);
+  display = toDisplay(dpy);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
   
   sp = (splotd*)g_list_nth_data(display->splots, INTEGER_DATA(plotId)[0]);
   if(sp == NULL) {
@@ -343,9 +350,11 @@ RS_GGOBI(setPlotRange)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ plot,
   displayd *display;
   USER_OBJECT_ ans;
 
-  display = GetDisplay(rdisplay, ggobiId, &gg);
-  if(!display)
-    return(NULL_USER_OBJECT);
+  gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+  
+  display = toDisplay(rdisplay);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
 
   GGOBI(setPlotRange)(NUMERIC_DATA(x), NUMERIC_DATA(y), INTEGER_DATA(plot)[0]-1, display, false, gg);
 

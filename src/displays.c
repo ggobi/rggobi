@@ -5,6 +5,7 @@ USER_OBJECT_
 RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   int len;
   USER_OBJECT_ ans = NEW_INTEGER(1);
   if(gg) {
@@ -19,6 +20,7 @@ USER_OBJECT_
 RS_GGOBI(getCurrentDisplayType)(USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans;
   const gchar *name = GGOBI(getCurrentDisplayType)(gg);
 
@@ -75,9 +77,8 @@ RS_GGOBI(raiseOrLowerDisplays)(USER_OBJECT_ displays, USER_OBJECT_ iconify, USER
     for(i = 0; i < numDisplays; i++) {
       displayd *display;
       windowDisplayd *wdpy;
-      display = GetDisplay(VECTOR_ELT(displays, i), ggobiId, NULL);
-      if(display == NULL || GGOBI_IS_WINDOW_DISPLAY(display) == false)
-	  continue;
+      display = toDisplay(VECTOR_ELT(displays, i));
+      g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
 
       wdpy = GGOBI_WINDOW_DISPLAY(display);
 
@@ -135,6 +136,7 @@ USER_OBJECT_
 RS_GGOBI(getDisplays)(USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   return(RS_INTERNAL_GGOBI(getDisplays)(gg));
 }
 
@@ -142,6 +144,7 @@ USER_OBJECT_
 RS_GGOBI(getCurrentDisplay)(USER_OBJECT_ gobiId)
 {
   ggobid *gg = toGGobi(gobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans;
 
   ans = toRPointer(gg->current_display, "GtkWidget");

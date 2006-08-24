@@ -19,15 +19,12 @@ GGobiData *
 toData(USER_OBJECT_ d)
 {
   if(inherits(d, "ggobiDataset")) {
-    GGobiData *data;
-    data = getPtrValue(d);
-	g_return_val_if_fail(GGOBI_IS_DATA(data), NULL);
-    if(!ValidateGGobiRef(data->gg, false))
-         return(NULL);
-    data = ValidateDatadRef(data, data->gg, false);
-	return(data);
+    GGobiData *data = getPtrValue(d);
+    g_return_val_if_fail(GGOBI_IS_DATA(data), NULL);
+    g_return_val_if_fail(ValidateGGobiRef(data->gg, false) != NULL, NULL);
+    return(ValidateDatadRef(data, data->gg, false));
   }
-  g_critical("Could not get GGobiData instance from R object");
+  g_critical("An R GGobi dataset object must inherit from ggobiDataset");
   return(NULL);
 }
 
@@ -36,7 +33,8 @@ RS_GGOBI(getVariableNames)(USER_OBJECT_ transformed, USER_OBJECT_ datasetId)
 {
   GGobiData *d = NULL;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 
   if(d)
     return(RS_INTERNAL_GGOBI(getVariableNames)(d));
@@ -69,7 +67,8 @@ RS_GGOBI(getCaseIds)(USER_OBJECT_ datasetId)
  USER_OBJECT_ ans;
  int n, m;
 
- d = GGOBI_DATA(toData(datasetId));
+ d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 
  if(!d) {
   PROBLEM "No such dataset"
@@ -139,7 +138,8 @@ RS_GGOBI(getRowNames)(USER_OBJECT_ data)
   gint nr, m;
   GGobiData *d;
   
- d = GGOBI_DATA(toData(data));
+ d = toData(data);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 
   if(d) {
     nr = d->nrows;
@@ -161,7 +161,8 @@ RS_GGOBI(getRowsInPlot)(USER_OBJECT_ datasetId)
   USER_OBJECT_ ans = NULL_USER_OBJECT;
   GGobiData *d;
  
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 
   if(d) {
     gint i;
@@ -221,14 +222,16 @@ RS_INTERNAL_GGOBI(setDataAttribute)(vector_b *v, USER_OBJECT_ vals, GGobiData *d
 USER_OBJECT_
 RS_GGOBI(getSampledIndices)(USER_OBJECT_ datasetId)
 {
-  GGobiData *d = GGOBI_DATA(toData(datasetId));
+  GGobiData *d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   return(RS_INTERNAL_GGOBI(getDataAttribute)(d->sampled));
 }
 
 USER_OBJECT_
 RS_GGOBI(setSampledIndices)(USER_OBJECT_ vals, USER_OBJECT_ datasetId)
 {
-  GGobiData *d = GGOBI_DATA(toData(datasetId));
+  GGobiData *d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   RS_INTERNAL_GGOBI(setDataAttribute)(&(d->sampled), vals, d);
   rows_in_plot_set(d, d->gg);
   return(NULL_USER_OBJECT);
@@ -237,14 +240,16 @@ RS_GGOBI(setSampledIndices)(USER_OBJECT_ vals, USER_OBJECT_ datasetId)
 USER_OBJECT_
 RS_GGOBI(getExcludedIndices)(USER_OBJECT_ datasetId)
 {
-  GGobiData *d = GGOBI_DATA(toData(datasetId));
+  GGobiData *d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   return(RS_INTERNAL_GGOBI(getDataAttribute)(d->excluded));
 }
 
 USER_OBJECT_
 RS_GGOBI(setExcludedIndices)(USER_OBJECT_ vals, USER_OBJECT_ datasetId)
 {
-  GGobiData *d = GGOBI_DATA(toData(datasetId));
+  GGobiData *d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   ggobid *gg = d->gg;
   RS_INTERNAL_GGOBI(setDataAttribute)(&(d->excluded), vals, d);
   subset_apply(d, gg);
@@ -260,7 +265,8 @@ RS_GGOBI(setCasesHidden)(USER_OBJECT_ vals, USER_OBJECT_ which, USER_OBJECT_ dat
   ggobid *gg;
   GGobiData *d;
   USER_OBJECT_ ans = NEW_LOGICAL(1);
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
   if(d) {
     int num = GET_LENGTH(vals);
@@ -284,7 +290,8 @@ RS_GGOBI(getCasesHidden)(USER_OBJECT_ datasetId)
   USER_OBJECT_ ans = NULL_USER_OBJECT;
   ggobid *gg;
   GGobiData *d;
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
     if(d) {
       gint num = d->nrows, m;
@@ -318,7 +325,8 @@ RS_GGOBI(addVariable)(USER_OBJECT_ vals, USER_OBJECT_ name, USER_OBJECT_ levels,
   GGobiData *d;
   ggobid *gg;
   USER_OBJECT_ ans = NULL_USER_OBJECT;
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
 
@@ -364,7 +372,8 @@ RS_GGOBI(datad_init)(USER_OBJECT_ cleanup, USER_OBJECT_ datasetId)
   GGobiData *d;
   ggobid *gg;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   if(d) {
@@ -383,7 +392,8 @@ RS_GGOBI(setVariableValues)(USER_OBJECT_ vals, USER_OBJECT_ rowIds,
   GGobiData *d;
   gint i, num, var, row;
   
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   num = GET_LENGTH(rowIds);
@@ -421,7 +431,8 @@ RS_GGOBI(setVariableNames)(USER_OBJECT_ vars, USER_OBJECT_ names, USER_OBJECT_ d
   gchar **curNames; 
   USER_OBJECT_ ans;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   PROTECT(ans = NEW_CHARACTER(num));
@@ -443,7 +454,8 @@ RS_GGOBI(varpanel_populate)(USER_OBJECT_ datasetId)
   GGobiData *d;
   ggobid *gg;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   if(d) {
@@ -502,7 +514,8 @@ RS_GGOBI(getVariables)(USER_OBJECT_ which, USER_OBJECT_ datasetId)
   GGobiData *d = NULL;
   USER_OBJECT_ ans = NULL_USER_OBJECT;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 
   if(d) {
       int n = GET_LENGTH(which), i;
@@ -525,6 +538,7 @@ USER_OBJECT_
 RS_GGOBI(createEmptyData)(USER_OBJECT_ snrow, USER_OBJECT_ name, USER_OBJECT_ description, USER_OBJECT_ gobiId)
 {
   ggobid *gg = toGGobi(gobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   GGobiData *d;
 
   if((gg = ValidateGGobiRef(gg, false)) == NULL) {
@@ -565,7 +579,8 @@ RS_GGOBI(setRowNames)(USER_OBJECT_ names, USER_OBJECT_ indices, USER_OBJECT_ dat
   gint i;
   USER_OBJECT_ ans = NULL_USER_OBJECT;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 
   if(d) {
     gboolean getOldValues = true;
@@ -616,7 +631,8 @@ RS_GGOBI(setIDs)(USER_OBJECT_ ids, USER_OBJECT_ datasetId)
   gchar **g_ids;
   int n, i;
   
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_if_fail(GGOBI_IS_DATA(d));
 
   if(d) {
 	  n = GET_LENGTH(ids);
@@ -641,7 +657,8 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
 {
   InputDescription *desc;
 
-  ggobid *gg = toGGobi(gobiID); 
+  ggobid *gg = toGGobi(gobiID);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT); 
   GGobiData *d = NULL;
   gint i, j, n;
 
@@ -689,7 +706,8 @@ USER_OBJECT_
 RS_GGOBI(setDataName)(USER_OBJECT_ name, USER_OBJECT_ datasetId)
 {
    GGobiData *d;
-   d = GGOBI_DATA(toData(datasetId));
+   d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
    GGobi_setDataName(CHAR_DEREF(STRING_ELT(name, 0)), d);
 
    return(NULL_USER_OBJECT);
@@ -705,7 +723,8 @@ RS_GGOBI(setCaseGlyphs)(USER_OBJECT_ vals, USER_OBJECT_ sizes, USER_OBJECT_ whic
 {
   ggobid *gg;
   GGobiData *d;
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
  
   if(d) {
@@ -734,7 +753,8 @@ RS_GGOBI(getCaseGlyphs)(USER_OBJECT_ ids, USER_OBJECT_ datasetID)
   ggobid *gg;
   GGobiData *d;
 
-  d = GGOBI_DATA(toData(datasetID));
+  d = toData(datasetID);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   if(!d)
     return(NULL_USER_OBJECT);
   gg = d->gg;
@@ -787,7 +807,8 @@ RS_GGOBI(setCaseColors)(USER_OBJECT_ vals, USER_OBJECT_ which, USER_OBJECT_ data
   gint num = GET_LENGTH(which);
   ggobid *gg;
   GGobiData *d;
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
   
   if(d) {
@@ -816,7 +837,8 @@ RS_GGOBI(getCaseColors)(USER_OBJECT_ ids, USER_OBJECT_ datasetId)
 
   ggobid *gg;
   GGobiData *d;
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   if(GET_LENGTH(ids) > 0) { 
@@ -857,7 +879,8 @@ RS_GGOBI(setVariableTypes)(USER_OBJECT_ vars, USER_OBJECT_ values, USER_OBJECT_ 
   int num;
   USER_OBJECT_ ans;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   num = GET_LENGTH(vars);
@@ -888,7 +911,8 @@ RS_GGOBI(getSourceName)(USER_OBJECT_ datasetId)
   GGobiData *d;
 
   if(GET_LENGTH(datasetId)) {
-    d = GGOBI_DATA(toData(datasetId));
+    d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
 	gg = d->gg;
 	PROTECT(ans = NEW_CHARACTER(1));
 
@@ -906,7 +930,8 @@ RS_GGOBI(datasetDim)(USER_OBJECT_ data)
 {
   USER_OBJECT_ ans = NULL_USER_OBJECT;
   GGobiData *d;
-   d = GGOBI_DATA(toData(data));
+   d = toData(data);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
    if(d) {
      ans = NEW_INTEGER(2);
      INTEGER_DATA(ans)[0] = GGOBI(nrecords)(d);

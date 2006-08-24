@@ -13,7 +13,8 @@ RS_GGOBI(newScatterplot)(USER_OBJECT_ variables, USER_OBJECT_ datasetId)
  USER_OBJECT_ ans;
  displayd *display;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
  display = GGOBI(newScatterplot)(INTEGER_DATA(variables)[0],
@@ -35,7 +36,8 @@ RS_GGOBI(newParcoords)(USER_OBJECT_ variables, USER_OBJECT_ datasetId)
  USER_OBJECT_ ans;
  gint *ids, n, i;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
  
  n  = GET_LENGTH(variables);
@@ -70,7 +72,8 @@ RS_GGOBI(newScatmat)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ datasetId)
   USER_OBJECT_ ans;
   gint *rowIds, *colIds, nr, nc, i;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   nr = GET_LENGTH(x);
@@ -99,7 +102,8 @@ RS_GGOBI(createPlot)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ datase
   GType type;
   GGobiExtendedDisplayClass *klass;
 
-  d = GGOBI_DATA(toData(datasetId));
+  d = toData(datasetId);
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   gg = d->gg;
 
   type = (GType) NUMERIC_DATA(stype)[0];
@@ -139,7 +143,8 @@ RS_GGOBI(createDisplay)(USER_OBJECT_ smissing, USER_OBJECT_ dataset)
   USER_OBJECT_ ans;
 
 
-  data = GGOBI_DATA(toData(dataset));
+  data = toData(dataset);
+  g_return_val_if_fail(GGOBI_IS_DATA(data), NULL_USER_OBJECT);
   gg = data->gg;
 
   dpy = g_object_new(GGOBI_TYPE_EMBEDDED_DISPLAY, NULL);
@@ -153,13 +158,14 @@ RS_GGOBI(createDisplay)(USER_OBJECT_ smissing, USER_OBJECT_ dataset)
 }
 
 USER_OBJECT_
-RS_GGOBI(setDisplayWidth)(USER_OBJECT_ newDims, USER_OBJECT_ displayId, USER_OBJECT_ ggobiID)
+RS_GGOBI(setDisplaySize)(USER_OBJECT_ newDims, USER_OBJECT_ displayId, USER_OBJECT_ ggobiID)
 {
  ggobid *gg; 
  displayd *dpy; 
  USER_OBJECT_ ans = NULL_USER_OBJECT;
 
  gg = toGGobi(ggobiID);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
  dpy = GGOBI(getDisplay)(INTEGER_DATA(displayId)[0], gg);
 
  if(GGOBI_IS_WINDOW_DISPLAY(dpy)) {
@@ -189,22 +195,18 @@ RS_GGOBI(setDisplayWidth)(USER_OBJECT_ newDims, USER_OBJECT_ displayId, USER_OBJ
 USER_OBJECT_
 RS_GGOBI(updateDisplay)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId)
 {
- USER_OBJECT_  ans = NEW_LOGICAL(1);
+  USER_OBJECT_ ans = NEW_LOGICAL(1);
   ggobid *gg;
   displayd *display;  
 
-  if((display = GetDisplay(dpy, ggobiId, &gg))) {
-      /*    ruler_ranges_set(display, sp, gg); */
-    display_tailpipe(display, FULL,  gg);
-    /*    displays_plot(NULL, FULL,  gg); */
-
-    /*
-      varpanel_refresh (display, gg);
-    */
-
-    gdk_flush();
-    LOGICAL_DATA(ans)[0] = TRUE;
-  }
+  gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+  display = toDisplay(dpy);
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  
+  display_tailpipe(display, FULL,  gg);
+  
+  LOGICAL_DATA(ans)[0] = TRUE;
   return(ans);
 }
 
@@ -223,19 +225,17 @@ RS_GGOBI(getDisplayType)(SEXP dpy, SEXP ggobiId)
   const char *tmp;
   SEXP ans, names;
 
-  display = GetDisplay(dpy, ggobiId, NULL);
+  display = toDisplay(dpy);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
    
-  if(display) {
-     tmp = ggobi_display_title_label(display);
-     PROTECT(ans = NEW_CHARACTER(1));
-     PROTECT(names = NEW_CHARACTER(1));
-     SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(tmp));
-     //SET_STRING_ELT(names, 0, COPY_TO_USER_STRING(getDisplayTypeName(display)));
-     UNPROTECT(1);
-  } else 
-    ans = NULL_USER_OBJECT;
-
- return(ans);
+  tmp = ggobi_display_title_label(display);
+  PROTECT(ans = NEW_CHARACTER(1));
+  PROTECT(names = NEW_CHARACTER(1));
+  SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(tmp));
+  //SET_STRING_ELT(names, 0, COPY_TO_USER_STRING(getDisplayTypeName(display)));
+  UNPROTECT(1);
+ 
+  return(ans);
 }
 
 /*
@@ -247,22 +247,22 @@ USER_OBJECT_
 RS_GGOBI(getNumPlotsInDisplay)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId)
 {
   displayd *display;
-
+  gint len;
+  
   USER_OBJECT_ ans = NEW_INTEGER(1);
-  display = GetDisplay(dpy, ggobiId, NULL);
-  if(display) {
-   int len;
-      len = g_list_length(display->splots);
-      INTEGER_DATA(ans)[0] = len;
-  }
+  display = toDisplay(dpy);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  len = g_list_length(display->splots);
+  INTEGER_DATA(ans)[0] = len;
 
- return(ans);
+  return(ans);
 }
 
 USER_OBJECT_
 RS_GGOBI(getDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans, names;
   gint NumOptions = 8;
   gint displayNum;
@@ -341,6 +341,7 @@ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values,
      options = GGOBI(getDefaultDisplayOptions)();
   } else {
      gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
      displayNum = INTEGER_DATA(which)[0];
      options = GGOBI(getDisplayOptions)(displayNum, gg);
 
@@ -377,9 +378,9 @@ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values,
 */
 
   if(apply) {
-     displayd *display = GetDisplay(which, ggobiId, NULL);
-     if(display)
-      set_display_options(display, gg);
+     displayd *display = toDisplay(which);
+     g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+     set_display_options(display, gg);
   }
 
   return (NULL_USER_OBJECT);
@@ -392,11 +393,9 @@ RS_GGOBI(getDisplayDataset)(USER_OBJECT_ dpy, USER_OBJECT_ ggobiId)
  ggobid *gg;
  USER_OBJECT_ ans;
 
-  display = GetDisplay(dpy, ggobiId, &gg);
-  if(display)
-    ans = RS_datasetInstance(display->d, gg);
-  else 
-    ans = NULL_USER_OBJECT;
+  display = toDisplay(dpy);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  ans = RS_datasetInstance(display->d, gg);
   return(ans);
 }
 
@@ -448,6 +447,7 @@ USER_OBJECT_
 RS_GGOBI(closeDisplay)(USER_OBJECT_ ref, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NEW_LOGICAL(1);
   displayd *display;
 
@@ -465,42 +465,17 @@ RS_GGOBI(closeDisplay)(USER_OBJECT_ ref, USER_OBJECT_ ggobiId)
   return(ans);
 }
 
-/* This function is of questionable use, since the user will always have
-   a display object before calling any display functions from R. The R wrapper
-   should send just the reference to the C side.
-*/
 displayd *
-GetDisplay(USER_OBJECT_ rdisplay, USER_OBJECT_ ggobiId, ggobid **setgg)
+toDisplay(USER_OBJECT_ rdisplay)
 {
- ggobid *gg;
- displayd *display = NULL;
-
-  gg = toGGobi(ggobiId);
-  if(gg == NULL)
-    return(NULL);
-
-  if(setgg)
-    *setgg = gg;
-
-  if(R_IS(rdisplay, "ggobiDisplay")) {
-    rdisplay = VECTOR_ELT(rdisplay, 1);   
-  } else if(IS_INTEGER(rdisplay)) {
-   display =  GGOBI(getDisplay)(INTEGER_DATA(rdisplay)[0], gg);
-  } 
-
-  if(IS_NUMERIC(rdisplay)) {
-     display  = (displayd*) (long) NUMERIC_DATA(rdisplay)[0];
-  } else if(TYPEOF(rdisplay) == EXTPTRSXP) {
-     display = (displayd *) R_ExternalPtrAddr(rdisplay);    
+  if(inherits(rdisplay, "ggobiDisplay")) {
+    displayd *display = getPtrValue(rdisplay);
+    g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL);
+    g_return_val_if_fail(ValidateGGobiRef(display->ggobi, false) != NULL, NULL);
+    return(ValidateDisplayRef(display, display->ggobi, false));
   }
-
-  if(display) {
-    display = ValidateDisplayRef(display, gg, false);
-    if(!display)
-      display = GGOBI(getDisplay)(((long) NUMERIC_DATA(rdisplay)[0] - 1), gg);
-  }
-
- return(display);
+  g_critical("An R GGobi display object must inherit from class 'ggobiDisplay'");
+  return(NULL);
 }
 
 /**

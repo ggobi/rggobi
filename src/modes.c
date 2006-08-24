@@ -6,6 +6,7 @@ USER_OBJECT_
 RS_GGOBI(setIMode)(USER_OBJECT_ name, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
     GGOBI(setIMode)(CHAR_DEREF(STRING_ELT(name, 0)), gg);
     /* Trying to get the main window updated so that the changes to the control
@@ -24,6 +25,7 @@ USER_OBJECT_
 RS_GGOBI(setPMode)(USER_OBJECT_ name, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
     GGOBI(setPMode)(CHAR_DEREF(STRING_ELT(name, 0)), gg);
   }
@@ -39,6 +41,7 @@ RS_GGOBI(getIModeName)(USER_OBJECT_ ggobiId)
   USER_OBJECT_ ans;
   const gchar *tmp;
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   tmp = GGOBI(getIModeName)(imode_get(gg));
 
   PROTECT(ans = NEW_CHARACTER(1));
@@ -53,6 +56,7 @@ RS_GGOBI(getPModeName)(USER_OBJECT_ ggobiId)
   USER_OBJECT_ ans;
   const gchar *tmp;
   ggobid *gg = toGGobi(ggobiId);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   tmp = GGOBI(getPModeName)(pmode_get(gg->current_display, gg));
 
   PROTECT(ans = NEW_CHARACTER(1));
