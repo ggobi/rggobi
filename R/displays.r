@@ -75,16 +75,6 @@ display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
 	.GGobiCall("createPlot", type, as.integer(vars), x)
 }
 
-# FIXME: C entry point "RS_GGOBI_setDisplaySize" not in DLL for package "rggobi"
-dim.GGobiDisplay <- function(gd) {
-	.GGobiCall("setDisplaySize", NULL, gd)
-}
-
-"dim<-.GGobiDisplay" <- function(gd, value) {
-	.GGobiCall("setDisplaySize", as.integer(value), gd)
-	gd
-}
-
 
 #
 # Changes the settings of the display options for a
