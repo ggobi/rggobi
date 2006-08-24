@@ -28,7 +28,7 @@ static R_CallMethodDef callMethods[] =
    CENTRY(getActiveColorScheme, 1),
    CENTRY(setActiveColorScheme, 2),
 
-   CENTRY(setDisplayWidth, 3),
+   CENTRY(setDisplaySize, 3),
    CENTRY(setEdges, 5),
 
    CENTRY(getVariables, 3),

@@ -62,7 +62,7 @@ USER_OBJECT_ RS_GGOBI(getVariableNames)(USER_OBJECT_ transformed, USER_OBJECT_ d
 USER_OBJECT_ RS_GGOBI(getActiveColorScheme)(USER_OBJECT_ gobiId);
 USER_OBJECT_ RS_GGOBI(setActiveColorScheme)(USER_OBJECT_ id, USER_OBJECT_ gobiId);
 USER_OBJECT_ RS_GGOBI(addColorScheme)(USER_OBJECT_ sscheme, USER_OBJECT_ name, USER_OBJECT_ overwrite, USER_OBJECT_ gobiId);
-USER_OBJECT_ RS_GGOBI(setDisplayWidth)(USER_OBJECT_ newDims, USER_OBJECT_ displayId, USER_OBJECT_ ggobiID);
+USER_OBJECT_ RS_GGOBI(setDisplaySize)(USER_OBJECT_ newDims, USER_OBJECT_ displayId, USER_OBJECT_ ggobiID);
 USER_OBJECT_ RS_GGOBI(setEdges)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append, USER_OBJECT_ datasetId);
 USER_OBJECT_ RS_GGOBI(getDatasetRecordIds)(USER_OBJECT_ datasetId);
 
