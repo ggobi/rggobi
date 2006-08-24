@@ -1,9 +1,9 @@
-setOldClass("ggobiDataset")
+setOldClass("GGobiData")
 
 # Set data
 # ===================================================================
 
-# [<-.ggobi
+# [<-.GGobiGGobi
 # Add data to ggobi instance.
 # 
 # This function allows you to add (and eventually) replace
@@ -12,14 +12,14 @@ setOldClass("ggobiDataset")
 # @arguments ggobi instance
 # @arguments name of data frame
 # @arguments data.frame, or string to path of file to load
-# @alias $<-.ggobi
-# @returns ggobiDataset
+# @alias $<-.GGobiGGobi
+# @returns GGobiData
 # @keyword manip 
 #X g <- ggobi()
 #X g["a"] <- mtcars
 #X g$b <- mtcars
-"[<-.ggobi" <- function(x, i, value) {
-	if (inherits(value, "ggobiDataset")) return(x)
+"[<-.GGobiGGobi" <- function(x, i, value) {
+	if (inherits(value, "GGobiData")) return(x)
 	if (length(i) != 1) stop("You may only add or replace one dataset at a time")
 	replace <- (i %in% names(x))
 	if (replace) {
@@ -34,7 +34,7 @@ setOldClass("ggobiDataset")
 	}
 	x
 }
-"$<-.ggobi" <- function(x, i, value) {
+"$<-.GGobiGGobi" <- function(x, i, value) {
   x[i] <- value
   x
 }
@@ -45,7 +45,7 @@ setOldClass("ggobiDataset")
 # @arguments mode of file
 # @arguments add?
 # @arguments ggobi instance
-# @returns ggobiDataset
+# @returns GGobiData
 # @keyword manip 
 # @keyword internal
 ggobi_set_data_file <- function(file, mode = "unknown", add = TRUE, .gobi = ggobi_get()) {
@@ -66,7 +66,7 @@ ggobi_set_data_file <- function(file, mode = "unknown", add = TRUE, .gobi = ggob
 # @arguments description of data frame
 # @arguments rownames
 # @arguments ggobi instance
-# @returns ggobiDataset
+# @returns GGobiData
 # @keyword manip 
 # @keyword internal
 ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), description = paste("R data frame", name), id = rownames(data), .gobi = ggobi_get()) {
@@ -93,23 +93,23 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 #
 # It is convenient to be able to refer to and operate on a ggobi 
 # dataset as if it were a regular R dataset.  This function allows one to
-# get an \code{ggobiDataset} object that represents a particular 
+# get an \code{GGobiData} object that represents a particular 
 # dataset. 
 # 
 # @arguments GGobi object
 # @arguments name of dataset to retrive
 # @keyword manip 
-# @alias [.ggobi
+# @alias [.GGobiGGobi
 #X g <- ggobi(ChickWeight)
 #X g["cars"] <- mtcars
 #X g[1:2]
 #X g["ChickWeight"]
 #X g["cars"]
 #X g$cars
-"$.ggobi" <- function(x, i) {
+"$.GGobiGGobi" <- function(x, i) {
   x[i]
 }
-"[.ggobi" <- function(x, i, ..., drop=TRUE) {
+"[.GGobiGGobi" <- function(x, i, ..., drop=TRUE) {
 	d <- dataset(clean.ggobi(i), .gobi = x)
 	if (drop && length(d) == 1 ) {
 		d[[1]]
@@ -125,12 +125,12 @@ dataset <- function(x, ...) UseMethod("dataset", x)
 #
 # It is convenient to be able to refer to and operate on a ggobi 
 # dataset as if it were a regular R dataset.  This function allows one to
-# get an \code{ggobiDataset} object that represents a particular 
+# get an \code{GGobiData} object that represents a particular 
 # dataset. 
 # 
 # @arguments which dataset to retrieve, an integer for positional matching or a character to match by name
 # @arguments GGobi instance
-# @value A list of \code{ggobiDataset} objects
+# @value A list of \code{GGobiData} objects
 # @seealso \code{link{.ggobi}} 
 # @keyword manip 
 # @keyword internal

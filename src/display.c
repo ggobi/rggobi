@@ -350,13 +350,13 @@ RS_GGOBI(closeDisplay)(USER_OBJECT_ ref, USER_OBJECT_ ggobiId)
 displayd *
 toDisplay(USER_OBJECT_ rdisplay)
 {
-  if(inherits(rdisplay, "ggobiDisplay")) {
+  if(inherits(rdisplay, "GGobiDisplay")) {
     displayd *display = getPtrValue(rdisplay);
     g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL);
     g_return_val_if_fail(ValidateGGobiRef(display->ggobi, false) != NULL, NULL);
     return(ValidateDisplayRef(display, display->ggobi, false));
   }
-  g_critical("An R GGobi display object must inherit from class 'ggobiDisplay'");
+  g_critical("An R GGobi display object must inherit from class 'GGobiDisplay'");
   return(NULL);
 }
 

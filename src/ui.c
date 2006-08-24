@@ -3,7 +3,7 @@
 /**
   This returns a raw pointer to the Gtk window object
   associated with the given display, which is given
-  as an S object of class ggobiDisplay.
+  as an S object of class GGobiDisplay.
  */
 USER_OBJECT_
 RS_GGOBI(getDisplayWindow)(USER_OBJECT_ display)
@@ -20,7 +20,7 @@ RS_GGOBI(getDisplayWindow)(USER_OBJECT_ display)
 
 /**
   Extracts a list of the splotd objects from the given displayd
-  given as an S object of class ggobiDisplay.
+  given as an S object of class GGobiDisplay.
   This returns the splotd objects as simple external pointers and 
   does not put a class on them.
  */

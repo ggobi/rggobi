@@ -4,63 +4,63 @@
 # Attempts to mimick R data frames as closely as possible
 # ============================================================================ 
 
-# Print ggobiDataset
-# Print ggobiDataset
+# Print GGobiData
+# Print GGobiData
 # 
-# By default printing a ggobiDataset acts like
+# By default printing a GGobiData acts like
 # printing an R data.frame - ie. show all the data
 # 
 # @arguments GGobi dataset to retrieve
 # @keyword attribute
 # @keyword internal 
-print.ggobiDataset <- function(x, ...) {
+print.GGobiData <- function(x, ...) {
   print(as.data.frame(x), ...)
 }
 
-# ggobiDataset dimensions
+# GGobiData dimensions
 # Retrieve the dimension of an ggobi dataset
 # 
 # @arguments dataset
 # @keyword attribute
 # @keyword internal 
-dim.ggobiDataset <- function(x) {
+dim.GGobiData <- function(x) {
 	.GGobiCall("datasetDim", x)
 }
 
-# ggobiDataset rows
+# GGobiData rows
 # Retrieve the number of row in an ggobi dataset
 # 
 # @arguments dataset
 # @keyword attribute
 # @keyword internal 
-nrow.ggobiDataset <- function(d) dim(d)[2]
+nrow.GGobiData <- function(d) dim(d)[2]
 
-# ggobiDataset columns
+# GGobiData columns
 # Retrieve the number of columns in an ggobi dataset
 # 
 # @arguments dataset
 # @keyword attribute
 # @keyword internal 
-ncol.ggobiDataset <- function(d) dim(d)[1]
+ncol.GGobiData <- function(d) dim(d)[1]
 
-# ggobiDataset column names
-# Get column names for a ggobiDataset
+# GGobiData column names
+# Get column names for a GGobiData
 # 
 # @arguments dataset
 # @keyword attribute
 # @keyword internal 
-names.ggobiDataset <- function(x, ...) {
+names.GGobiData <- function(x, ...) {
   .GGobiCall("getVariableNames", FALSE, x)
 }
 
 # Set column names
-# Set column names for a ggobiDataset
+# Set column names for a GGobiData
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments new names
 # @keyword attribute
 # @keyword internal 
-"names<-.ggobiDataset" <- function(x, value) {
+"names<-.GGobiData" <- function(x, value) {
 	.GGobiCall("setVariableNames", as.integer(1:ncol(x) -1 ), as.character(value), x)
 	x
 }
@@ -69,7 +69,7 @@ names.ggobiDataset <- function(x, ...) {
 # Variable index
 # Return indices corresponding to variable names
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments variable names
 # @returns numeric vector of (0-based) positions
 # @keyword attribute
@@ -79,7 +79,7 @@ variable_index <- function(x, names) {
 	if(is.numeric(names)) return(as.integer(names - 1))
 	if(is.character(names)) return(as.integer(match(names, names(x)) - 1))
 	
-	unlist(lapply(names, function(name) variable_index.ggobiDataset(x, name)))
+	unlist(lapply(names, function(name) variable_index.GGobiData(x, name)))
 }
 
 # Get row names
@@ -89,18 +89,18 @@ variable_index <- function(x, names) {
 # @arguments new names
 # @keyword attribute
 # @keyword internal 
-rownames.ggobiDataset <- function(x) {
+rownames.GGobiData <- function(x) {
 	.GGobiCall("getRowNames", x)
 }
 
 # Set row names
-# Set row names for a ggobiDataset
+# Set row names for a GGobiData
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments new names
 # @keyword attribute
 # @keyword internal 
-"rownames<-.ggobiDataset" <- function(x, value) {
+"rownames<-.GGobiData" <- function(x, value) {
 	.GGobiCall("setRowNames", as.character(value), as.integer(1:length(value) - 1), x)
 	x
 }
@@ -112,16 +112,16 @@ rownames.ggobiDataset <- function(x) {
 # @arguments ggobiDataget
 # @keyword attribute
 # @keyword internal 
-dimnames.ggobiDataset <- function(x) {
-  list(rownames.ggobiDataset(x), names(x))
+dimnames.GGobiData <- function(x) {
+  list(rownames.GGobiData(x), names(x))
 }
 
-# Summarise ggobiDataset.
-# Summarise a ggobiDataset with dimensions, mode and variable names.
+# Summarise GGobiData.
+# Summarise a GGobiData with dimensions, mode and variable names.
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @keyword attribute
-summary.ggobiDataset <- function(object, ...) {
+summary.GGobiData <- function(object, ...) {
 	list(dim = dim(object), mode = mode(object), variables = names(object))
 }
 
@@ -138,38 +138,38 @@ summary.ggobiDataset <- function(object, ...) {
 # @arguments arguments for generic data.frame subset function
 # @arguments drop dimensions?
 # @value desired subset from data.frame
-# @alias [[.ggobiDataset
-# @alias $.ggobiDataset
+# @alias [[.GGobiData
+# @alias $.GGobiData
 # @keyword manip 
 #X g <- ggobi(mtcars)
 #X x <- g$mtcars
 #X x[1:5, 1:5]
 #X x[[1]]
 #X x$cyl
-"[.ggobiDataset" <- function(x, i, j, drop=FALSE) {
+"[.GGobiData" <- function(x, i, j, drop=FALSE) {
 	as.data.frame(x)[i, j, drop=drop]
 }
 
-"$.ggobiDataset" <- "[[.ggobiDataset" <- function(x, i) {
+"$.GGobiData" <- "[[.GGobiData" <- function(x, i) {
 	as.data.frame(x)[[i]]
 }
 
 
 # Conversion methods
-# Convert a ggobiDataset to a regular R data.frame or matrix
+# Convert a GGobiData to a regular R data.frame or matrix
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @keyword manip 
 # @keyword internal
-# @alias as.matrix.ggobiDataset
-"as.data.frame.ggobiDataset" <- function(x, ...) {
+# @alias as.matrix.GGobiData
+"as.data.frame.GGobiData" <- function(x, ...) {
 	gd <- .GGobiCall("getData", x)
 	df <- as.data.frame(gd)
 	rownames(df) <- rownames(x)
 	df
 }
 
-"as.matrix.ggobiDataset" <- function(x, ...) {
+"as.matrix.GGobiData" <- function(x, ...) {
   as.matrix(as.data.frame(x))
 }
 
@@ -193,7 +193,7 @@ summary.ggobiDataset <- function(object, ...) {
 #X x[1:5, 1:5]
 #X x[1:5, 1] <- 1:5
 #X x[1:5, 1:5]
-"[<-.ggobiDataset" <- function(x, i, j, value) {
+"[<-.GGobiData" <- function(x, i, j, value) {
 	data <- as.data.frame(x)
 
 	# figure out if any new columns have been added and add them.
@@ -205,7 +205,7 @@ summary.ggobiDataset <- function(object, ...) {
 	x
 }
 
-"$<-.ggobiDataset" <- "[[<-.ggobiDataset" <- function(x, i, value) {
+"$<-.GGobiData" <- "[[<-.GGobiData" <- function(x, i, value) {
 	df <- as.data.frame(x)
 	if(is.null(df[[i]])) {
 		ggobi_data_add_variable(x, value, i)
@@ -217,9 +217,9 @@ summary.ggobiDataset <- function(object, ...) {
 
 
 # Set variable values
-# Set the variable values for a column in a ggobiDataset
+# Set the variable values for a column in a GGobiData
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments values of new variable
 # @arguments variable name
 # @arguments update?
@@ -233,10 +233,10 @@ ggobi_data_set_variable <- function(x, vals, var, update = TRUE) {
 }
 
 # Add variable
-# Add variable to a ggobiDataset
+# Add variable to a GGobiData
 # 
 # @alias addVariable
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments values to add
 # @arguments name of column to add
 # @keyword internal
@@ -259,7 +259,7 @@ ggobi_data_add_variable <- function(x, vals, name, ...) {
 # @keyword internal
 # 
 ggobi_data_remove_variable <- function(x, var) {
- which <- getVariableIndex.ggobi(..., .gobi=.gobi)
+ which <- getVariableIndex.GGobiGGobi(..., .gobi=.gobi)
 
  .GGobiC("removeVariables", which, .data)[[1]]
 }
@@ -269,25 +269,25 @@ ids <- function(x) UseMethod("ids", x)
 "ids<-" <- function(x, value) UseMethod("ids<-", x)
 
 # Row ids
-# Retrive row ids from a ggobiDataset
+# Retrive row ids from a GGobiData
 # 
 # @alias ids
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @keyword manip 
 # @seealso \code{\link{ids<-}}
-ids.ggobiDataset <- function(x) {
+ids.GGobiData <- function(x) {
   .GGobiCall("getCaseIds", x)
 }  
 
 # Set row ids
-# Set row ids from a ggobiDataset
+# Set row ids from a GGobiData
 # 
 # @alias ids<-
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments new values
 # @keyword manip 
 # @seealso \code{\link{ids}}
-"ids<-.ggobiDataset" <- function(x, value) {
+"ids<-.GGobiData" <- function(x, value) {
 	.GGobiCall("setIDs", as.character(value), .data=x)
 	x
 }

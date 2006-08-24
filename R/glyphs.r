@@ -30,10 +30,10 @@ glyph_color <- glyph_colour <- function(x) UseMethod("glyph_colour", x)
 # Get glyph type.
 # 
 # @alias glyph_type
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @keyword dynamic 
 # @seealso \code{\link{glyph_type<-}}
-glyph_type.ggobiDataset <- function(x) {
+glyph_type.GGobiData <- function(x) {
 	which <- 1:nrow(x)
 	.GGobiCall("getCaseGlyphs", as.integer(which - 1), x, .gobi = attr(x, "ggobi"))$type + 1
 }
@@ -42,11 +42,11 @@ glyph_type.ggobiDataset <- function(x) {
 # Set glyph type
 # 
 # @alias glyph_type<-
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments vector of new types
 # @keyword dynamic 
 # @seealso \code{\link{glyph_type}}
-"glyph_type<-.ggobiDataset" <- function(x, value) {
+"glyph_type<-.GGobiData" <- function(x, value) {
 	which <- 1:nrow(x)
 	types <- mapGlyphType(value)
 	types <- rep(types - 1, length=length(which))
@@ -61,10 +61,10 @@ glyph_type.ggobiDataset <- function(x) {
 # Get glyph size
 # 
 # @alias glyph_size
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @keyword dynamic 
 # @seealso \code{\link{glyph_size<-}}
-glyph_size.ggobiDataset <- function(x, value) {
+glyph_size.GGobiData <- function(x, value) {
 	which <- 1:nrow(x)
 	.GGobiCall("getCaseGlyphs", as.integer(which - 1), x, .gobi = attr(x, "ggobi"))$size + 1
 }
@@ -73,11 +73,11 @@ glyph_size.ggobiDataset <- function(x, value) {
 # Set glyph size
 # 
 # @alias glyph_size<-
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments vector of new sizes
 # @keyword dynamic 
 # @seealso \code{\link{glyph_size}}
-"glyph_size<-.ggobiDataset" <- function(x, value) {
+"glyph_size<-.GGobiData" <- function(x, value) {
 	which <- 1:nrow(x)
 	sizes <- rep(value - 1, length=length(which))
 	types <- rep(as.integer(-1), length(which))
@@ -91,11 +91,11 @@ glyph_size.ggobiDataset <- function(x, value) {
 # Get glyph colour
 # 
 # @alias glyph_colour
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @alias glyph_color
 # @keyword dynamic 
 # @seealso \code{\link{glyph_colour<-}}
-glyph_colour.ggobiDataset <- function(x)  {
+glyph_colour.GGobiData <- function(x)  {
 	which <- 1:nrow(x)
 	.GGobiCall("getCaseColors", as.integer(which - 1), x, .gobi = attr(x, "ggobi")) + 1
 }
@@ -105,11 +105,11 @@ glyph_colour.ggobiDataset <- function(x)  {
 # 
 # @alias glyph_colour<-
 # @alias glyph_color<-
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments vector of new colours
 # @seealso \code{\link{glyph_colour}}
 # @keyword dynamic 
-"glyph_colour<-.ggobiDataset" <- function(x, value) {
+"glyph_colour<-.GGobiData" <- function(x, value) {
 	#colors <- resolveColors.ggobi(value)
 	colors <- rep(as.integer(value), length=nrow(x))
 	ind <- 0:(length(colors)-1)
@@ -140,7 +140,7 @@ excluded <- function(x) UseMethod("excluded", x)
 # @arguments ggobiDataget
 # @keyword dynamic 
 # @seealso \code{\link{excluded<-}}
-excluded.ggobiDataset <- function(x) {
+excluded.GGobiData <- function(x) {
  .GGobiCall("getExcludedIndices", .data = x)
 }
 
@@ -150,11 +150,11 @@ excluded.ggobiDataset <- function(x) {
 # If a point is excluded it is not drawn.
 # 
 # @alias excluded<-
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments logical vector 
 # @keyword dynamic 
 # @seealso \code{\link{excluded}}
-"excluded<-.ggobiDataset" <- function(x, value) {
+"excluded<-.GGobiData" <- function(x, value) {
 	.GGobiCall("setExcludedIndices", rep(as.logical(value), length=nrow(x)), .data = x)
 	x
 }
@@ -163,10 +163,10 @@ excluded.ggobiDataset <- function(x) {
 # Returns logical vector indicating if each point is under the brush
 # 
 # @alias selected
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments logical vector 
 # @keyword dynamic 
-selected.ggobiDataset <- function(x) {
+selected.GGobiData <- function(x) {
 	sel <- .GGobiCall("getSelectedIndices", .data=x)
 
 	if(is.null(sel))
@@ -186,7 +186,7 @@ selected <- function(x) UseMethod("selected", x)
 # @arguments ggobiDataget
 # @keyword dynamic 
 # @seealso \code{\link{shadowed<-}}
-shadowed.ggobiDataset <- function(x) {
+shadowed.GGobiData <- function(x) {
 	.GGobiCall("getCasesHidden", .data=x)
 }
 shadowed <- function(x) UseMethod("shadowed", x)
@@ -198,11 +198,11 @@ shadowed <- function(x) UseMethod("shadowed", x)
 # If a point is shadowed it is drawn in a dark gray colour.
 # 
 # @alias shadowed<-
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments logical vector 
 # @keyword dynamic 
 # @seealso \code{\link{shadowed}}
-"shadowed<-.ggobiDataset" <- function(x, value) {
+"shadowed<-.GGobiData" <- function(x, value) {
 	.GGobiCall("setCasesHidden", rep(as.logical(value), length=nrow(x)), as.integer((1:nrow(x))-1), .data = x)
 	x
 }

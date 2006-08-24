@@ -1,38 +1,52 @@
 # Get GGobi displays
 # Get's list of displays in the specified GGobi instance
 # 
-# @alias displays.ggobi
+# @alias displays.GGobiGGobi
 # @arguments GGobi object
 # TODO: add displays method for datasets
 displays <- function(x) UseMethod("displays", x)
-displays.ggobi <- function(x) {
+displays.GGobiGGobi <- function(x) {
  .GGobiCall("getDisplays", .gobi = x)
 }
 
-# SEGFAULTS
-dataset.ggobiDisplay <- function(gd) {
+# FIXME: Incorrect reference to ggobid.
+dataset.GGobiDisplay <- function(gd) {
  .GGobiCall("getDisplayDataset", gd)
 }
 
-ggobi.ggobiDisplay <- function(gd) {
+# FIXME: how do we do this now from R?
+ggobi.GGobiDisplay <- function(gd) {
 	gd$ggobi
+}
+
+print.GGobiDisplay <- function(gd) {
+	print(class(gd)[1])
 }
 
 # Close display window
 # 
 # @arguments GGobiDisplay object to close
-close.ggobiDisplay <- function(con, ...) {
+close.GGobiDisplay <- function(con, ...) {
 	.GGobiCall("closeDisplay", con$ref, .gobi = con$ggobi)
 }
 
-summary.ggobiDisplay <- function(x) {
+summary.GGobiDisplay <- function(x) {
 	list(type = class(x), dataset = dataset(x), ggobi = ggobi(x))
 }
+
+# This tells the number of plots within  a given display 
+# window within a ggobi instance.
+# FIXME: Incorrect reference to ggobid.
+length.GGobiDisplay <- function(gd) {
+	.GGobiCall("getNumPlotsInDisplay",  gd)
+}
+
 
 
 #X g <- ggobi(mtcars)
 #X save_display(get_RGtk2_display(g, 1), "test.png")
-save_display <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
+plot.GGobiDisplay <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
+	display <-
 	if (plot.only) {
 		disp <- display$getChildren()[[2]]$getChildren()[[3]][["widget"]][["window"]]
 	} else {
@@ -45,54 +59,30 @@ save_display <- function(display, path="ggobi_display.png", filetype="png", plot
 	disp_pixbuf$save(path, filetype)
 }
 
-createDisplay.ggobi <- function(ggobi, type, vars, .data = 1) {
-  if(!inherits(type, "GType")) {
-    types <- getDisplayTypes.ggobi()
-    id <- match(type, names(types))
-    if(is.na(id)) {
-      id <- match(type, sapply(types, names))
-    }
+display <- function(x, ...) UseMethod("display", x)
 
-    if(is.na(id))
-      stop("Unrecognized plot type")
 
-    type <- types[[id]]
-  }
+# FIXME: invalid class cast from (NULL) pointer to `GGobiExtendedDisplay'
+display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
+	type <- ggobi_display_get_type(type)
 
-  if(mode(.data) == "numeric" || mode(.data) == "character")
-    .data <- dataset(.data, .gobi)[[1]]
+	if(is.character(vars)) {
+		vars <- match(vars, names(x))
+		if(any(is.na(vars)))
+		 stop("Incorrect variables specified")
+	}
 
-  if(is.character(vars)) {
-     vars = match(vars, names(.data))
-     if(any(is.na(vars)))
-       stop("Incorrect variables specified")
-  }
-
-  .GGobiCall("createPlot", type, as.integer(vars), .data, .gobi = .gobi)
-}  
-
-setDisplaySize.ggobi <- function(sz,  display = 1, .gobi = ggobi_get() ) {
- .GGobiCall("setDisplaySize", dims = as.integer(sz), as.integer(display - 1), .gobi = .gobi)
+	.GGobiCall("createPlot", type, as.integer(vars), x)
 }
 
-getDisplaySize.ggobi <- function(con) {
-  setDisplaySize.ggobi(NULL, con[["ref"]], .gobi = con[["ggobi"]])
+# FIXME: C entry point "RS_GGOBI_setDisplaySize" not in DLL for package "rggobi"
+dim.GGobiDisplay <- function(gd) {
+	.GGobiCall("setDisplaySize", NULL, gd)
 }
 
-
-#
-# This tells the type of plot(s) in a given display 
-# window within a ggobi instance.
-# 
-getPlotType.ggobi <- function(display = 1, .gobi = ggobi_get()) {
-	.GGobiCall("getDisplayType",  as.integer(display-1), .gobi = .gobi)
-}
-
-
-# This tells the number of plots within  a given display 
-# window within a ggobi instance.
-length.ggobiDisplay <- function(display = 1, .gobi = ggobi_get()) {
-	.GGobiCall("getNumPlotsInDisplay",  as.integer(display-1), .gobi = .gobi)
+"dim<-.GGobiDisplay" <- function(gd, value) {
+	.GGobiCall("setDisplaySize", as.integer(value), gd)
+	gd
 }
 
 
@@ -111,13 +101,13 @@ length.ggobiDisplay <- function(display = 1, .gobi = ggobi_get()) {
 #
 # Need to sort current if specified.
 #
-setDisplayOptions.ggobi <- function(points,
+setDisplayOptions.GGobiGGobi <- function(points,
          axes, axesLabels, axesValues,
          directed, undirected, arrowheads,
          whiskers,
          current = NULL,
           display = 1, .gobi = ggobi_get()) {
-  old <- getDisplayOptions.ggobi(display, .gobi=.gobi)
+  old <- getDisplayOptions.GGobiGGobi(display, .gobi=.gobi)
   
   if(is.null(current)) {
     current = old
@@ -181,15 +171,33 @@ setDisplayOptions.ggobi <- function(points,
 # which - the display number within the specified ggobi instance.
 #
 
-getDisplayOptions.ggobi <- function(which = 1, .gobi = ggobi_get()) {
+getDisplayOptions.GGobiGGobi <- function(which = 1, .gobi = ggobi_get()) {
   ans = .GGobiCall("getDisplayOptions", as.integer(which-1), .gobi = .gobi)
   class(ans) = "GGobiDisplayOptions"
 
   ans
 }
 
+# =========================================================
+# Class methods
+# =========================================================
 
-ggobi_display_types <- function(.gobi = getGGobi()) {
+ggobi_display_types <- function(.gobi = ggobi_get()) {
  .GGobiCall("getDisplayTypes", .gobi = .gobi)
 }
 
+ggobi_display_get_type <- function(type) {
+	if(!inherits(type, "GType")) {
+    types <- ggobi_display_types()
+    id <- match(type, names(types))
+    if(is.na(id)) {
+      id <- match(type, sapply(types, names))
+    }
+
+    if(is.na(id))
+      stop("Unrecognized plot type")
+
+    type <- types[[id]]
+  }
+	type
+}

@@ -3,7 +3,7 @@
 #
 # To remove edges, set edges to NULL.
 # 
-# @arguments ggobiDataset
+# @arguments GGobiData
 # @arguments matrix or data frame of edges.  First column should be from edge, second column to edge. 
 # @keyword manip
 # 

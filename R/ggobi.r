@@ -70,7 +70,7 @@ ggobi.data.frame <- function(data, args=character(0), mode=character(0), name = 
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X names(g)
-names.ggobi <- function(x) {
+namesGGobiGGobi <- function(x) {
  .GGobiCall("getDatasetNames", .gobi=x)
 }
 
@@ -99,7 +99,7 @@ clean.ggobi <- function(x) {
 # @seealso \code{\link{summary.ggobi}}
 # @keyword dynamic 
 # @keyword internal 
-print.ggobi <- function(x, ...) {
+printGGobiGGobi <- function(x, ...) {
 	print(summary(x))
 }
 
@@ -110,7 +110,7 @@ print.ggobi <- function(x, ...) {
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X summary(g)
-summary.ggobi <- function(object, ...) {
+summaryGGobiGGobi <- function(object, ...) {
   ans <- .GGobiCall("getDescription", .gobi = object)
 	if (is.null(ans)) return("Nothing known about this GGobi instance")
 	
@@ -135,7 +135,7 @@ summary.ggobi <- function(object, ...) {
 #X g2 <- ggobi(mtcars)
 #X close(g2)
 #X close(ggobi_get())
-close.ggobi <- function(con, ...) {
+closeGGobiGGobi <- function(con, ...) {
   ok <- .GGobiCall("close", .gobi = con)
   invisible(ok)
 }

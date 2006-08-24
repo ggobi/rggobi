@@ -39,7 +39,7 @@ scatmat.ggobi <-
 #
 function(x, y, .data = 1, .gobi = ggobi_get()) 
 {
-  if(!inherits(.data, "ggobiDataset")) {
+  if(!inherits(.data, "GGobiData")) {
     .data <- dataset(.data, .gobi=.gobi)
   }
 
