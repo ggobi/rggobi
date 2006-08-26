@@ -1,0 +1,56 @@
+\documentclass[a4paper]{report}
+\usepackage{Rnews}
+\usepackage[round]{natbib}
+\bibliographystyle{abbrvnat}
+
+%\documentclass[oneside,letterpaper]{scrartcl}
+\usepackage[utf8]{inputenc}
+%\usepackage[pdftex]{graphicx}
+\usepackage{hyperref}
+%\usepackage{fullpage}
+\usepackage{alltt}
+
+\begin{document}
+\begin{article}
+
+\title{An introduction to rggobi}
+%\VignetteIndexEntry{An introduction to rggobi}
+\author{Hadley Wickham, Michael Lawrence}
+
+\maketitle
+
+\section*{Introduction}
+
+{\tt rggobi} connects R and GGobi together.
+
+The current version focuses on three main aspects:
+
+\begin{itemize}
+	\item Getting data into and out of GGobi from R
+	\item Modifying meta-data, or manual brushing
+	\item Basic plot control
+\end{itemize}
+
+We'll discuss each of these in turn, providing the basic syntax and some examples of what you can do with it.  All {\tt rggobi} functions are well documented, and you can find out more in the documentation, e.g. {\tt ?ggobi}.
+
+\section*{Data}\label{sec:data}
+
+Getting data into and out of GGobi is really easy.    Just acts like a regular R data frame.  If you need to break the connection, use {\tt as.data.frame} to create a static copy in R.
+
+You can also use {\tt ggobi\_save\_xml} to save the dataset as an GGobi xml file.  
+
+\section*{Meta-data, aka manual brushing}\label{sec:meta_data}
+
+
+\section*{Plots}\label{sec:plots}
+
+
+\section*{Conclusion}\label{sec:conclusion}
+
+You can see {\tt rggobi} in use at \url{http://www.ggobi.org/rggobi}.
+
+If you develop a package using {\tt rggobi} please let us know so we can highlight your work on the GGobi homepage.
+
+
+\end{article}
+\end{document}
