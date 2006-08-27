@@ -7,6 +7,8 @@
 #include "parcoordsClass.h"
 #include "scatmatClass.h"
 #include "scatterplotClass.h"
+#include "tsdisplay.h"
+#include "barchartDisplay.h"
 
 /*
   Allows the R user to set the variables within a given plot.
@@ -33,13 +35,14 @@ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ p
     ERROR;
   }
 
-  if (GGOBI_IS_SCATTERPLOT_DISPLAY(display) || GGOBI_IS_SCATMAT_DISPLAY(display)) {
+  if (GGOBI_IS_SCATTERPLOT_DISPLAY(display) || GGOBI_IS_SCATMAT_DISPLAY(display)
+      || GGOBI_IS_TIME_SERIES_DISPLAY(display)) {
     oldx = sp->xyvars.x + 1;
     oldy = sp->xyvars.y + 1;
     sp->xyvars.x = INTEGER_DATA(varIds)[0];
     sp->xyvars.y = INTEGER_DATA(varIds)[1];
     n = 2;
-  } else if (GGOBI_IS_PAR_COORDS_DISPLAY(display)) {
+  } else if (GGOBI_IS_PAR_COORDS_DISPLAY(display) || GGOBI_IS_BARCHART_DISPLAY(display)) {
     oldx = sp->p1dvar +1;
     sp->p1dvar = INTEGER_DATA(varIds)[0];
     n = 1;

@@ -110,12 +110,15 @@ RS_GGOBI(getDisplayOptions)(USER_OBJECT_ which)
   USER_OBJECT_ ans, names;
   gint NumOptions = 8;
   DisplayOptions *options;
-  displayd *display;
   
-  display = toDisplay(which);
-  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
-
-  options = &(display->options);
+  if (GET_LENGTH(which) == 0)
+    options = GGOBI(getDefaultDisplayOptions)();
+  else {
+    displayd *display = toDisplay(which);
+    g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+    options = &(display->options);
+  }
+  
   g_return_val_if_fail(options != NULL, NULL_USER_OBJECT);
 
   PROTECT(ans = NEW_LOGICAL(NumOptions));

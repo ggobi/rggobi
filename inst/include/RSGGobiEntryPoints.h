@@ -6,7 +6,6 @@ void RS_GGOBI(getNumGGobiInstances)(glong *ans);
 USER_OBJECT_ RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(getNumberedKeyHandler)(USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(setNumberedKeyHandler)(USER_OBJECT_ handler, USER_OBJECT_ sdescription, USER_OBJECT_ ggobiId);
-USER_OBJECT_ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ plotId, USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(getNumPlotsInDisplay)(USER_OBJECT_ dpy);
 SEXP RS_GGOBI(getDisplayType)(SEXP dpy, SEXP ggobiId);
 USER_OBJECT_ RS_GGOBI(getDisplayTypes)();
@@ -107,7 +106,7 @@ USER_OBJECT_ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance);
 
 
 SEXP RS_GGOBI(createPlots)(SEXP plotDescList, SEXP dims, SEXP cells, SEXP gobiId, SEXP rdisplay, SEXP dataset);
-USER_OBJECT_ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ plotId, USER_OBJECT_ ggobiId);
+USER_OBJECT_ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ plotId);
 
 void RS_GGOBI(getNumGGobiInstances)(glong *ans);
 void RS_GGOBI(flush)();

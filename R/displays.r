@@ -13,7 +13,6 @@ dataset.GGobiDisplay <- function(gd) {
  .GGobiCall("getDisplayDataset", gd)
 }
 
-# FIXME: how do we do this now from R?
 ggobi.GGobiDisplay <- function(gd) {
 	.GGobiCall("getGGobiForDisplay", gd)
 }
