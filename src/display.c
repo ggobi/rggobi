@@ -210,33 +210,84 @@ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values)
   return (NULL_USER_OBJECT);
 }
 
+static void
+toggle_display_variables(displayd *display, USER_OBJECT_ vars, gboolean active)
+{
+  gint i, j;
+  for (j = 0; j < 3; j++) {
+    USER_OBJECT_ varIds = VECTOR_ELT(vars, j);
+    for (i = 0; i < GET_LENGTH(varIds); i++) {
+      gint var = INTEGER_DATA(varIds)[i];
+      GtkWidget *wid = varpanel_widget_get_nth(j, var, display->d);
+      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(wid)) == active) {
+        varsel(wid, &display->cpanel, display->current_splot, var, j, 
+          -1, 0, 0, 0, display->d, display->ggobi);
+      }
+    }
+  }
+}
+
+USER_OBJECT_
+RS_GGOBI(getDisplayVariables)(USER_OBJECT_ dpy)
+{
+  USER_OBJECT_ buttons, vars, ans;
+  static gchar *button_names[] = { "X", "Y", "Z" };
+  gint i;
+  
+  displayd *display = toDisplay(dpy);
+  
+  /* get the currently plotted variables */
+  gint *plotted_vars = g_new (gint, display->d->ncols);
+  gint nplotted_vars = GGOBI_EXTENDED_DISPLAY_GET_CLASS (display)->plotted_vars_get(
+    display, plotted_vars, display->d, display->ggobi);
+    
+  PROTECT(ans = NEW_LIST(2));
+  buttons = NEW_CHARACTER(nplotted_vars);
+  SET_VECTOR_ELT(ans, 1, buttons);
+  vars = NEW_INTEGER(nplotted_vars);
+  SET_VECTOR_ELT(ans, 0, vars);
+  
+  for (i = 0; i < nplotted_vars; i++) {
+    gint var = plotted_vars[i], j;
+    for (j = 0; j < G_N_ELEMENTS(button_names); j++) {
+      GtkWidget *wid = varpanel_widget_get_nth(j, var, display->d);
+      if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(wid)))
+        SET_STRING_ELT(buttons, i, mkChar(button_names[j]));
+    }
+    INTEGER_DATA(vars)[i] = var;
+  }
+  
+  UNPROTECT(1);
+  g_free(plotted_vars);
+  
+  return(ans);
+}
+
 /*
   Allows the R user to set the variables within a given display
  */
 USER_OBJECT_
-RS_GGOBI(setDisplayVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy)
+RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJECT_ dpy)
 {
   displayd *display;
   USER_OBJECT_ ans = NULL_USER_OBJECT;
-  gint i;
+  gint i, nplotted_vars;
+  gint *plotted_vars;
 
   display = toDisplay(dpy);
 	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
-
-  for (i = 0; i < GET_LENGTH(varIds); i++) {
-    gint button = i > 2 ? VARSEL_X : i;
-    gint jvar = INTEGER_DATA(varIds)[i];
-    GtkWidget *wid = varpanel_widget_get_nth(button, jvar, display->d);
-    if (!GTK_WIDGET_VISIBLE(wid))
-      button = VARSEL_X;
-    varsel(wid, &display->cpanel, display->ggobi->current_splot, jvar, button, 
-      -1, 0, 0, 0, display->d, display->ggobi);
-  }
-
+  
+  /* If any of the requested variables AREN'T selected, select them */
+  toggle_display_variables(display, vars, false);
+  varpanel_refresh(display, display->ggobi);
+  /* If any of the obsolete variables ARE still selected, select (toggle) them */
+  toggle_display_variables(display, varPrev, true);
+  
+  /* refresh everything */
   varpanel_refresh(display, display->ggobi);
   display_tailpipe(display, FULL,  display->ggobi);
   
- return(ans);
+  return(ans);
 }
 
 USER_OBJECT_
