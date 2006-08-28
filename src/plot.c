@@ -12,18 +12,14 @@
 
 /*
   Allows the R user to set the variables within a given plot.
-  Returns the previous settings in place of those that were
-  given by the user. This allows the values to be restored
-  easily at a later time.
  */
 USER_OBJECT_
 RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ plotId)
 {
   displayd *display;
   splotd *sp;
-  long oldx, oldy;
-  USER_OBJECT_ ans;
-  int n;
+  USER_OBJECT_ ans = NULL_USER_OBJECT;
+  gint i;
 
   display = toDisplay(dpy);
 	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
@@ -35,24 +31,17 @@ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ p
     ERROR;
   }
 
-  if (GGOBI_IS_SCATTERPLOT_DISPLAY(display) || GGOBI_IS_SCATMAT_DISPLAY(display)
-      || GGOBI_IS_TIME_SERIES_DISPLAY(display)) {
-    oldx = sp->xyvars.x + 1;
-    oldy = sp->xyvars.y + 1;
-    sp->xyvars.x = INTEGER_DATA(varIds)[0];
-    sp->xyvars.y = INTEGER_DATA(varIds)[1];
-    n = 2;
-  } else if (GGOBI_IS_PAR_COORDS_DISPLAY(display) || GGOBI_IS_BARCHART_DISPLAY(display)) {
-    oldx = sp->p1dvar +1;
-    sp->p1dvar = INTEGER_DATA(varIds)[0];
-    n = 1;
-  }
-
-  ans = NEW_INTEGER(n);
-  INTEGER_DATA(ans)[0] = oldx;
-   
-  if(n > 1) {
-    INTEGER_DATA(ans)[1] = oldy;
+  for (i = 0; i < GET_LENGTH(varIds); i++) {
+    gint button = VARSEL_X;
+    gint jvar = INTEGER_DATA(varIds)[i];
+    if (i < 3) {
+      GtkWidget *wid = varpanel_widget_get_nth(i, jvar, display->d);
+      if (GTK_WIDGET_VISIBLE(wid))
+        button = i;
+    }
+    varsel(NULL, &display->cpanel, sp, jvar, button, -1, 0, 0, 0, display->d, 
+      display->ggobi);
+    varpanel_refresh(display, display->ggobi);
   }
 
  return(ans);
