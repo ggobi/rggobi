@@ -105,7 +105,6 @@ rownames.GGobiData <- function(x) {
 	x
 }
 
-
 # Get dimension names
 # Get row and column names for a ggobiDataget
 # 
@@ -207,7 +206,9 @@ summary.GGobiData <- function(object, ...) {
 
 "$<-.GGobiData" <- "[[<-.GGobiData" <- function(x, i, value) {
 	df <- as.data.frame(x)
-	if(is.null(df[[i]])) {
+	if (is.null(value)) {
+		ggobi_data_remove_variable(x, i)
+	} else if (is.null(df[[i]])) {
 		ggobi_data_add_variable(x, value, i)
 	} else {
 		ggobi_data_set_variable(x, value, i)
@@ -259,9 +260,10 @@ ggobi_data_add_variable <- function(x, vals, name, ...) {
 # @keyword internal
 # 
 ggobi_data_remove_variable <- function(x, var) {
- which <- getVariableIndex.GGobi(..., .gobi=.gobi)
+	varId <- variable_index(x, var)
+	if(any(is.na(varId))) stop("Invalid variable")
 
- .GGobiC("removeVariables", which, .data)[[1]]
+ .GGobiC("removeVariables", varId, x)[[1]]
 }
 
 

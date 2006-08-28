@@ -1,4 +1,4 @@
-ggobi <- function(data, ...) UseMethod("ggobi", data)
+ggobi <- function(data=NULL, ...) UseMethod("ggobi", data)
 
 # New ggobi
 # Creates a new ggobi instance
@@ -36,14 +36,14 @@ ggobi <- function(data, ...) UseMethod("ggobi", data)
 # @value A ggobi object 
 # @keyword dynamic 
 # @alias rggobi
-#X ggobi(ggobi.find.file("data", "flea.csv"))
-#X ggobi(ggobi.find.file("data", "flea.xml"))
+#X ggobi(ggobi_find_file("data", "flea.csv"))
+#X ggobi(ggobi_find_file("data", "flea.xml"))
 #X ggobi(mtcars)
 #X mtcarsg <- ggobi_get()$mtcars
 #X glyph_colour(mtcarsg)
 #X glyph_colour(mtcarsg) <- ifelse(mtcarsg$cyl < 4, 1, 2)
 #X glyph_size(mtcarsg) <- mtcarsg$cyl
-ggobi.data.frame <- function(data, args=character(0), mode=character(0), name = deparse(sys.call()[[2]]), ...) {
+ggobi.default <- function(data, args=character(0), mode=character(0), name = deparse(sys.call()[[2]]), ...) {
 	
 	filename <- character(0)
 	if(!missing(data) && is.character(data) && file.exists(data)) {
@@ -206,8 +206,8 @@ ggobi_version <- function() {
 # @arguments bits of the path to join together
 # @keyword dynamic 
 # @keyword internal 
-#X ggobi.find.file("data","tips.xml")
-ggobi.find.file <- function(..., check = F) {
+#X ggobi_find_file("data","tips.xml")
+ggobi_find_file <- function(..., check = F) {
 	file <- .GGobiCall("ggobi_find_data_file", file.path(...))
 	if(check && !file.exists(file)) stop("Cannot find file ", file)
 	

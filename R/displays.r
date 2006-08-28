@@ -9,8 +9,9 @@ displays.GGobi <- function(x) {
  .GGobiCall("getDisplays", .gobi = x)
 }
 
+# FIXME: inccorect
 dataset.GGobiDisplay <- function(gd) {
- .GGobiCall("getDisplayDataset", gd)
+ .GGobiCall("getDisplayDataset", gd, .gobi=ggobi(gd))
 }
 
 ggobi.GGobiDisplay <- function(gd) {
@@ -25,7 +26,7 @@ print.GGobiDisplay <- function(gd) {
 # 
 # @arguments GGobiDisplay object to close
 close.GGobiDisplay <- function(con, ...) {
-	.GGobiCall("closeDisplay", con$ref, .gobi = con$ggobi)
+	.GGobiCall("closeDisplay", con)
 }
 
 summary.GGobiDisplay <- function(x) {
@@ -71,96 +72,42 @@ display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
 }
 
 
+goptions <- function(x) UseMethod("goptions", x)
+
+# Set defaults for display options
 #
-# Changes the settings of the display options for a
-# collection of plots or the template options for future
-# plots.
 #
-#
-# The argument `which' identifies the GGobi display (this is an index
-# into the ordered list of displays viewable via the hierarchical dislay
-# tree). If this is negative, the Default options used when creating new
-# plots will be modified.
-#
-# The return value is the current settings for the specified options.
-#
-# Need to sort current if specified.
-#
-setDisplayOptions.GGobi <- function(points,
-         axes, axesLabels, axesValues,
-         directed, undirected, arrowheads,
-         whiskers,
-         current = NULL,
-          display = 1, .gobi = ggobi_get()) {
-  old <- getDisplayOptions.GGobi(display, .gobi=.gobi)
-  
-  if(is.null(current)) {
-    current = old
-  } else {
-    if(length(names(current)) == 0) {
-      stop("Need named components")
-    } else {
-      which = pmatch(names(current), names(old))
-      if(any(is.na(which)))
-        stop("Unknown element(s)", paste(names(current)[is.na(which)], sep=", "))
-       # Now reorder current so that the names are
-      tmp = old
-      tmp[which] = current
-      current = tmp
-    }
-  }
-
-  if(!missing(points))
-    current["Show Points"] <- as.logical(points)
-
-  if(!missing(axes))
-    current["Show axes"] <- as.logical(axes)
-
-  if(!missing(axesValues))
-    current["Show tour axes"] <- as.logical(axes)
-
-  if(!missing(axesLabels))
-    current["Show axes labels"] <- as.logical(axes)        
-    
-  if(!missing(directed))
-    current["Directed edges"] <- as.logical(directed)
-
-  if(!missing(undirected))
-    current["Undirected edges"] <- as.logical(undirected)
-
-    
-  if(!missing(arrowheads))
-    current["Arrowheads"] <- as.logical(arrowheads)
-
-  if(!missing(whiskers)) 
-    current["Show whiskers"] <- as.logical(whiskers)
-
-
-  
-  .GGobiCall("setDisplayOptions", as.integer(display - 1), current, .gobi = .gobi)
-
- return(old)
+"goptions<-.GGobiGGobi" <- function(x, value) {
+	goptions.GGobiDisplay(NULL) <- value
 }
 
-#
-# Retrieve the display options for the 
-# specified display. The default is to get
-# the template default options which are used when
-# creating a new display/plot.
-# Alternatively, one can specify an integer which identifies
-# the display (window) and its sub-plots.
-# These are stored in ordered and can be examined using
-# the hierarchical display tree accessed from the Plots
-# menu item.
-#
-# which - the display number within the specified ggobi instance.
-#
 
-getDisplayOptions.GGobi <- function(which = 1, .gobi = ggobi_get()) {
-  ans = .GGobiCall("getDisplayOptions", as.integer(which-1), .gobi = .gobi)
-  class(ans) = "GGobiDisplayOptions"
+# Changes the settings of the display options for a
+# collection of plots
+# 
+# Possible options:
+# 
+#  * "Show Points"
+#  * "Show axes"
+#  * "Show tour axes"
+#  * "Show axes labels"
+#  * "Directed edges"
+#  * "Undirected edges"
+#  * "Arrowheads"
+#  * "Show whiskers" 
+"goptions<-.GGobiDisplay" <- function(x, value) {
+	old <- goptions(x)
+	cur <- update(old, value)
+	.GGobiCall("setDisplayOptions", cur, gd)
 
-  ans
+	cur
+}
+
+goptions.GGobiDisplay <- function(x) {
+  .GGobiCall("getDisplayOptions", x)
+}
+goptions.GGobiGGobi <- function(x) {
+  goptions.GGobiDisplay(NULL)
 }
 
 # right now the behavior of this function is exactly like that of the user
