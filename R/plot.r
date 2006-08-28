@@ -64,61 +64,6 @@ function(x, y, .data = 1, .gobi = ggobi_get())
  .GGobiCall("newScatmat", as.integer(x-1), as.integer(y-1), .data, .gobi = .gobi)
 }
 
-setPlotVariables.ggobi <-
-#
-# In this version, one cannot alter the variables
-# in a programmatically generated display that is
-# embedded within another display's window.
-#
-function(..., display = 1, .gobi = ggobi_get(), plots = NULL)
-{
- if(is.numeric(display))
-   display <- as.integer(display)
-
-   # find out what type of plot we are dealing with.
-   # won't work for hybrid types.
- type <- getPlotType.ggobi(display, .gobi = as.integer(.gobi))
-
-   # Determine the number of splots within this display.
- if(missing(plots)) {
-   numPlots <- getPlotCount.ggobi(display, .gobi)
-   plots <- 1:numPlots
- } else {
-   plots <- as.integer(plots)
-   numPlots <- length(plots)
- }
-
-   # We need the dataset associated with the display.
-  data <- dataset(display, .gobi = .gobi)
-  varNames <- names(data)
-
-   # Now, get the indices of the variables the user has specified.
- varIds <- as.integer(getVariableIndex.ggobi(..., .data = data, .gobi = .gobi) -1)
-
-   # Since we are setting these for the individual sub-plots,
-   # determine how we skip over the variables as we iterate
-   # over the plots.
- offset <- switch(type,"scatterplot"=2, "parallel coordinates plot"=1,
-                        "scatterplot matrix"=2) 
-
-
- 
- olds <- vector("list", numPlots)
- for(i in 1:numPlots) {
-   if(length(varIds) >= offset) {
-     tmp <- as.integer(varIds[1:offset])
-     olds[[i]] <- .GGobiCall("setPlotVariables", tmp, ifelse(is.integer(display),as.integer(display-1),display), as.integer(i-1), .gobi= .gobi)
-  
-       # Put names on these indices
-     names(olds[[i]]) <- varNames[olds[[i]]]     
-     varIds <- varIds[-c(1:offset)]
-   }
-  }
-
- .GGobiCall("updateDisplay", as.integer(display-1), .gobi=.gobi)
- return(olds)
-}
-
 summary.ggobiPlot <-
 function(x)
 {

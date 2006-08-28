@@ -210,6 +210,35 @@ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values)
   return (NULL_USER_OBJECT);
 }
 
+/*
+  Allows the R user to set the variables within a given display
+ */
+USER_OBJECT_
+RS_GGOBI(setDisplayVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy)
+{
+  displayd *display;
+  USER_OBJECT_ ans = NULL_USER_OBJECT;
+  gint i;
+
+  display = toDisplay(dpy);
+	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+
+  for (i = 0; i < GET_LENGTH(varIds); i++) {
+    gint button = i > 2 ? VARSEL_X : i;
+    gint jvar = INTEGER_DATA(varIds)[i];
+    GtkWidget *wid = varpanel_widget_get_nth(button, jvar, display->d);
+    if (!GTK_WIDGET_VISIBLE(wid))
+      button = VARSEL_X;
+    varsel(wid, &display->cpanel, display->ggobi->current_splot, jvar, button, 
+      -1, 0, 0, 0, display->d, display->ggobi);
+  }
+
+  varpanel_refresh(display, display->ggobi);
+  display_tailpipe(display, FULL,  display->ggobi);
+  
+ return(ans);
+}
+
 USER_OBJECT_
 RS_GGOBI(getDisplayDataset)(USER_OBJECT_ dpy)
 {

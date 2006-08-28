@@ -106,7 +106,7 @@ USER_OBJECT_ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance);
 
 
 SEXP RS_GGOBI(createPlots)(SEXP plotDescList, SEXP dims, SEXP cells, SEXP gobiId, SEXP rdisplay, SEXP dataset);
-USER_OBJECT_ RS_GGOBI(setPlotVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy, USER_OBJECT_ plotId);
+USER_OBJECT_ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ varIds, USER_OBJECT_ dpy);
 
 void RS_GGOBI(getNumGGobiInstances)(glong *ans);
 void RS_GGOBI(flush)();

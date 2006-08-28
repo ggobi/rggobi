@@ -163,6 +163,40 @@ getDisplayOptions.GGobi <- function(which = 1, .gobi = ggobi_get()) {
   ans
 }
 
+# right now the behavior of this function is exactly like that of the user
+# clicking buttons on the variable selection panel. The elements of the
+# 'vars' vector correspond to the X, Y, and Z buttons, respectively, if they exist.
+# otherwise they spill over to the X button (ie for tours, scatterplot matrices).
+# unfortunately this means we are not "setting" the variables but pressing buttons,
+# which are very different things, since in some cases we are "adding" them.
+# see notes below
+setDisplayVariables.GGobiDisplay <-
+# shouldn't .gobi default to ggobi(display)?
+function(display, vars, .gobi = ggobi_get())
+{
+  # Get the indices of the variables the user has specified.
+  varIds <- variable_index(dataset(display, .gobi = .gobi), vars)
+  
+  # I could make it so that the currently selected variables remain selected
+  # if they are specified in the 'vars' vector - ie, they are not toggled
+  # But the main problem is deselecting the ones that we no longer want selected
+  
+  # In this case,
+  # we could try to "select" them first, so that if they are toggles (ie a tour) 
+  # they are toggled off but this doesn't work otherwise
+  
+  # there's no nice way to get the variables in the display either - since
+  # there's no model for the varpanel, we'd have to query each button
+  
+  # maybe if this was renamed to toggleDisplayVariables the semantics would be
+  # such that we wouldn't have to worry about this
+  
+  #prev <- getDisplayVariables(display)
+  #varIds <- c(prev[!(prev %in% varIds)], varIds)
+  
+  .GGobiCall("setDisplayVariables", varIds, display, .gobi= .gobi)
+}
+
 # =========================================================
 # Class methods
 # =========================================================
