@@ -31,7 +31,7 @@ RS_GGOBI(createDisplay)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ dat
      nvars = GET_LENGTH(svars);
      vars = g_malloc(sizeof(gint)*nvars);
      for(i = 0; i < nvars; i++)
-       vars[i] = INTEGER_DATA(svars)[i] - 1;
+       vars[i] = INTEGER_DATA(svars)[i];
      display = klass->createWithVars(false, nvars, vars, d, gg);
   } else if(klass->create)
      display = klass->create(false, NULL, d, gg);

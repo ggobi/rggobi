@@ -9,32 +9,48 @@ displays.GGobi <- function(x) {
  .GGobiCall("getDisplays", .gobi = x)
 }
 
-# FIXME: inccorect
+# Get display dataset
+# Returns a link to the dataset associated with this display.
+# 
+# See \code{\link{[.GGobi}} for more information.
+# 
+# @arguments GGobiDisplay object
+# @keyword manip 
 dataset.GGobiDisplay <- function(gd) {
  .GGobiCall("getDisplayDataset", gd, .gobi=ggobi(gd))
 }
 
+# Get display GGobi
+# Returns a link to the GGobi object associated with this display
+# 
+# @arguments GGobiDisplay object
+# @keyword manip
 ggobi.GGobiDisplay <- function(gd) {
 	.GGobiCall("getGGobiForDisplay", gd)
 }
 
+# Print method for GGobiDisplay
+# Shows display type (first element in class vector)
+# 
+# @arguments GGobiDisplay object
+# @keyword internal 
 print.GGobiDisplay <- function(gd) {
 	print(class(gd)[1])
 }
 
-# Close display window
+# Close display
+# Closes the referenced display.  The variable will be invalid after this call
 # 
 # @arguments GGobiDisplay object to close
 close.GGobiDisplay <- function(con, ...) {
 	.GGobiCall("closeDisplay", con)
 }
 
-summary.GGobiDisplay <- function(x) {
-	list(type = class(x), dataset = dataset(x), ggobi = ggobi(x))
-}
-
-# This tells the number of plots within  a given display 
-# window within a ggobi instance.
+# Length method for GGobiDisplay
+# Returns the number of plots within a given display
+# 
+# @arguments GGobiDisplay object to close
+# @keyword internal 
 length.GGobiDisplay <- function(gd) {
 	.GGobiCall("getNumPlotsInDisplay",  gd)
 }
@@ -44,8 +60,7 @@ length.GGobiDisplay <- function(gd) {
 #X g <- ggobi(mtcars)
 #X save_display(get_RGtk2_display(g, 1), "test.png")
 plot.GGobiDisplay <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
-	display <-
-	if (plot.only) {
+	display <- if (plot.only) {
 		disp <- display$getChildren()[[2]]$getChildren()[[3]][["widget"]][["window"]]
 	} else {
 		disp <- display[["window"]]
@@ -59,16 +74,21 @@ plot.GGobiDisplay <- function(display, path="ggobi_display.png", filetype="png",
 
 display <- function(x, ...) UseMethod("display", x)
 
+# Create a new display
+# Create a new display for the GGobiData object.  
+# 
+# @seealso \code{\link{ggobi_display_types}} for a list of display types
+#X g <- ggobi(mtcars)
+#X display(g[1])
+#X display(g[1], vars=c(4,5))
+#X display(g[1], vars=c("drat","hp"))
+#X display(g[1], "Parallel Coordinates Display")
+#X display(g[1], "Scatterplot Matrix")
 display.GGobiData <- function(x, type="Scatterplot Display", vars=1:nrow(x)) {
 	type <- ggobi_display_get_type(type)
+	vars <- variable_index(x, vars)
 
-	if(is.character(vars)) {
-		vars <- match(vars, names(x))
-		if(any(is.na(vars)))
-		 stop("Incorrect variables specified")
-	}
-
-	.GGobiCall("createDisplay", type, as.integer(vars), x)
+	.GGobiCall("createDisplay", type, vars, x)
 }
 
 

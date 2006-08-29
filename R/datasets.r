@@ -79,7 +79,7 @@ variable_index <- function(x, names) {
 	if(is.numeric(names)) return(as.integer(names - 1))
 	if(is.character(names)) return(as.integer(match(names, names(x)) - 1))
 	
-	unlist(lapply(names, function(name) variable_index.GGobiData(x, name)))
+	lapply(names, function(name) variable_index(x, name))
 }
 
 # Get row names
