@@ -10,7 +10,7 @@ test_load_frame <- function() {
 }
 
 test_load_file <- function() {
-	files <- dir(ggobi.find.file("data"), "\.xml$", full=TRUE)
+	files <- dir(ggobi_find_file("data"), "\.xml$", full=TRUE)
 	
 	lapply(files, function(x) {
 		assert_error({

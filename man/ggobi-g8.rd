@@ -41,8 +41,8 @@ pointing to the data in GGobi so that all changes are kept in sync.
 If you need to force a ggobiDaataset to be an R \code{data.frame} use
 \code{\link{as.data.frame}}.}
 
-\examples{ggobi(ggobi.find.file("data", "flea.csv"))
-ggobi(ggobi.find.file("data", "flea.xml"))
+\examples{ggobi(ggobi_find_file("data", "flea.csv"))
+ggobi(ggobi_find_file("data", "flea.xml"))
 ggobi(mtcars)
 mtcarsg <- ggobi_get()$mtcars
 glyph_colour(mtcarsg)

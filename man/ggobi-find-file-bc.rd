@@ -1,12 +1,12 @@
-\name{ggobi.find.file}
-\alias{ggobi.find.file}
+\name{ggobi_find_file}
+\alias{ggobi_find_file}
 \title{Find GGobi file.}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
 Finds a file stored somewhere in the ggobi installation.
 }
-\usage{ggobi.find.file(..., check = F)}
+\usage{ggobi_find_file(..., check = F)}
 \arguments{
 \item{...}{bits of the path to join together}
 \item{check}{}
@@ -14,6 +14,6 @@ Finds a file stored somewhere in the ggobi installation.
 
 \details{}
 
-\examples{ggobi.find.file("data","tips.xml")}
+\examples{ggobi_find_file("data","tips.xml")}
 \keyword{dynamic}
 \keyword{internal}
