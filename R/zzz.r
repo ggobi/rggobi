@@ -26,7 +26,9 @@ ggobi_check_structs <- function() {
 
 	ok <- ours == theirs[which]
 	if(!all(ok)) {
-		warning("Some structs have different size: ", paste(names(ours)[!ok], collapse=", "), ". You may have an incompatible version of GGobi installed.", .call=FALSE)
+		warning("Some structs have different size: ", 
+      paste(paste(names(ours)[!ok], "(", ours[!ok] "!=", theirs[which][!ok], ")"), collapse=", "), 
+      ". You may have an incompatible version of GGobi installed.", .call=FALSE)
 		return(ok)
 	}
 
