@@ -1,15 +1,14 @@
-\name{dataset}
-\alias{dataset}
-\title{Generic method for getting dataset}
+\name{as.RGtkObject}
+\alias{as.RGtkObject}
+\title{Cast to RGtk object}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-@keyword internal
+
 }
-\usage{dataset(x, ...)}
+\usage{as.RGtkObject(x)}
 \arguments{
 \item{x}{}
-\item{...}{}
 }
 
 \details{}

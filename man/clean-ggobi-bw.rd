@@ -1,12 +1,12 @@
-\name{GGobiDatatset}
-\alias{GGobiDatatset}
+\name{clean.ggobi}
+\alias{clean.ggobi}
 \title{Clean ggobi}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
 Clean arguments for ggobi
 }
-\usage{GGobiDatatset(x)}
+\usage{clean.ggobi(x)}
 \arguments{
 \item{x}{vector}
 }

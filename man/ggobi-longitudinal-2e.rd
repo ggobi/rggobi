@@ -6,18 +6,24 @@
 \description{
 Instantiate new ggobi with a longitudinal data set.
 }
-\usage{ggobi_longitudinal(data, time = "Time", obsUnit = "ID")}
+\usage{ggobi_longitudinal(data, time=1:rows, id=rep(1, rows))}
 \arguments{
 \item{data}{data frame}
 \item{time}{time variable}
-\item{obsUnit}{id variable}
+\item{id}{id variable}
 }
 
-\details{@arguments data frame
-@arguments time variable
-@arguments id variable
-@keyword dynamic}
+\details{This function allows you to load longitudinal data in
+to GGobi and display it as a line plot.  This is achieved
+by creating edges between adjacent time points, for a given
+id variable.
+
+For best viewing, we recommend that you turn the show points off
+in the options menu.  When brushing, you may also want to use
+categorical brushing on the id variable, so that the entire
+series is selected for an observation.}
 
 \examples{data(Oxboys, package="nlme")
-ggobi_longitudinal(Oxboys, "Occasion", "Subject")}
+ggobi_longitudinal(Oxboys, Occasion, Subject)
+example adding an id, if not present}
 \keyword{dynamic}

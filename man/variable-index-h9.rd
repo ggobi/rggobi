@@ -8,7 +8,7 @@ Return indices corresponding to variable names
 }
 \usage{variable_index(x, names)}
 \arguments{
-\item{x}{ggobiDataset}
+\item{x}{GGobiData}
 \item{names}{variable names}
 }
 

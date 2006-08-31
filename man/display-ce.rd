@@ -1,12 +1,12 @@
-\name{dataset}
-\alias{dataset}
-\title{Generic method for getting dataset}
+\name{display}
+\alias{display}
+\title{Create a new display}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-@keyword internal
+
 }
-\usage{dataset(x, ...)}
+\usage{display(x, ...)}
 \arguments{
 \item{x}{}
 \item{...}{}

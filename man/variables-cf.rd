@@ -1,12 +1,12 @@
-\name{dataset}
-\alias{dataset}
-\title{Generic method for getting dataset}
+\name{variables}
+\alias{variables}
+\title{Get variables}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-@keyword internal
+
 }
-\usage{dataset(x, ...)}
+\usage{variables(x, ...)}
 \arguments{
 \item{x}{}
 \item{...}{}
