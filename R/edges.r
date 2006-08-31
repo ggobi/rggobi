@@ -1,12 +1,20 @@
 # Set edges
 # Set edges for a dataset.
 #
+# In GGobi, and edge dataset is a special type of dataset that has
+# two additional (hidden) columns which specification source and
+# destination row names.  These rownames are compared to the row 
+# names of the dataset in the current plot, and if any match, it
+# is possible to specify this dataset as an edge set to the plotted
+# datset.  When this is done, edges will be drawn between points 
+# specified by the edge dataset.
+# 
 # To remove edges, set edges to NULL.
 # 
 # @arguments GGobiData
 # @arguments matrix or data frame of edges.  First column should be from edge, second column to edge. 
 # @keyword manip
-# 
+# @seealso \code{\link{ggobi_longitudinal}} for creating edges which simulate time series plots
 #X cc<-cor(t(swiss),use="p", method="s") 
 #X ccd<-sqrt(2*(1-cc)) 
 #X a <- which(lower.tri(ccd), arr.ind=TRUE)

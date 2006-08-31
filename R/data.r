@@ -13,7 +13,6 @@ setOldClass("GGobiData")
 # @arguments name of data frame
 # @arguments data.frame, or string to path of file to load
 # @alias $<-.GGobi
-# @returns GGobiData
 # @keyword manip 
 #X g <- ggobi()
 #X g["a"] <- mtcars
@@ -118,6 +117,8 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 	}
 }
 
+# Generic method for getting dataset
+# @keyword internal 
 dataset <- function(x, ...) UseMethod("dataset", x)
 
 # Get ggobi dataset.
@@ -131,9 +132,10 @@ dataset <- function(x, ...) UseMethod("dataset", x)
 # @arguments which dataset to retrieve, an integer for positional matching or a character to match by name
 # @arguments GGobi instance
 # @value A list of \code{GGobiData} objects
-# @seealso \code{link{.ggobi}} 
+# @seealso \code{\link{$.ggobiDataset}} for user level selection of datasets
 # @keyword manip 
 # @keyword internal
+# @alias dataset.character
 dataset.numeric <- function(x, .gobi = ggobi_get()) {
 	refs <- .GGobiCall("getDataset", as.integer(x-1), .gobi=.gobi)
 

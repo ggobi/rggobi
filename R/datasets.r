@@ -23,6 +23,8 @@ print.GGobiData <- function(x, ...) {
 # @arguments dataset
 # @keyword attribute
 # @keyword internal 
+#X g <- ggobi(mtcars)
+#X dim(g[1])
 dim.GGobiData <- function(x) {
 	.GGobiCall("datasetDim", x)
 }

@@ -1,8 +1,20 @@
+# View displays
+# See methods for details
+# 
+# @keyword internal 
 displays <- function(x) UseMethod("displays", x)
-
 
 # Get GGobi displays
 # Gets list of displays in the specified GGobi instance
+# 
+# A display basically corresponds to a window in GGobi.  A display
+# may contain mutliple plots within it.  For example, the scatterplot
+# matrix contains $p \times p$ plots.
+# 
+# Use this function to obtain a reference to a display (they are 
+# numbered in the order they are created) so you can change
+# display mode, set variables (\code{\link{variables.ggobi<-}}),
+# or save a static image to disk.
 # 
 # @seealso \code{\link{display}} to create displays 
 # @alias displays.GGobi
@@ -15,20 +27,16 @@ displays.GGobi <- function(x) {
  .GGobiCall("getDisplays", .gobi = x)
 }
 
-displays.GGobiData <- function(x) {
-}
-
 # Get display dataset
-# Returns a link to the dataset associated with this display.
+# Returns a link to the GGobiData (dataset) object associated with this display.
 # 
-# See \code{\link{[.GGobi}} for more information.
+# See \code{\link{[.GGobi}} for more information on 
 # 
 # @arguments GGobiDisplay object
 # @keyword manip 
 #X g <- ggobi(mtcars)
 #X d <- displays(g)[1]
 #X dataset(d)
-#X identical(dataset(d), g[1])
 dataset.GGobiDisplay <- function(gd) {
  .GGobiCall("getDisplayDataset", gd, .gobi=ggobi(gd))
 }
@@ -37,7 +45,7 @@ dataset.GGobiDisplay <- function(gd) {
 # Returns a link to the GGobi object associated with this display
 # 
 # @arguments GGobiDisplay object
-# @keyword manip
+# @keyword internal
 ggobi.GGobiDisplay <- function(gd) {
 	.GGobiCall("getGGobiForDisplay", gd)
 }
@@ -52,7 +60,7 @@ print.GGobiDisplay <- function(gd) {
 }
 
 # Close display
-# Closes the referenced display.  The variable will be invalid after this call
+# Closes the referenced display.  The R variable will be invalid after this call.
 # 
 # @arguments GGobiDisplay object to close
 # @keyword internal 
@@ -75,6 +83,13 @@ length.GGobiDisplay <- function(gd) {
 
 
 # Save picture of plot (and window) to disk
+# This allows you to make a static copy of a GGobiDisplay.
+# 
+# If you want to make publicaiton quality graphics, you should
+# probably use the DescribeDisplay plugin and package.   This
+# will recreate a GGobiDisplay in R, and so can produce high-quality
+# vector (eg. pdf) output.  See \url{http://www.ggobi.org/describe-display}
+# for more information
 # 
 # @arguments GGobiDisplay to save
 # @arguments path to save to
@@ -82,7 +97,7 @@ length.GGobiDisplay <- function(gd) {
 # @arguments if TRUE, save only plot, otherwise save surrounding GUI elements as well
 # @keyword plot 
 #X g <- ggobi(mtcars)
-#X save_display(get_RGtk2_display(g, 1), "test.png")
+#X save_display(displays(g)[[1]], "test.png")
 ggobi_display_save_picture <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
 	if (!require("RGtk2")) stop("RGtk2 required to save windows images to disk", .call=FALSE)
 
@@ -99,11 +114,27 @@ ggobi_display_save_picture <- function(display, path="ggobi_display.png", filety
 	disp_pixbuf$save(path, filetype)
 }
 
+# Create a new display
+# 
+# @keyword internal 
 display <- function(x, ...) UseMethod("display", x)
 
 # Create a new display
 # Create a new display for the GGobiData object.  
+#
+# This function allows you to create a new display from
+# a GGobiData object.  You will need to specify the type of display you 
+# want ("Scatterplot Display", "Scatterplot Matrix" and  "Parallel Coordinates
+# Display" are the most common), and which variables the plot
+# should be intialised with.  Specifying more than two variables only makes
+# sense for scatterplot matrices and pcps.
 # 
+# Many of the plots used in GGobi (eg. the tours and densities plots) are
+# special modes of the scatterplot display.  You will need to create a 
+# new scatterplot display, change the projection mode to what you want, 
+# and then set the variables.  Hopefully this will be improved in a future
+# version of rggobi.
+#  
 # @seealso \code{\link{ggobi_display_types}} for a list of display types
 # @keyword dynam 
 #X g <- ggobi(mtcars)
@@ -120,54 +151,29 @@ display.GGobiData <- function(x, type="Scatterplot Display", vars=1:ncol(x)) {
 }
 
 
+# Get variables
+# 
 # @keyword internal 
-goptions <- function(x) UseMethod("goptions", x)
-goptions.GGobiDisplay <- function(x) {
-  .GGobiCall("getDisplayOptions", x)
-}
-goptions.GGobi <- function(x) {
-  goptions.GGobiDisplay(NULL)
-}
-
-
-# @keyword internal 
-"goptions<-" <- function(x, value) UseMethod("goptions<-", x)
-
-# Set defaults for display options
-#
-"goptions<-.GGobiGGobi" <- function(x, value) {
-	goptions.GGobiDisplay(NULL) <- value
-}
-
-# Changes the settings of the display options for a display.
-# These options correspond to options available in the display menus in GGobi.
-# 
-# Possible options:
-# 
-#  * "Show Points"
-#  * "Show axes"
-#  * "Show tour axes"
-#  * "Show axes labels"
-#  * "Directed edges"
-#  * "Undirected edges"
-#  * "Arrowheads"
-#  * "Show whiskers" 
-# 
-# @arguments GGobiDisplay to modify
-# @arguments list of new settings
-# @keyword manip 
-"goptions<-.GGobiDisplay" <- function(x, value) {
-	old <- goptions(x)
-	cur <- update(old, value)
-	browser()
-	.GGobiCall("setDisplayOptions", cur, x)
-
-	x
-}
-
 variables <- function(x, ...) UseMethod("variables", x)
+
+# Set variables
+# 
+# @keyword internal 
 "variables<-" <- function(x, value) UseMethod("variables<-", x)
 
+# Get display variables
+# List the variables used in a given display
+# 
+# There are three types of variables in GGobi displays: 
+# x, y, z, which correspond to the labels on the toggle buttons
+# in GGobi.  Most plots have a constrained set of possible options.
+# For example, in tours you can only set x variables, and you must 
+# have at least three.  Or in the rotation plot, you need exactly
+# one x, y, and z variable. 
+# 
+# @arguments GGobiDisplay object
+# @keyword dynamic 
+# @seealso \code{\link{variable<-.GGobiDataset}} for examples
 variables.GGobiDisplay <- function(x) {
   vars <- .GGobiCall("getDisplayVariables", x, .gobi=ggobi(x))
   # convert to names?
@@ -178,10 +184,20 @@ variables.GGobiDisplay <- function(x) {
 # Set display variables 
 # Set display variables with a list of x, y, and z component variable indices.
 # 
+# There are three types of variables in GGobi displays: 
+# x, y, z, which correspond to the labels on the toggle buttons
+# in GGobi.  Most plots have a constrained set of possible options.
+# For example, in tours you can only set x variables, and you must 
+# have at least three.  Or in the rotation plot, you need exactly
+# one x, y, and z variable. 
+#
+# Currently, there is no checking done to ensure that you are
+# sending a sensible set of variables for the given display type.
+# Generally, any invalid choices will be silently ignored.
+# 
 # @arguments GGobiDisplay object
 # @arguments list with x, y and z components
 # @keyword dynamic 
-# 
 #X g <- ggobi(mtcars)
 #X d <- display(g[1], "Parallel Coordinates Display")
 #X variables(d)

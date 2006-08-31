@@ -29,6 +29,18 @@ glyph_color <- glyph_colour <- function(x) UseMethod("glyph_colour", x)
 # Get glyph type.
 # Get glyph type.
 # 
+# Glyph type refers to the shape of the glyph, one of:
+# 
+# \itemize{
+# 	\item a filled circle
+# 	\item an empty circle
+# 	\item a filled square
+# 	\item an empty square
+# 	\item a single pixel
+# 	\item a plus sign
+# 	\item a cross
+# }
+# 
 # @alias glyph_type
 # @arguments GGobiData
 # @keyword dynamic 
@@ -60,6 +72,8 @@ glyph_type.GGobiData <- function(x) {
 # Get glyph size
 # Get glyph size
 # 
+# Glyph size is an integer between 1 and 6.
+# 
 # @alias glyph_size
 # @arguments GGobiData
 # @keyword dynamic 
@@ -71,6 +85,8 @@ glyph_size.GGobiData <- function(x, value) {
 
 # Set glyph size
 # Set glyph size
+# 
+# Glyph size is an integer between 1 and 6.
 # 
 # @alias glyph_size<-
 # @arguments GGobiData
@@ -180,7 +196,8 @@ selected <- function(x) UseMethod("selected", x)
 # Get shadowed status
 # Get the exclusion status of points.
 # 
-# If a point is shadowed it is drawn in a dark gray colour.
+# If a point is shadowed it is drawn in a dark gray colour, 
+# behind all non-shadowed points.  It cannot be selected.
 # 
 # @alias shadowed
 # @arguments ggobiDataget
@@ -195,7 +212,8 @@ shadowed <- function(x) UseMethod("shadowed", x)
 # Set shadowed status
 # Set the exclusion status of points.
 # 
-# If a point is shadowed it is drawn in a dark gray colour.
+# If a point is shadowed it is drawn in a dark gray colour, 
+# behind all non-shadowed points.  It cannot be selected.
 # 
 # @alias shadowed<-
 # @arguments GGobiData
