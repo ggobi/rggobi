@@ -12,6 +12,6 @@ Get list of GGobiDisplay types.  An instance of GGobi must be open
 }
 
 \details{}
-\seealso{\code{\link{ggobi_display_get_type}}}
+\seealso{\code{\link{ggobi_display_make_type}}}
 \examples{}
 \keyword{internal}
