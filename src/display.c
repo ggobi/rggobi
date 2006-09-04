@@ -37,8 +37,8 @@ RS_GGOBI(createDisplay)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ dat
      display = klass->create(false, NULL, d, gg);
 
   if(!display) {
-        PROBLEM "Couldn't create the display"
-	ERROR;
+    PROBLEM "Couldn't create the display"
+    ERROR;
   }
 
   display_add(display, gg);
@@ -286,6 +286,7 @@ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJE
   /* refresh everything */
   varpanel_refresh(display, display->ggobi);
   display_tailpipe(display, FULL,  display->ggobi);
+  RS_GGOBI(limited_event_handle)(-1); /* ensure display is redrawn */
   
   return(ans);
 }

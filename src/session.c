@@ -48,48 +48,6 @@ RS_GGOBI(getGlyphSizes)()
   return(ans);
 }
 
-
-
-USER_OBJECT_ 
-RS_GGOBI(getPModeNames)()
-{
- USER_OBJECT_ ans;
- int n = -1, i;
- const gchar *const *gnames;
- 
- gnames = GGOBI(getPModeNames)(&n); 
-
- PROTECT(ans = NEW_CHARACTER(n));
-
- for(i = 0; i < n; i++) {
-  SET_STRING_ELT(ans, i, COPY_TO_USER_STRING(gnames[i]));
- }
-
- UNPROTECT(1);
-
- return(ans);
-}
-
-USER_OBJECT_ 
-RS_GGOBI(getIModeNames)()
-{
- USER_OBJECT_ ans;
- int n = -1, i;
- const gchar *const *gnames;
- 
- gnames = GGOBI(getIModeNames)(&n); 
-
- PROTECT(ans = NEW_CHARACTER(n));
-
- for(i = 0; i < n; i++) {
-  SET_STRING_ELT(ans, i, COPY_TO_USER_STRING(gnames[i]));
- }
-
- UNPROTECT(1);
-
- return(ans);
-}
-
 USER_OBJECT_
 RS_GGOBI(getVersionInfo)()
 {
