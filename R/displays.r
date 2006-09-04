@@ -144,7 +144,7 @@ display <- function(x, ...) UseMethod("display", x)
 #X display(g[1], "Parallel Coordinates Display")
 #X display(g[1], "Scatterplot Matrix")
 display.GGobiData <- function(x, type="Scatterplot Display", vars=1:ncol(x)) {
-	type <- ggobi_display_get_type(type)
+	type <- ggobi_display_make_type(type)
 	vars <- variable_index(x, vars)
 
 	.GGobiCall("createDisplay", type, vars, x)
@@ -223,6 +223,24 @@ variables.GGobiDisplay <- function(x) {
 	x
 }
 
+"pmode<-" <- function(x, value) UseMethod("pmode<-", x)
+"imode<-" <- function(x, value) UseMethod("imode<-", x)
+
+"imode<-.GGobiDisplay" <- function(x, value) {
+	.GGobiCall("setIMode",  as.character(value), x)
+	x
+}
+"pmode<-.GGobiDisplay" <- function(x, value) {
+	.GGobiCall("setPMode", as.character(value), x)
+	x
+}
+
+pmode <- function(x) UseMethod("pmode", x)
+imode <- function(x) UseMethod("imode", x)
+pmode.GGobiDisplay <- function(x)  .GGobiCall("getPModeName", x)
+imode.GGobiDisplay <- function(x)  .GGobiCall("getIModeName", x)
+
+
 # =========================================================
 # Class methods
 # =========================================================
@@ -231,7 +249,7 @@ variables.GGobiDisplay <- function(x) {
 # Get list of GGobiDisplay types.  An instance of GGobi must be open
 # 
 # @arguments GGobi reference
-# @seealso \code{\link{ggobi_display_get_type}}
+# @seealso \code{\link{ggobi_display_make_type}}
 # @keyword internal
 ggobi_display_types <- function() {
  .GGobiCall("getDisplayTypes", .gobi = ggobi_get())
@@ -241,7 +259,7 @@ ggobi_display_types <- function() {
 # Used to convert between friendly plot name and internal GGobi name.
 # 
 # @keyword internal 
-ggobi_display_get_type <- function(type) {
+ggobi_display_make_type <- function(type) {
 	if(!inherits(type, "GType")) {
     types <- ggobi_display_types()
     id <- match(type, names(types))
@@ -256,3 +274,6 @@ ggobi_display_get_type <- function(type) {
   }
 	type
 }
+
+ggobi_display_pmodes <- function(type) .GGobiCall("getModeNames", type, "pmode")
+ggobi_display_imodes <- function(type) .GGobiCall("getIModeNames", type, "imode")

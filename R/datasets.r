@@ -258,9 +258,10 @@ ggobi_data_add_variable <- function(x, vals, name, ...) {
 	.GGobiCall("addVariable", as.numeric(vals), as.character(name), levels, values, x)
 }
 
-#
-# @keyword internal
+# Remove variable
+# Remove variables from a GGobiData object
 # 
+# @keyword internal
 ggobi_data_remove_variable <- function(x, var) {
 	varId <- variable_index(x, var)
 	if(any(is.na(varId))) stop("Invalid variable")

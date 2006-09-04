@@ -70,7 +70,7 @@ ggobi.default <- function(data, args=character(0), mode=character(0), name = dep
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X names(g)
-namesGGobiGGobi <- function(x) {
+names.GGobi <- function(x) {
  .GGobiCall("getDatasetNames", .gobi=x)
 }
 
