@@ -115,4 +115,7 @@ void RS_GGOBI(flush)();
 USER_OBJECT_ RS_GGOBI(setVariableTypes)(USER_OBJECT_ vars, USER_OBJECT_ values, USER_OBJECT_ datasetId);
 USER_OBJECT_ RS_GGOBI(setAsTimeVariables)(USER_OBJECT_ vars, USER_OBJECT_ values, USER_OBJECT_ datasetId);
 
+USER_OBJECT_ RS_GGOBI(getIModeNames)(USER_OBJECT_ s_type_name);
+USER_OBJECT_ RS_GGOBI(getPModeNames)(USER_OBJECT_ s_type_name);
+
 #endif

@@ -111,7 +111,10 @@ static R_CallMethodDef callMethods[] =
    CENTRY(setNumberedKeyHandler, 3),
    
    CENTRY(setVariableTypes, 4),
-   CENTRY(setAsTimeVariables, 4)  
+   CENTRY(setAsTimeVariables, 4),
+   
+   CENTRY(getPModeNames, 1),
+   CENTRY(getIModeNames, 1)
 
    , {NULL}
 };
