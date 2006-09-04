@@ -227,19 +227,28 @@ variables.GGobiDisplay <- function(x) {
 "imode<-" <- function(x, value) UseMethod("imode<-", x)
 
 "imode<-.GGobiDisplay" <- function(x, value) {
+	if (!(value %in% imodes(x))) stop("imode must be one of: ", paste(imodes(x), collapse=", "))
 	.GGobiCall("setIMode",  as.character(value), x)
 	x
 }
 "pmode<-.GGobiDisplay" <- function(x, value) {
+	if (!(value %in% pmodes(x))) stop("pmode must be one of: ", paste(pmodes(x), collapse=", "))
 	.GGobiCall("setPMode", as.character(value), x)
 	x
 }
 
 pmode <- function(x) UseMethod("pmode", x)
 imode <- function(x) UseMethod("imode", x)
-pmode.GGobiDisplay <- function(x)  .GGobiCall("getPModeName", x)
+pmode.GGobiDisplay <- function(x) .GGobiCall("getPModeName", x)
 imode.GGobiDisplay <- function(x)  .GGobiCall("getIModeName", x)
 
+pmodes <- function(x) UseMethod("pmodes", x)
+imodes <- function(x) UseMethod("imodes", x)
+
+pmodes.GGobiDisplay <- function(x) pmodes(class(x)[1])
+imodes.GGobiDisplay <- function(x) imodes(class(x)[1])
+pmodes.character <- function(x) .GGobiCall("getPModeNames", x)
+imodes.character <- function(x) .GGobiCall("getIModeNames", x)
 
 # =========================================================
 # Class methods
@@ -275,5 +284,3 @@ ggobi_display_make_type <- function(type) {
 	type
 }
 
-ggobi_display_pmodes <- function(type) .GGobiCall("getModeNames", type, "pmode")
-ggobi_display_imodes <- function(type) .GGobiCall("getIModeNames", type, "imode")
