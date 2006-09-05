@@ -6,10 +6,10 @@
 \description{
 Create a new display for the GGobiData object.
 }
-\usage{display.GGobiData(x, type="Scatterplot Display", vars=1:ncol(x))}
+\usage{display.GGobiData(x, pmode="Scatterplot Display", vars=list(X=names(x)))}
 \arguments{
 \item{x}{}
-\item{type}{}
+\item{pmode}{}
 \item{vars}{}
 }
 
@@ -28,8 +28,10 @@ version of rggobi.}
 \seealso{\code{\link{ggobi_display_types}} for a list of display types}
 \examples{g <- ggobi(mtcars)
 display(g[1])
-display(g[1], vars=c(4,5))
-display(g[1], vars=c("drat","hp"))
+display(g[1], vars=list(X=c(4,5)))
+display(g[1], vars=list(X=c"drat","hp")))
 display(g[1], "Parallel Coordinates Display")
+display(g[1], "2D Tour")
+display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
 display(g[1], "Scatterplot Matrix")}
 \keyword{dynam}
