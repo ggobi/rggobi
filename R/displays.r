@@ -139,15 +139,22 @@ display <- function(x, ...) UseMethod("display", x)
 # @keyword dynam 
 #X g <- ggobi(mtcars)
 #X display(g[1])
-#X display(g[1], vars=c(4,5))
-#X display(g[1], vars=c("drat","hp"))
+#X display(g[1], vars=list(X=c(4,5)))
+#X display(g[1], vars=list(X=c"drat","hp")))
 #X display(g[1], "Parallel Coordinates Display")
+#X display(g[1], "2D Tour")
+#X display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
 #X display(g[1], "Scatterplot Matrix")
-display.GGobiData <- function(x, type="Scatterplot Display", vars=1:ncol(x)) {
-	type <- ggobi_display_make_type(type)
+display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x))) {
+	type <- pmodes()[pmode]
 	vars <- variable_index(x, vars)
 
-	.GGobiCall("createDisplay", type, vars, x)
+	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), vars$x, x)
+	if (type != pmode) {
+		pmode(d) <- pmode
+		variables(d) <- vars
+	}
+	d
 }
 
 
@@ -205,13 +212,13 @@ variables.GGobiDisplay <- function(x) {
 #X variables(d)
 "variables<-.GGobiDisplay" <- function(x, value) {
 	# get the old vars
-	prev_vars <- getDisplayVariables(x)
+	prev_vars <- variables(x)
 
 	# Get the indices of the variables the user has specified.
 	d <- dataset(x)
 
 	# build a list of variable indices for each of x, y, and z
-	vars <- lapply(value, function(vars) variable_index(d, vars))
+	vars <- variable_index(d, value)
 
 	# find the vars we don't want anymore
 	prev_vars <- lapply(1:length(vars), function(i) {
@@ -240,9 +247,24 @@ variables.GGobiDisplay <- function(x) {
 pmode <- function(x) UseMethod("pmode", x)
 imode <- function(x) UseMethod("imode", x)
 pmode.GGobiDisplay <- function(x) .GGobiCall("getPModeName", x)
+
+pmodes.default <- function(x) {
+	types <- ggobi_display_types()
+	modes <- lapply(types, pmodes)
+	unlist(mapply(
+		function(modes, type) {
+			all <- append(modes, type)
+			lookup <- rep(type, length=length(all))
+			names(lookup) <- all
+			lookup
+		}, 
+		modes, names(modes), SIMPLIFY=FALSE
+	))
+}
+
 imode.GGobiDisplay <- function(x)  .GGobiCall("getIModeName", x)
 
-pmodes <- function(x) UseMethod("pmodes", x)
+pmodes <- function(x=NULL) UseMethod("pmodes", x)
 imodes <- function(x) UseMethod("imodes", x)
 
 pmodes.GGobiDisplay <- function(x) pmodes(class(x)[1])

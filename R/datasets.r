@@ -78,10 +78,16 @@ names.GGobiData <- function(x, ...) {
 # @keyword internal 
 variable_index <- function(x, names) {
 	if(length(names) == 0) return(integer(0))
+	if(is.integer(names)) return(names)
 	if(is.numeric(names)) return(as.integer(names - 1))
 	if(is.character(names)) return(as.integer(match(names, names(x)) - 1))
 	
-	lapply(names, function(name) variable_index(x, name))
+	def <- list(X = numeric(0), Y=numeric(0), Z=numeric(0))
+	if (!is.null(names$X)) def$X <- names$X
+	if (!is.null(names$Y)) def$Y <- names$Y
+	if (!is.null(names$Z)) def$Z <- names$Z
+	
+	lapply(def, function(name) variable_index(x, name))
 }
 
 # Get row names
