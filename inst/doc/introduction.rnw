@@ -85,7 +85,24 @@ Another function {\tt selected}, returns a logical vector indicating if each poi
 
 Currently, plot control with {\tt rggobi} is rather primitive, and can only create or modify {\tt GGobiDisplay} objects.  A {\tt GGobiDisplay} represents all the plots present in a window.  This may be a single plot, in the case of a scatterplot, or many plots, in the case of scatterplot matrix.
 
-To retrieve a list of displays, use the {\tt displays} function.  To create a new display use the {\tt display} method on a {\tt GGobiData} object.  You'll need to specify the type of plot you want (...) and which variables to include.  Later on, you can get and set the variables in a plot using the {\tt variable} and {\tt variable<-} methods.  Because of the range of plot types in GGobi, variables should be specified as a list containing {\tt x}, {\tt y} and {\tt z} character vectors listing the variable or variables to be set in each component.
+To retrieve a list of displays, use the {\tt displays} function.  To create a new display use the {\tt display} method on a {\tt GGobiData} object.  You'll need to specify the type of plot you want (...) and which variables to include.  Later on, you can get and set the variables in a plot using the {\tt variable} and {\tt variable<-} methods.  Because of the range of plot types in GGobi, variables should be specified as a list containing {\tt X}, {\tt Y} and {\tt Z} character vectors listing the variable or variables to be set in each component.
+
+Types of displays
+
+\begin{tabular}{ccc}
+Name & Description & Variables\\
+\hline
+1D Plot                      & ASH plot & 1 X\\
+XY Plot                      & Scatterplot & 1 X and 1 Y\\
+1D Tour                      & ASH tour & n X variables\\
+Rotation                     & 3d rotation & 1 X, 1 Y and 1 Z\\
+2D Tour                      & 2d tour & n X\\
+2x1D Tour                    & Constrained 2d tour & n X and n Y\\
+Scatterplot Matrix           &  & n X\\
+Parallel Coordinates Display &  & n X\\
+Time Series                  &  & 1 X and n Y\\
+Barchart                     &  & 1 X\\
+\end{tabular}
 
 Another useful feature is the ability to save the contents of a GGobi display to a file on disk.  This is what we used to create the images in this document.  This creates an exact (raster) copy of the GGobi display.  If you want to create publication quality graphics from GGobi, have a look at the {\tt DescribeDisplay} plugin and package at  \url{http://www.ggobi.org/describe-display}.  These create R versions of your GGobi plots.
 
