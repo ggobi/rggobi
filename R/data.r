@@ -7,7 +7,7 @@ setOldClass("GGobiData")
 # Add data to ggobi instance.
 # 
 # This function allows you to add (and eventually) replace
-# ggobi to a ggobi instance.  
+# GGobiData objects in a GGobi instance.  
 # 
 # @arguments ggobi instance
 # @arguments name of data frame

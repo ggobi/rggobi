@@ -26,6 +26,13 @@ setDisplayEdges.ggobi <- function(displays, edgeData, directed = FALSE, on = TRU
  } else
   edgeData = NULL
 
- .GGobiCall("setDisplayEdges", displays, edgeData, as.logical(directed), as.logical(on), .gobi = .gobi)
 }
 
+
+"edges<-.ggobiDisplay" <- function(x, value) {
+	if (is.null(value)) {
+		.GGobiCall("setDisplayEdges", list(x), value, FALSE, FALSE, .gobi = .gobi)
+	} else {
+		.GGobiCall("setDisplayEdges", list(x), value, FALSE, TRUE, .gobi = .gobi)
+	}
+}

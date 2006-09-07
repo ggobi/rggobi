@@ -15,29 +15,35 @@
 
 \title{An introduction to rggobi}
 %\VignetteIndexEntry{An introduction to rggobi}
-\author{Hadley Wickham, Michael Lawrence}
+\author{Hadley Wickham, Michael Lawrence, Debby Swyane, Duncan Temple Lang}
 
 \maketitle
 
-\section*{Introduction}
+\section{Introduction}
 
-GGobi is a tool for highly interactive and dynamic graphic analysis.  It allows you to explore your data with tools such as linked brushing and the tour.  This article assumes some familiarity with GGobi.  If you would like find out more, or see examples of GGobi in use, please see the GGobi webpage: \url{http://www.ggobi.org}.  GGobi exploratory graphics provide a natural complement to R's high quality static graphics and powerful statistical algorithms.  The {\tt rggobi} package connects R to GGobi, so that you can easily transition between analysis and exploration.  Obviously, we can't recreate the dynamic and interactive nature of GGobi in this document so we recommend that you try these examples out at home.  
+GGobi is a tool for highly interactive and dynamic graphic analysis.  It allows you to explore your data with tools such as linked brushing and the grand tour.  Linked brushing is a key component of interactive graphics, and is necessary as soon as you have more than one plot of the same data.  Linked brushing lets you identify which points in different plots correspond to the same underlying  observation.  It has many .  The grand tour makes up the dynamic component of GGobi.  If you imagine your data as points in a $p$ dimensional space, the grand tour randomly and smoothly rotates your data and projects it down on a 2D plane.  With some training, the grand tour allows you to see high-dimensional phenomenon that you can't otherwise.  
 
-The current version of {\tt rggobi} focuses on three main tasks:
+This article does assumes some familiarity with GGobi.  If you would like find out more, or see examples of GGobi in use, please see the GGobi webpage: \url{http://www.ggobi.org}.  The website also has demos of linked brushing and the grand tour at \url{http://www.ggobi.org/docs}.  GGobi's exploratory graphics provide a natural complement to R's high quality static graphics and powerful statistical algorithms.  The {\tt rggobi} package connects R to GGobi, so that you can easily transition between analysis and exploration.  This article shows you how you can starting using {\tt rggobi} now, and demonstrates some ways to gain new insight into your data using a combination of analysis and visualisation.
+
+We will introduce the three main components of {\tt rggobi}, with examples of how you might use them in day-to-day tasks:
 
 \begin{itemize}
 	\item Getting data into and out of GGobi.
-	\item Modifying observation-level attributes, or manual brushing.
+	\item Modifying observation-level attributes, or automatic brushing.
 	\item Basic plot control.
 \end{itemize}
 
-We'll discuss each of these in turn, providing the basic syntax and some examples of what you can do.  We have tried to ensure that all the functions are well documented, so you can get more details and examples through the online help: {\tt ?ggobi}.
+\noindent We'll discuss each of these in turn, providing the basic syntax and some examples of what you can do. We will conclude with a case study of using {\tt rggobi} for XXX. We have tried to ensure that all the functions are well documented, so you can get more details and examples through the online help: {\tt ?ggobi}.
 
-\section*{Data}\label{sec:data}
+\section{Data}\label{sec:data}
 
-Getting data into GGobi is really easy: {\tt g <- ggobi(mtcars)}, which returns a {\tt GGobi} object.  Getting data out isn't much harder, you just need to index that {\tt GGobi} object: by position, {\tt g[1]}, or by name, {\tt g["mtcars"]}.  These return {\tt GGobiData} objects which are linked to the data in GGobi.  These act just like a regular data frame, except all changes will be synced with GGobi.  You can get a static copy of the data using {\tt as.data.frame}, or save the dataset in GGobi's native XML format using {\tt ggobi\_save\_xml}.
+Getting data from R into GGobi is easy: {\tt g <- ggobi(mtcars)}, which returns a {\tt GGobi} object.  Getting data out isn't much harder, you just need to index that {\tt GGobi} object: by position, {\tt g[[1]]}, or by name, {\tt g[["mtcars"]]}, {\tt g\$mtcars}.  These return {\tt GGobiData} objects which are linked to the data in GGobi.  These act just like a regular data frame, except all changes will be synced with GGobi.  You can get a static copy of the data using {\tt as.data.frame}, or save the dataset in GGobi's native XML format using {\tt ggobi\_save\_xml}.
 
-As changes to the data are updated in GGobi immediately, you can use these functions to create animations.  This example shows simple random motion. [Any better suggestions?]
+One use of GGobi is to look for multivariate outliers.  It is customary to look at uni- or bivariate plots to look for uni- or bivariate outliers, but higher dimensional outliers may go unnoticed.  Looking for these outliers is easy to do with the tour.  Change to tour view and then select all the variables.  Watch the tour and look for points that are far away from the others in some projections.
+
+[Picture here ]
+
+As changes to the data are updated in GGobi immediately, you can use these functions to create animations.  This example scrolls through a long time series. [Update example]
 
 \begin{verbatim}
 rw <- data.frame(
@@ -55,41 +61,58 @@ while(TRUE) {
 
 [Picture here]
 
-Adding more datasets to the GGobi instance is easy too: {\tt g["mtcars2"] <- mtcars} will add another dataset named ``mtcars2''.  You can also load any file that GGobi recognises by passing the path to the file instead.  Along with the {\tt ggobi\_find\_file} function, which locates files in the GGobi installation directory, this makes it easy to load GGobi sample data.  This example loads the olives dataset included with GGobi.
+Adding more datasets to the GGobi instance is easy too: {\tt g\$mtcars2 <- mtcars} will add another dataset named ``mtcars2''.  You can also load any file that GGobi recognises by passing the path to the file.  In conjunction with {\tt ggobi\_find\_file}, which locates files in the GGobi installation directory, this makes it easy to load GGobi sample data.  This example loads the olives dataset included with GGobi.
 
 \begin{alltt}
 ggobi(ggobi_find_file("data", "olives.csv"))
 \end{alltt}
 
-Edge data sets are a special type of dataset in GGobi.  Instead of representing points, the represent connections, or edges, between points.  An edge dataset has an two invisible columns which store the names of the source and destination observations.  You can convert a regular dataset into a edge dataset with the {\tt edges} function.  This takes a matrix with two columns, source and destination, containing the names of points to join.  Typically, you will need to add a new data frame with number of rows equal to the number of edges you want to add.  Rggobi also provides a convenient function for creating edge sets for longitudinal data, {\tt ggobi\_longitudinal}.  This will link together observations in sequential time order and is great for looking at time series or longitudinal data.
+Edge data sets are a special type of dataset in GGobi.  Instead of representing points, they represent connections, or edges, between points.  
 
-[Picture here]
+Example here.
 
-\section*{Modifying observation-level attributes, or manual brushing}\label{sec:meta_data}
+How is this stored in GGobi?  An edge dataset has an two invisible columns which store the names of the source and destination observations.  You can convert a regular dataset into a edge dataset with the {\tt edges} function.  This takes a matrix with two columns, source and destination, containing the names of points to join.  Typically, you will need to add a new data frame with number of rows equal to the number of edges you want to add.  
 
-Brushing lets you interactively change the attributes of observations in a dataset.  You can also do this manually, from within R, using the following functions:
+A special case of data with edges is time series or longitudinal data, in which observations adjacent in time are combined 
+Rggobi also provides a convenient function for creating edge sets for longitudinal data, {\tt ggobi\_longitudinal}.  This will link together observations in sequential time order and is good for looking at time series or longitudinal data.
+
+This example uses the {\tt stormtracks} data included in {\tt rggobi}.  {\tt ggobi\_longitudinal} automatically turns points off and edges on.  If you want to display the time points as well, select ``Show Points'' in the ``Options'' menu.
+
+\begin{alltt}
+ggobi_longitudinal(stormtracks, seasday, id)
+\end{alltt}
+
+For straight time series data (already in order, with no grouping variables), just use {\tt ggobi\_longitudinal} with no other arguments
+
+\includegraphics[width=2.5in]{stormtracks.png}
+
+\section{Modifying observation-level attributes, or automatic brushing}\label{sec:meta_data}
+
+Brushing lets you interactively change the colour, shape and size of points on plot.  Because brushing is linked, these changes will propagate to every plot where the brushed observations are displayed.  Brushing also includes shadowing, so that points sit in the background and have less visual impact, and exclusion.  You can also brush points ``automatically'', from R, using the following functions:
 
 \begin{itemize}
-	\item colour, with {\tt glyph\_colour}
-	\item size, with  {\tt glyph\_size}
-	\item shape, with {\tt glyph\_shape}
-	\item shadowed, with {\tt shadowed}
-	\item excluded, with {\tt excluded}
+	\item change glyph colour with {\tt glyph\_colour}
+	\item change glyph size, with  {\tt glyph\_size}
+	\item change glyph shape with {\tt glyph\_shape}
+	\item shadow and unshadow points with {\tt shadowed}
+	\item exclude and include points with {\tt excluded}
 \end{itemize}
 
-Each of these get or set the current values for the specified {\tt GGobiData}.  The getters are useful for retrieving information that you have created while brushing in GGobi, and the setters can be used to change the appearance of points based on model information, or to create animations.  
+Each of these get or set the current values for the specified {\tt GGobiData}.  The getters are useful for retrieving information that you have created while brushing in GGobi, and the setters can be used to change the appearance of points based on model information, or to create animations.  They can also be used to store the results of a complicated sequence of brushing steps so they can be repeated later.
+
+This example demonstrates the use of the some of these functions to highlight points of interest from a regression.
 
 Another function {\tt selected}, returns a logical vector indicating if each point is currently under the brush.  This could be used to further explore interesting or unusual points.
 
-\section*{Plots}\label{sec:plots}
+\section{Displays}\label{sec:display}
 
-Currently, plot control with {\tt rggobi} is rather primitive, and can only create or modify {\tt GGobiDisplay} objects.  A {\tt GGobiDisplay} represents all the plots present in a window.  This may be a single plot, in the case of a scatterplot, or many plots, in the case of scatterplot matrix.
+A {\tt GGobiDisplay} represents related plots in a window, and corresponds to a plot window in GGobi.  With {\tt rggobi} you can to create new displays, change the interaction or projection mode of an existing plot, or change which variables are selected. 
 
 To retrieve a list of displays, use the {\tt displays} function.  To create a new display use the {\tt display} method on a {\tt GGobiData} object.  You'll need to specify the type of plot you want (...) and which variables to include.  Later on, you can get and set the variables in a plot using the {\tt variable} and {\tt variable<-} methods.  Because of the range of plot types in GGobi, variables should be specified as a list containing {\tt X}, {\tt Y} and {\tt Z} character vectors listing the variable or variables to be set in each component.
 
 Types of displays
 
-\begin{tabular}{ccc}
+\begin{tabular}{lll}
 Name & Description & Variables\\
 \hline
 1D Plot                      & ASH plot & 1 X\\
@@ -106,7 +129,17 @@ Barchart                     &  & 1 X\\
 
 Another useful feature is the ability to save the contents of a GGobi display to a file on disk.  This is what we used to create the images in this document.  This creates an exact (raster) copy of the GGobi display.  If you want to create publication quality graphics from GGobi, have a look at the {\tt DescribeDisplay} plugin and package at  \url{http://www.ggobi.org/describe-display}.  These create R versions of your GGobi plots.
 
-\section*{Conclusion}\label{sec:conclusion}
+\section{Using RGtk2 with rggobi}\label{sec:using_rgtk2_with_rggobi}
+
+Pong?
+
+\section{Case study}\label{sec:case_study}
+
+
+\section{Future work}\label{sec:future_work}
+
+
+\section{Conclusion}\label{sec:conclusion}
 
 GGobi is a powerful tool for data exploration, and the integration with R that {\tt rggobi} allows a seamless workflow between analysis and exploration.  Much of the potential of {\tt rggobi} has yet to be explored, but some ideas are demonstrated in the {\tt classifly} package, \url{http://had.co.nz/classifly} which visualises high-dimensional classification boundaries.  We are also keen to hear about your work---if you develop a package using {\tt rggobi} please let us know so we can highlight your work on the GGobi homepage.
 
