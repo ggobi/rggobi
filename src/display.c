@@ -304,6 +304,109 @@ RS_GGOBI(getDisplayDataset)(USER_OBJECT_ dpy)
 }
 
 USER_OBJECT_
+RS_axesValueMatrix(displayd *display) 
+{
+  // currently only works for Tour2D
+  int n = display->t2d.nsubset, k, j;
+  vartabled *vt;
+  USER_OBJECT_ matrix;
+  
+  PROTECT(matrix = allocMatrix(REALSXP, n, 4));
+  for (k = 0; k < n; k++) {
+    j = display->t2d.subset_vars.els[k];
+    vt = vartable_element_get (j, display->d);
+    REAL(matrix)[k] = display->t2d.F.vals[0][j]; // x coeff
+    REAL(matrix)[k+n] = display->t2d.F.vals[1][j]; // y coeff
+    REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; // range
+    REAL(matrix)[k+3*n] = j+1; // variable index
+  }
+  
+  UNPROTECT(1);
+  
+  return(matrix);
+}
+
+void
+RS_GGOBI_INTERNAL(getTourVectorsFromMode)(ProjectionMode mode, gdouble **x, gdouble **y)
+{
+  tour *t;
+  switch(mode) {
+    case TOUR1D:
+      t = &display->t1d;
+    break;
+    case TOUR2D:
+      t = &display->t2d;
+    break;
+    case TOUR2D3:
+      t = &display->t2d3;
+    break;
+    case TOURCORR:
+      t = &display->tcorr1;
+    break;
+    default:
+      g_critical("Specified mode '%s' is not a tour", asCString(s_mode_name));
+      return NULL_USER_OBJECT;
+  }
+  
+  *x = t->F.vals[0];
+  *y = NULL;
+  if (mode == TOURCORR)
+    *y = display->tcorr2.F.vals[0];
+  else if (mode != TOUR1D)
+    *y = t->F.vals[1];
+}
+
+/* Expects a 2 column matrix with the X and Y coefficients for each var */
+USER_OBJECT_
+RS_GGOBI(setTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
+  USER_OBJECT_ matrix)
+{
+  displayd *display = toDisplay(s_display);
+  ProjectionMode mode = GGOBI(getPModeId)(asCString(s_mode_name));
+  gint k;
+  gdouble *x, *y;
+  
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  
+  RS_GGOBI_INTERNAL(getTourVectorsFromMode)(mode, &x, &y);
+  
+  for (k = 0; k < display->d->n_cols; k++) {
+    x[k] = REAL(matrix)[k];
+    if (y)
+      y[k] = REAL(matrix)[k+n];
+  }
+  
+  return NULL_USER_OBJECT;
+}
+
+USER_OBJECT_
+RS_GGOBI(getTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
+{
+	displayd *display = toDisplay(s_display);
+  ProjectionMode mode = GGOBI(getPModeId)(asCString(s_mode_name));
+  gint k;
+  USER_OBJECT_ matrix;
+  gdouble *x, *y;
+  
+  g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  
+  RS_GGOBI_INTERNAL(getTourVectorsFromMode)(mode, &x, &y);
+  
+  PROTECT(matrix = allocMatrix(REALSXP, n, 3));
+  for (k = 0; k < display->d->n_cols; k++) {
+    vartabled *vt = vartable_element_get (k, display->d);
+    REAL(matrix)[k] = x[k]; // x coeff
+    if (y)
+      REAL(matrix)[k+n] = y[k]; // y coeff
+    REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; // range
+  }
+  
+  UNPROTECT(1);
+  
+  return matrix;
+}
+
+USER_OBJECT_
 RS_displayInstance(displayd *display)
 {
   USER_OBJECT_ ans;
