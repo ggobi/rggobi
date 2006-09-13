@@ -118,4 +118,7 @@ USER_OBJECT_ RS_GGOBI(setAsTimeVariables)(USER_OBJECT_ vars, USER_OBJECT_ values
 USER_OBJECT_ RS_GGOBI(getIModeNames)(USER_OBJECT_ s_type_name);
 USER_OBJECT_ RS_GGOBI(getPModeNames)(USER_OBJECT_ s_type_name);
 
+USER_OBJECT_ RS_GGOBI(setPlotScale)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ rdisplay, USER_OBJECT_ plot);
+USER_OBJECT_ RS_GGOBI(getPlotScale)(USER_OBJECT_ rdisplay, USER_OBJECT_ plot);
+
 #endif
