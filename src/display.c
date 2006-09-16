@@ -327,7 +327,8 @@ RS_axesValueMatrix(displayd *display)
 }
 
 void
-RS_GGOBI_INTERNAL(getTourVectorsFromMode)(ProjectionMode mode, gdouble **x, gdouble **y)
+RS_INTERNAL_GGOBI(getTourVectorsFromMode)(displayd *display, ProjectionMode mode, 
+  gdouble **x, gdouble **y)
 {
   tour *t;
   switch(mode) {
@@ -340,17 +341,17 @@ RS_GGOBI_INTERNAL(getTourVectorsFromMode)(ProjectionMode mode, gdouble **x, gdou
     case TOUR2D3:
       t = &display->t2d3;
     break;
-    case TOURCORR:
+    case COTOUR:
       t = &display->tcorr1;
     break;
     default:
-      g_critical("Specified mode '%s' is not a tour", asCString(s_mode_name));
-      return NULL_USER_OBJECT;
+      g_critical("Specified mode '%s' is not a tour", GGOBI(getPModeName)(mode));
+      return;
   }
   
   *x = t->F.vals[0];
   *y = NULL;
-  if (mode == TOURCORR)
+  if (mode == COTOUR)
     *y = display->tcorr2.F.vals[0];
   else if (mode != TOUR1D)
     *y = t->F.vals[1];
@@ -363,14 +364,16 @@ RS_GGOBI(setTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
 {
   displayd *display = toDisplay(s_display);
   ProjectionMode mode = GGOBI(getPModeId)(asCString(s_mode_name));
-  gint k;
-  gdouble *x, *y;
+  gint k, n;
+  gdouble *x = NULL, *y = NULL;
   
   g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
   
-  RS_GGOBI_INTERNAL(getTourVectorsFromMode)(mode, &x, &y);
+  RS_INTERNAL_GGOBI(getTourVectorsFromMode)(display, mode, &x, &y);
+  g_return_val_if_fail(x != NULL && y != NULL, NULL_USER_OBJECT);
   
-  for (k = 0; k < display->d->n_cols; k++) {
+  n = display->d->ncols;
+  for (k = 0; k < n; k++) {
     x[k] = REAL(matrix)[k];
     if (y)
       y[k] = REAL(matrix)[k+n];
@@ -384,16 +387,18 @@ RS_GGOBI(getTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
 {
 	displayd *display = toDisplay(s_display);
   ProjectionMode mode = GGOBI(getPModeId)(asCString(s_mode_name));
-  gint k;
+  gint k, n;
   USER_OBJECT_ matrix;
-  gdouble *x, *y;
+  gdouble *x = NULL, *y = NULL;
   
   g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
   
-  RS_GGOBI_INTERNAL(getTourVectorsFromMode)(mode, &x, &y);
+  RS_INTERNAL_GGOBI(getTourVectorsFromMode)(display, mode, &x, &y);
+  g_return_val_if_fail(x != NULL && y != NULL, NULL_USER_OBJECT);
   
+  n = display->d->ncols;
   PROTECT(matrix = allocMatrix(REALSXP, n, 3));
-  for (k = 0; k < display->d->n_cols; k++) {
+  for (k = 0; k < n; k++) {
     vartabled *vt = vartable_element_get (k, display->d);
     REAL(matrix)[k] = x[k]; // x coeff
     if (y)
