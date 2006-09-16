@@ -17,7 +17,8 @@
 # @keyword dynamic 
 #X data(Oxboys, package="nlme")
 #X ggobi_longitudinal(Oxboys, Occasion, Subject)
-#X example adding an id, if not present
+#X ggobi_longitudinal(stormtracks, seasday, id)
+#X ggobi_longitudinal(data.frame(x=1:100, y=sin(1:100)))
 ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
 	rows <- nrow(data)
 	time <- eval(substitute(time), data)
@@ -32,6 +33,23 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
 	edges[!matching, ] <- NA
 	
 	edges(g[1]) <- edges 
+  d <- displays(g)[[1]]
+  edges(d) <- g[1]
 
 	invisible(g)
+}
+
+ggobi_pcp <- function(data, type="range") {
+  if (!require(reshape)) stop("Must have reshape package installed")
+  data$CASEID <- factor(1:nrow(data))
+  datam <- melt(rescaler(data, type=type), id = "CASEID")
+  
+  g <- ggobi_longitudinal(datam, id=CASEID)
+  g$raw <- data
+
+  d <- displays(g)[[1]]
+  edges(d) <- g[1]
+  variables(d) <- list(X="variable", Y="value")
+  
+  invisible(g)
 }

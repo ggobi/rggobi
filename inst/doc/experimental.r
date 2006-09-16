@@ -4,11 +4,28 @@
 df <- data.frame(x=1:10000, y=sin(1:10000 * pi/20) + runif(10000, max=0.5))
 g <- ggobi_longitudinal(df[1:100, ])
 
-
 df_g <- g[1]
 for(i in 1:2000) {
 	df_g[, 2] <- df[i:(i + 99), 2]
 }
+
+
+# Edges example
+# ------------------------------------
+
+library(graph)
+library(SNAData)
+
+data(business)
+data(marital)
+data(florentineAttrs)
+
+florentine <- data.frame(florentineAttrs, business.links = degree(business), marital.links = degree(marital))
+
+g <- ggobi(florentine)
+edges(g) <- business
+edges(g) <- marital
+
 
 
 # Maximum likelihood

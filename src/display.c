@@ -359,7 +359,7 @@ RS_INTERNAL_GGOBI(getTourVectorsFromMode)(displayd *display, ProjectionMode mode
 
 /* Expects a 2 column matrix with the X and Y coefficients for each var */
 USER_OBJECT_
-RS_GGOBI(setTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
+RS_GGOBI(setTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
   USER_OBJECT_ matrix)
 {
   displayd *display = toDisplay(s_display);
@@ -383,7 +383,7 @@ RS_GGOBI(setTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
 }
 
 USER_OBJECT_
-RS_GGOBI(getTourProjections)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
+RS_GGOBI(getTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
 {
 	displayd *display = toDisplay(s_display);
   ProjectionMode mode = GGOBI(getPModeId)(asCString(s_mode_name));

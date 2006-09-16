@@ -1,3 +1,28 @@
+"edges<-" <- function(x, value) UseMethod("edges<-", x)
+
+"edges<-.GGobi" <- function(x, value) {
+  name <- deparse(substitute(value))
+  if(is(value, "graphNEL")) {
+    value <- t(edgeMatrix(value))
+  }
+
+  browser()
+  x[[name]] <- data.frame(id=1:nrow(value))
+  edges(x[[name]]) <- value
+
+  x
+}
+
+"edges<-.GGobiDisplay" <- function(x, value) {
+	if (is.null(value)) {
+		.GGobiCall("setDisplayEdges", list(x), value, FALSE, FALSE)
+	} else {
+		.GGobiCall("setDisplayEdges", list(x), value, FALSE, TRUE)
+	}
+	x
+}
+
+
 # Set edges
 # Set edges for a dataset.
 #
@@ -12,7 +37,7 @@
 # To remove edges, set edges to NULL.
 # 
 # @arguments GGobiData
-# @arguments matrix or data frame of edges.  First column should be from edge, second column to edge. 
+# @arguments matrix, data frame, or graph containing of edges.  First column should be from edge, second column to edge. 
 # @keyword manip
 # @seealso \code{\link{ggobi_longitudinal}} for creating edges which simulate time series plots
 #X cc<-cor(t(swiss),use="p", method="s") 
@@ -26,11 +51,16 @@
 #X edges(gg$cor) <- cbind(src, dest)
 #X edges(gg$cor)
 #X edges(gg$cor) <- NULL
-"edges<-" <- function(x, value) {
+"edges<-.GGobiData" <- function(x, value) {
   if (is.null(value)) return(invisible(.GGobiCall("setEdges", character(0), character(0), FALSE, x)))
   
+  if(is(value, "graphNEL")) {
+    value <- t(edgeMatrix(value))
+  }
+
   src  <- value[,1]
-  dest <- value[,2]
+  dest <- value[,2]    
+  
 
 	if (is.numeric(src)) src <- rownames(x)[src]
 	if (is.numeric(dest)) dest <- rownames(x)[dest]

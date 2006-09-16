@@ -41,7 +41,7 @@ RS_GGOBI(getPlotScale)(USER_OBJECT_ rdisplay, USER_OBJECT_ plot)
   g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
   
   sp = GGOBI(getPlot)(display, INTEGER_DATA(plot)[0]-1);
-  g_return_val_if_fail(GGOBI_IS_SPLOT(display), NULL_USER_OBJECT);
+  g_return_val_if_fail(GGOBI_IS_SPLOT(sp), NULL_USER_OBJECT);
   
   ans = NEW_NUMERIC(2);
   NUMERIC_DATA(ans)[0] = sp->scale.x;
