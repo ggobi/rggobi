@@ -379,6 +379,9 @@ RS_GGOBI(setTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
       y[k] = REAL(matrix)[k+n];
   }
   
+  display_tailpipe (display, FULL, display->ggobi);
+  varcircles_refresh (display->d, display->ggobi);
+  
   return NULL_USER_OBJECT;
 }
 
