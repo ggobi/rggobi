@@ -99,7 +99,7 @@ clean.ggobi <- function(x) {
 # @seealso \code{\link{summary.ggobi}}
 # @keyword dynamic 
 # @keyword internal 
-printGGobiGGobi <- function(x, ...) {
+print.GGobi <- function(x, ...) {
 	print(summary(x))
 }
 
@@ -110,7 +110,7 @@ printGGobiGGobi <- function(x, ...) {
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X summary(g)
-summaryGGobiGGobi <- function(object, ...) {
+summary.GGobi <- function(object, ...) {
   ans <- .GGobiCall("getDescription", .gobi = object)
 	if (is.null(ans)) return("Nothing known about this GGobi instance")
 	
@@ -135,7 +135,7 @@ summaryGGobiGGobi <- function(object, ...) {
 #X g2 <- ggobi(mtcars)
 #X close(g2)
 #X close(ggobi_get())
-closeGGobiGGobi <- function(con, ...) {
+close.GGobi <- function(con, ...) {
   ok <- .GGobiCall("close", .gobi = con)
   invisible(ok)
 }

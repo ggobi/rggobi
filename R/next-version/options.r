@@ -18,7 +18,7 @@ goptions.GGobi <- function(x) {
 
 # Set defaults for display options
 #
-"goptions<-.GGobiGGobi" <- function(x, value) {
+"goptions<-.GGobi" <- function(x, value) {
 	goptions.GGobiDisplay(NULL) <- value
 }
 
