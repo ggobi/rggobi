@@ -1,12 +1,12 @@
-\name{namesGGobiGGobi}
-\alias{namesGGobiGGobi}
+\name{names.GGobi}
+\alias{names.GGobi}
 \title{GGobi names}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
 Get dataset names
 }
-\usage{namesGGobiGGobi(x)}
+\usage{names.GGobi(x)}
 \arguments{
 \item{x}{}
 }

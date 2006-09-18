@@ -1,12 +1,12 @@
-\name{closeGGobiGGobi}
-\alias{closeGGobiGGobi}
+\name{close.GGobi}
+\alias{close.GGobi}
 \title{Close GGobi instance}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
 Terminates and discards a ggobi instance
 }
-\usage{closeGGobiGGobi(con, ...)}
+\usage{close.GGobi(con, ...)}
 \arguments{
 \item{con}{ggobi object to close}
 \item{...}{ignored and for compatability generic function.}

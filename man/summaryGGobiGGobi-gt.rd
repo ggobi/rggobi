@@ -1,12 +1,12 @@
-\name{summaryGGobiGGobi}
-\alias{summaryGGobiGGobi}
+\name{summary.GGobi}
+\alias{summary.GGobi}
 \title{GGobi summary}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
 Get a description of the global state of the GGobi session.
 }
-\usage{summaryGGobiGGobi(object, ...)}
+\usage{summary.GGobi(object, ...)}
 \arguments{
 \item{object}{ggobi object}
 \item{...}{}
