@@ -206,8 +206,8 @@ summary.GGobiData <- function(object, ...) {
 	# figure out if any new columns have been added and add them.
 	
 	data[i, j] <- value
-	for(i in unique(j)) {
-		ggobi_data_set_variable(x, data[,i], i)
+	for(var in unique(vars)) {
+		x[[vars]] <- data[[vars]]
 	}
 	x
 }
@@ -220,8 +220,8 @@ summary.GGobiData <- function(object, ...) {
 		ggobi_data_add_variable(x, value, i)
 	} else {
 		ggobi_data_set_variable(x, value, i)
-		
 	}
+	x
 }
 
 

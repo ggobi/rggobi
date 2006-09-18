@@ -122,10 +122,6 @@ Barchart                     & 1 X\\
 
 Another useful feature is the ability to save the contents of a GGobi display to a file on disk.  This is what we used to create the images in this document.  This creates an exact (raster) copy of the GGobi display.  If you want to create publication quality graphics from GGobi, have a look at the {\tt DescribeDisplay} plugin and package at  \url{http://www.ggobi.org/describe-display}.  These create R versions of your GGobi plots.
 
-\section{Using RGtk2 with rggobi}\label{sec:using_rgtk2_with_rggobi}
-
-You can also use {\tt rggobi} in conjunction with RGtk2 to create custom graphical user interfaces (GUIs).   
-
 \section{Case study}\label{sec:case_study}
 
 
