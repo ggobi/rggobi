@@ -6,10 +6,10 @@
 \description{
 @keyword internal
 }
-\usage{dataset(x, ...)}
+\usage{dataset(x, .gobi = ggobi_get())}
 \arguments{
 \item{x}{}
-\item{...}{}
+\item{.gobi}{}
 }
 
 \details{}

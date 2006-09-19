@@ -142,7 +142,10 @@ glyph_colour.GGobiData <- function(x)  {
 # Sampling, selection, hiding, exclusion
 # ============================================================================ 
 
-
+# Get and set exclusion
+#
+# @keyword internal
+# @alias excluded<-
 excluded <- function(x) UseMethod("excluded", x)
 "excluded<-" <- function(x, value) UseMethod("excluded<-", x)
 
@@ -152,7 +155,6 @@ excluded <- function(x) UseMethod("excluded", x)
 # 
 # If a point is excluded it is not drawn.
 # 
-# @alias excluded
 # @arguments ggobiDataget
 # @keyword dynamic 
 # @seealso \code{\link{excluded<-}}
@@ -165,7 +167,6 @@ excluded.GGobiData <- function(x) {
 # 
 # If a point is excluded it is not drawn.
 # 
-# @alias excluded<-
 # @arguments GGobiData
 # @arguments logical vector 
 # @keyword dynamic 

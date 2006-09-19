@@ -194,6 +194,8 @@ summary.GGobiData <- function(object, ...) {
 # @arguments new values
 # @keyword manip 
 # @keyword internal 
+# @alias $<-.GGobiData
+# @alias [[<-.GGobiData
 #
 #X g <- ggobi(mtcars)
 #X x <- g["mtcars"]

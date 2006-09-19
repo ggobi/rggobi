@@ -27,7 +27,6 @@ edges(g) <- business
 edges(g) <- marital
 
 
-
 # Maximum likelihood
 # ------------------------------------
 

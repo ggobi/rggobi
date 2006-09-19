@@ -1,7 +1,54 @@
+# Create a new display
+# 
+# @keyword internal 
+display <- function(x, ...) UseMethod("display", x)
+
+# Create a new display
+# Create a new display for the GGobiData object.  
+#
+# This function allows you to create a new display from
+# a GGobiData object.  You will need to specify the type of display you 
+# want ("Scatterplot Display", "Scatterplot Matrix" and  "Parallel Coordinates
+# Display" are the most common), and which variables the plot
+# should be intialised with.  Specifying more than two variables only makes
+# sense for scatterplot matrices and pcps.
+# 
+# Many of the plots used in GGobi (eg. the tours and densities plots) are
+# special modes of the scatterplot display.  You will need to create a 
+# new scatterplot display, change the projection mode to what you want, 
+# and then set the variables.  Hopefully this will be improved in a future
+# version of rggobi.
+#  
+# @argments GGobiData object
+# @arguments projection mode to use
+# @arguments variables to display, see \code{\link{variables.GGobiDisplay}} for details
+# @seealso \code{\link{ggobi_display_types}} for a list of display types
+# @keyword dynamic
+#X g <- ggobi(mtcars)
+#X display(g[1])
+#X display(g[1], vars=list(X=4, Y=5))
+#X display(g[1], vars=list(X="drat", Y="hp"))
+#X display(g[1], "Parallel Coordinates Display")
+#X display(g[1], "2D Tour")
+#X display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
+#X display(g[1], "Scatterplot Matrix")
+display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x)), ...) {
+	type <- pmodes()[pmode]
+	vars <- variable_index(x, vars)
+
+	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), vars$X, x)
+	if (type != pmode) {
+		pmode(d) <- pmode
+	}
+	variables(d) <- vars
+	d
+}
+
+
 # Get variables
 # 
 # @keyword internal 
-variables <- function(x, ...) UseMethod("variables", x)
+variables <- function(x) UseMethod("variables", x)
 
 # Set variables
 # 
@@ -12,15 +59,16 @@ variables <- function(x, ...) UseMethod("variables", x)
 # List the variables used in a given display
 # 
 # There are three types of variables in GGobi displays: 
-# x, y, z, which correspond to the labels on the toggle buttons
+# X, Y, Z, which correspond to the labels on the toggle buttons
 # in GGobi.  Most plots have a constrained set of possible options.
-# For example, in tours you can only set x variables, and you must 
+# For example, in tours you can only set X variables, and you must 
 # have at least three.  Or in the rotation plot, you need exactly
-# one x, y, and z variable. 
+# one X, Y, and Z variable.   You can figure out what these 
+# conditions are by using the toggle buttons in GGobi.
 # 
 # @arguments GGobiDisplay object
 # @keyword dynamic 
-# @seealso \code{\link{variable<-.GGobiDataset}} for examples
+# @seealso \code{\link{variables<-.GGobiDisplay}} for examples
 variables.GGobiDisplay <- function(x) {
   vars <- .GGobiCall("getDisplayVariables", x, .gobi=ggobi(x))
   # convert to names?
@@ -51,21 +99,12 @@ variables.GGobiDisplay <- function(x) {
 #X variables(d) <- list(x=1:8)
 #X variables(d)
 "variables<-.GGobiDisplay" <- function(x, value) {
-	# get the old vars
-	prev_vars <- variables(x)
-
-	# Get the indices of the variables the user has specified.
 	d <- dataset(x)
+	prev_vars <- variable_index(d, variables(x))
+	new_vars <- variable_index(d, value)
 
-	# build a list of variable indices for each of x, y, and z
-	vars <- variable_index(d, value)
+  prev_vars <- mapply(setdiff, prev_vars, new_vars, SIMPLIFY=FALSE)
 
-	# find the vars we don't want anymore
-	prev_vars <- lapply(1:length(vars), function(i) {
-	  pv <- variable_index(d, prev_vars[[i]]) 
-	  pv[!(pv %in% vars[[i]])]
-	})
-
-	.GGobiCall("setDisplayVariables", vars, prev_vars, x, .gobi=ggobi(x))
+	.GGobiCall("setDisplayVariables", new_vars, prev_vars, x, .gobi=ggobi(x))
 	x
 }

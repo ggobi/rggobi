@@ -2,7 +2,7 @@
 #include <write_xml.h>
 
 USER_OBJECT_
-RS_GGOBI(writeDatasetsXML)(USER_OBJECT_ filename,	USER_OBJECT_ datasetIds, USER_OBJECT_ gobiId)
+RS_GGOBI(writeDatasetsXML)(USER_OBJECT_ filename, USER_OBJECT_ datasetIds, USER_OBJECT_ gobiId)
 {
 	FILE *f;
 	XmlWriteInfo info = {0, };

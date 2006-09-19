@@ -1,5 +1,7 @@
 \name{"[<-.GGobiData"}
 \alias{[<-.GGobiData}
+\alias{$<-.GGobiData}
+\alias{[[<-.GGobiData}
 \title{Assignments for ggobi datasets}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
@@ -25,7 +27,9 @@ R, subsetting that copy, and then returning any changes.
 @arguments column indices
 @arguments new values
 @keyword manip
-@keyword internal}
+@keyword internal
+@alias $<-.GGobiData
+@alias [[<-.GGobiData}
 
 \examples{g <- ggobi(mtcars)
 x <- g["mtcars"]

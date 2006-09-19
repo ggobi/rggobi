@@ -25,5 +25,6 @@ series is selected for an observation.}
 
 \examples{data(Oxboys, package="nlme")
 ggobi_longitudinal(Oxboys, Occasion, Subject)
-example adding an id, if not present}
+ggobi_longitudinal(stormtracks, seasday, id)
+ggobi_longitudinal(data.frame(x=1:100, y=sin(1:100)))}
 \keyword{dynamic}

@@ -13,6 +13,7 @@ setOldClass("GGobiData")
 # @arguments name of data frame
 # @arguments data.frame, or string to path of file to load
 # @alias $<-.GGobi
+# @alias [[<-.GGobi
 # @keyword manip 
 #X g <- ggobi()
 #X g["a"] <- mtcars
@@ -33,7 +34,7 @@ setOldClass("GGobiData")
 	}
 	x
 }
-"$<-.GGobi" <- function(x, i, value) {
+"[[<-.GGobi" <- "$<-.GGobi" <- function(x, i, value) {
   x[i] <- value
   x
 }
@@ -98,16 +99,14 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 # @arguments GGobi object
 # @arguments name of dataset to retrive
 # @keyword manip 
-# @alias [.GGobi
+# @alias [[.GGobi
+# @alias $.GGobi
 #X g <- ggobi(ChickWeight)
 #X g["cars"] <- mtcars
 #X g[1:2]
 #X g["ChickWeight"]
 #X g["cars"]
 #X g$cars
-"$.GGobi" <- function(x, i) {
-  x[i]
-}
 "[.GGobi" <- function(x, i, ..., drop=TRUE) {
 	d <- dataset(clean.ggobi(i), .gobi = x)
 	if (drop && length(d) == 1 ) {
@@ -116,10 +115,13 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 		d
 	}
 }
+"[[.GGobi" <- "$.GGobi" <- function(x, i) {
+  x[i]
+}
 
 # Generic method for getting dataset
 # @keyword internal 
-dataset <- function(x, ...) UseMethod("dataset", x)
+dataset <- function(x, .gobi = ggobi_get()) UseMethod("dataset", x)
 
 # Get ggobi dataset.
 # Get an object representing an internal ggobi dataset
@@ -157,7 +159,13 @@ dataset.character <- function(x, .gobi = ggobi_get()) {
 	dataset(id, .gobi)
 }
 
-ggobi_data_write_xml <- function(filename, .data = 1, .gobi = ggobi_get()) {
+# Write xml
+# Write GGobi xml for specific dataset to filename
+#
+# @arguments GGobiData object
+# @arguments path to write file to
+# @keyword manip
+ggobi_data_write_xml <- function(gd, filename) {
 	refs <- lapply(.data, dataset, .gobi)
-	.GGobiCall("writeDatasetsXML", as.character(filename), refs, .gobi = .gobi)
+	.GGobiCall("writeDatasetsXML", gd, as.character(filename))
 }

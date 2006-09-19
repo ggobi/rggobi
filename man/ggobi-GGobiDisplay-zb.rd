@@ -6,9 +6,10 @@
 \description{
 Returns a link to the GGobi object associated with this display
 }
-\usage{ggobi.GGobiDisplay(gd)}
+\usage{ggobi.GGobiDisplay(data, ...)}
 \arguments{
-\item{gd}{GGobiDisplay object}
+\item{data}{GGobiDisplay object}
+\item{...}{}
 }
 
 \details{}

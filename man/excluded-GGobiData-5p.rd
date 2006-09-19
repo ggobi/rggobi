@@ -1,6 +1,5 @@
 \name{excluded.GGobiData}
 \alias{excluded.GGobiData}
-\alias{excluded}
 \title{Get excluded status}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 

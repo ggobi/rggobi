@@ -6,10 +6,9 @@
 \description{
 
 }
-\usage{variables(x, ...)}
+\usage{variables(x)}
 \arguments{
 \item{x}{}
-\item{...}{}
 }
 
 \details{}

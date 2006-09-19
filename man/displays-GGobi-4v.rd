@@ -18,11 +18,11 @@ matrix contains $p \times p$ plots.
 
 Use this function to obtain a reference to a display (they are
 numbered in the order they are created) so you can change
-display mode, set variables (\code{\link{variables.ggobi<-}}),
+display mode, set variables (\code{\link{variables<-.GGobi}}),
 or save a static image to disk.}
 \seealso{\code{\link{display}} to create displays}
 \examples{g <- ggobi(mtcars)
 displays(g)
 display(g[1])
 displays(g)}
-
+\keyword{dynamic}

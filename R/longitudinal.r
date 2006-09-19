@@ -39,6 +39,12 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
 	invisible(g)
 }
 
+# Create parallel coordinates plot.
+# Mock up a pcp plot using points and edges.
+# 
+# Experimental and may suggest ways to reduce PCP code in GGobi
+# 
+# @keyword internal
 ggobi_pcp <- function(data, type="range") {
   if (!require(reshape)) stop("Must have reshape package installed")
   data$CASEID <- factor(1:nrow(data))

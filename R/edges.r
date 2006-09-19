@@ -1,26 +1,34 @@
+
+
+# Get edges
+# Get edges for a dataset
+#
+# @arguments ggobi dataset
+# @value A matrix of edge pairs
+# @keyword manip
+edges <- function(x) {
+	m <- .GGobiCall("getSymbolicEdges", x)
+	if (ncol(m) == 2) colnames(m) <- c("source", "destination")
+	m
+}
+
+# Get connecting edges 
+# Get actual edges from application of edges dataset to target dataset.
+# 
+# @arguments target ggobi dataset
+# @arguments ggobi dataset containing edges
+# @keyword manip 
+connecting_edges <- function(x, y) {
+	m <- .GGobiCall("getConnectedEdges", y, x) + 1
+	if (ncol(m) == 2) colnames(m) <- c("source", "destination")
+	m
+}
+
+# Set edges
+# Generic method, see methods for more details
+# 
+# @keyword internal
 "edges<-" <- function(x, value) UseMethod("edges<-", x)
-
-"edges<-.GGobi" <- function(x, value) {
-  name <- deparse(substitute(value))
-  if(is(value, "graphNEL")) {
-    value <- t(edgeMatrix(value))
-  }
-
-  browser()
-  x[[name]] <- data.frame(id=1:nrow(value))
-  edges(x[[name]]) <- value
-
-  x
-}
-
-"edges<-.GGobiDisplay" <- function(x, value) {
-	if (is.null(value)) {
-		.GGobiCall("setDisplayEdges", list(x), value, FALSE, FALSE)
-	} else {
-		.GGobiCall("setDisplayEdges", list(x), value, FALSE, TRUE)
-	}
-	x
-}
 
 
 # Set edges
@@ -69,26 +77,40 @@
 	x
 }
 
-# Get edges
-# Get edges for a dataset
+
+# Set edges
+# Set edges for a display
 #
-# @arguments ggobi dataset
-# @value A matrix of edge pairs
-# @keyword manip
-edges <- function(x) {
-	m <- .GGobiCall("getSymbolicEdges", x)
-	if (ncol(m) == 2) colnames(m) <- c("source", "destination")
-	m
+# This sets the dataset that a GGobiDisplay uses
+# to display edges.
+#
+# @arguments GGobiDisplay object
+# @arguments GGobiData object that contains edges
+# @keyword dynamic
+"edges<-.GGobiDisplay" <- function(x, value) {
+	if (is.null(value)) {
+		.GGobiCall("setDisplayEdges", list(x), value, FALSE, FALSE)
+	} else {
+		.GGobiCall("setDisplayEdges", list(x), value, FALSE, TRUE)
+	}
+	x
 }
 
-# Get connecting edges 
-# Get actual edges from application of edges dataset to target dataset.
+# Set edges
+# Create a new edges dataset and add to GGobi
+#
 # 
-# @arguments target ggobi dataset
-# @arguments ggobi dataset containing edges
-# @keyword manip 
-connecting_edges <- function(x, y) {
-	m <- .GGobiCall("getConnectedEdges", y, x) + 1
-	if (ncol(m) == 2) colnames(m) <- c("source", "destination")
-	m
+# @keyword dynamic
+"edges<-.GGobi" <- function(x, value) {
+  name <- deparse(substitute(value))
+  if(is(value, "graphNEL")) {
+    names <- nodes(value)
+    value <- t(edgeMatrix(value))
+    value <- cbind(names[value[, 1]], names[value[, 2]])
+  }
+  x[[name]] <- data.frame(id=1:nrow(value))
+  y <- x[[name]]
+  edges(y) <- value
+
+  x
 }

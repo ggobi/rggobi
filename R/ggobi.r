@@ -36,6 +36,7 @@ ggobi <- function(data=NULL, ...) UseMethod("ggobi", data)
 # @value A ggobi object 
 # @keyword dynamic 
 # @alias rggobi
+# @alias ggobi
 #X ggobi(ggobi_find_file("data", "flea.csv"))
 #X ggobi(ggobi_find_file("data", "flea.xml"))
 #X ggobi(mtcars)

@@ -1,12 +1,12 @@
-\name{"edges<-"}
-\alias{edges<-}
+\name{"edges<-.GGobi"}
+\alias{edges<-.GGobi}
 \title{Set edges}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-Generic method, see methods for more details
+Create a new edges dataset and add to GGobi
 }
-\usage{"edges<-"(x, value)}
+\usage{"edges<-.GGobi"(x, value)}
 \arguments{
 \item{x}{}
 \item{value}{}
@@ -15,4 +15,4 @@ Generic method, see methods for more details
 \details{}
 
 \examples{}
-\keyword{internal}
+\keyword{dynamic}

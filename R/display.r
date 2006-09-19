@@ -13,12 +13,13 @@ displays <- function(x) UseMethod("displays", x)
 # 
 # Use this function to obtain a reference to a display (they are 
 # numbered in the order they are created) so you can change
-# display mode, set variables (\code{\link{variables.ggobi<-}}),
+# display mode, set variables (\code{\link{variables<-.GGobiDisplay}}),
 # or save a static image to disk.
 # 
 # @seealso \code{\link{display}} to create displays 
 # @alias displays.GGobi
 # @arguments GGobi object
+# @keyword dynamic
 #X g <- ggobi(mtcars)
 #X displays(g)
 #X display(g[1])
@@ -35,10 +36,10 @@ displays.GGobi <- function(x) {
 # @arguments GGobiDisplay object
 # @keyword manip 
 #X g <- ggobi(mtcars)
-#X d <- displays(g)[1]
+#X d <- displays(g)[[1]]
 #X dataset(d)
-dataset.GGobiDisplay <- function(gd) {
- .GGobiCall("getDisplayDataset", gd, .gobi=ggobi(gd))
+dataset.GGobiDisplay <- function(x, .gobi=ggobi(x)) {
+ .GGobiCall("getDisplayDataset", x, .gobi=.gobi)
 }
 
 # Get display GGobi
@@ -46,8 +47,8 @@ dataset.GGobiDisplay <- function(gd) {
 # 
 # @arguments GGobiDisplay object
 # @keyword internal
-ggobi.GGobiDisplay <- function(gd) {
-	.GGobiCall("getGGobiForDisplay", gd)
+ggobi.GGobiDisplay <- function(data, ...) {
+	.GGobiCall("getGGobiForDisplay", data)
 }
 
 # Print method for GGobiDisplay
@@ -55,8 +56,8 @@ ggobi.GGobiDisplay <- function(gd) {
 # 
 # @arguments GGobiDisplay object
 # @keyword internal 
-print.GGobiDisplay <- function(gd) {
-	print(class(gd)[1])
+print.GGobiDisplay <- function(x, ...) {
+	print(class(x)[1])
 }
 
 # Close display
@@ -95,7 +96,7 @@ length.GGobiDisplay <- function(gd) {
 # @arguments path to save to
 # @arguments type of file to save
 # @arguments if TRUE, save only plot, otherwise save surrounding GUI elements as well
-# @keyword plot 
+# @keyword hplot 
 #X g <- ggobi(mtcars)
 #X save_display(displays(g)[[1]], "test.png")
 ggobi_display_save_picture <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
@@ -114,48 +115,7 @@ ggobi_display_save_picture <- function(display, path="ggobi_display.png", filety
 	disp_pixbuf$save(path, filetype)
 }
 
-# Create a new display
-# 
-# @keyword internal 
-display <- function(x, ...) UseMethod("display", x)
 
-# Create a new display
-# Create a new display for the GGobiData object.  
-#
-# This function allows you to create a new display from
-# a GGobiData object.  You will need to specify the type of display you 
-# want ("Scatterplot Display", "Scatterplot Matrix" and  "Parallel Coordinates
-# Display" are the most common), and which variables the plot
-# should be intialised with.  Specifying more than two variables only makes
-# sense for scatterplot matrices and pcps.
-# 
-# Many of the plots used in GGobi (eg. the tours and densities plots) are
-# special modes of the scatterplot display.  You will need to create a 
-# new scatterplot display, change the projection mode to what you want, 
-# and then set the variables.  Hopefully this will be improved in a future
-# version of rggobi.
-#  
-# @seealso \code{\link{ggobi_display_types}} for a list of display types
-# @keyword dynam 
-#X g <- ggobi(mtcars)
-#X display(g[1])
-#X display(g[1], vars=list(X=c(4,5)))
-#X display(g[1], vars=list(X=c"drat","hp")))
-#X display(g[1], "Parallel Coordinates Display")
-#X display(g[1], "2D Tour")
-#X display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
-#X display(g[1], "Scatterplot Matrix")
-display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x))) {
-	type <- pmodes()[pmode]
-	vars <- variable_index(x, vars)
-
-	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), vars$x, x)
-	if (type != pmode) {
-		pmode(d) <- pmode
-		variables(d) <- vars
-	}
-	d
-}
 
 
 # =========================================================

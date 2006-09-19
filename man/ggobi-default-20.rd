@@ -1,6 +1,7 @@
 \name{ggobi.default}
 \alias{ggobi.default}
 \alias{rggobi}
+\alias{ggobi}
 \title{New ggobi}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 

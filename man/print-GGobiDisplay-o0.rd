@@ -6,9 +6,10 @@
 \description{
 Shows display type (first element in class vector)
 }
-\usage{print.GGobiDisplay(gd)}
+\usage{print.GGobiDisplay(x, ...)}
 \arguments{
-\item{gd}{GGobiDisplay object}
+\item{x}{GGobiDisplay object}
+\item{...}{}
 }
 
 \details{}

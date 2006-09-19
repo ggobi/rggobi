@@ -22,4 +22,4 @@ for more information}
 
 \examples{g <- ggobi(mtcars)
 save_display(displays(g)[[1]], "test.png")}
-\keyword{plot}
+\keyword{hplot}

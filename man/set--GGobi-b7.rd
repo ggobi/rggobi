@@ -1,6 +1,7 @@
 \name{"[<-.GGobi"}
 \alias{[<-.GGobi}
 \alias{$<-.GGobi}
+\alias{[[<-.GGobi}
 \title{[<-.GGobi}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
@@ -15,7 +16,7 @@ Add data to ggobi instance.
 }
 
 \details{This function allows you to add (and eventually) replace
-ggobi to a ggobi instance.}
+GGobiData objects in a GGobi instance.}
 
 \examples{g <- ggobi()
 g["a"] <- mtcars
