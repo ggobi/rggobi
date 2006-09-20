@@ -90,6 +90,7 @@ RS_GGOBI(getPlotRange)(USER_OBJECT_ rdisplay, USER_OBJECT_ plot)
   
   display = toDisplay(rdisplay);
   g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  g_return_val_if_fail(pmode_get(display, display->ggobi) == XYPLOT, NULL_USER_OBJECT);
   
   sp = GGOBI(getPlot)(display, INTEGER_DATA(plot)[0]-1);
   g_return_val_if_fail(GGOBI_IS_SPLOT(sp), NULL_USER_OBJECT);
@@ -97,10 +98,10 @@ RS_GGOBI(getPlotRange)(USER_OBJECT_ rdisplay, USER_OBJECT_ plot)
   RS_INTERNAL_GGOBI(getPlotRange)(display, sp, &tfmin, &tfmax);
   
   PROTECT(ans = NEW_LIST(2));
-  s_x =  NEW_INTEGER(2);
+  s_x =  NEW_NUMERIC(2);
   SET_VECTOR_ELT(ans, 0, s_x);
-  s_y =  NEW_INTEGER(2);
-  SET_VECTOR_ELT(ans, 0, s_y);
+  s_y =  NEW_NUMERIC(2);
+  SET_VECTOR_ELT(ans, 1, s_y);
   
   NUMERIC_DATA(s_x)[0] = tfmin.x;
   NUMERIC_DATA(s_x)[1] = tfmax.x;
