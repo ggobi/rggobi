@@ -18,7 +18,7 @@ matrix contains $p \times p$ plots.
 
 Use this function to obtain a reference to a display (they are
 numbered in the order they are created) so you can change
-display mode, set variables (\code{\link{variables<-.GGobi}}),
+display mode, set variables (\code{\link{variables<-.GGobiDisplay}}),
 or save a static image to disk.}
 \seealso{\code{\link{display}} to create displays}
 \examples{g <- ggobi(mtcars)

@@ -18,6 +18,6 @@ For example, in tours you can only set X variables, and you must
 have at least three.  Or in the rotation plot, you need exactly
 one X, Y, and Z variable.   You can figure out what these
 conditions are by using the toggle buttons in GGobi.}
-\seealso{\code{\link{variable<-.GGobiDisplay}} for examples}
+\seealso{\code{\link{variables<-.GGobiDisplay}} for examples}
 \examples{}
 \keyword{dynamic}

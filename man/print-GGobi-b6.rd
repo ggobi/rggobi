@@ -13,7 +13,7 @@ Prints summary of ggobi object by instance
 }
 
 \details{}
-\seealso{\code{\link{summary.ggobi}}}
+\seealso{\code{\link{summary.GGobi}}}
 \examples{}
 \keyword{dynamic}
 \keyword{internal}

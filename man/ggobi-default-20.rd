@@ -20,13 +20,13 @@ Creates a new ggobi instance
 \details{This function creates a new instance of GGobi with or without new data.  Use
 this function whenever you want to create a new GGobi indepdent of the
 others---they will not share linked plots.  If you want to add
-another dataset to an existing ggobi, please see \code{\link{[<-.ggobi}}
+another dataset to an existing ggobi, please see \code{\link{[<-.GGobi}}
 
 There are currently three basic types of functions that you
 can use with rggobi:
 
 \itemize{
-\item Data getting and setting: see \code{\link{[.ggobi}}, and \code{\link{[.ggobiDataset}}
+\item Data getting and setting: see \code{\link{[.GGobi}}, and \code{\link{[.GGobiDataset}}
 \item "Automatic" brushing: see \code{\link{glyph_colour}},
 \code{\link{glyph_size}},  \code{\link{glyph_type}},
 \code{\link{shadowed}},    \code{\link{excluded}}, and the associated
@@ -36,8 +36,8 @@ setter functions.
 }
 
 You will generally spend most of your time working with
-\code{ggobDataset}s, you retrieve using \code{\link{$.ggobiDataset}},
-\code{\link{[.ggobiDataset}}, or \code{\link{[[.ggobiDataset}}.
+\code{ggobDataset}s, you retrieve using \code{\link{$.GGobiDataset}},
+\code{\link{[.GGobiDataset}}, or \code{\link{[[.GGobiDataset}}.
 Most of the time these will operate like normal R datasets while
 pointing to the data in GGobi so that all changes are kept in sync.
 If you need to force a ggobiDaataset to be an R \code{data.frame} use
