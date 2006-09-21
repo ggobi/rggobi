@@ -165,7 +165,7 @@ dataset.character <- function(x, .gobi = ggobi_get()) {
 # @arguments GGobiData object
 # @arguments path to write file to
 # @keyword manip
-ggobi_data_write_xml <- function(gd, filename) {
-	refs <- lapply(.data, dataset, .gobi)
-	.GGobiCall("writeDatasetsXML", gd, as.character(filename))
-}
+# ggobi_data_write_xml <- function (gd, filename) {
+# 	refs <- lapply(.data, dataset, .gobi)
+# 	.GGobiCall("writeDatasetsXML", gd, as.character(filename))
+# }

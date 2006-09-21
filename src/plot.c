@@ -62,7 +62,7 @@ RS_GGOBI(setPlotRange)(USER_OBJECT_ s_min_x, USER_OBJECT_ s_min_y,
 	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
 
   sp = GGOBI(getPlot)(display, INTEGER_DATA(plot)[0]-1);
-  g_return_val_if_fail(GGOBI_IS_SPLOT(display), NULL_USER_OBJECT);
+  g_return_val_if_fail(GGOBI_IS_SPLOT(sp), NULL_USER_OBJECT);
   
   RS_INTERNAL_GGOBI(getPlotRange)(display, sp, &tfmin, &tfmax);
   
