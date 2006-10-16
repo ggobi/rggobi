@@ -5,9 +5,20 @@ df <- data.frame(x=1:10000, y=sin(1:10000 * pi/20) + runif(10000, max=0.5))
 g <- ggobi_longitudinal(df[1:100, ])
 
 df_g <- g[1]
-for(i in 1:2000) {
-	df_g[, 2] <- df[i:(i + 99), 2]
-}
+d <- displays(g)[[1]]
+ggobi_display_save_picture(d, "time-series-1.png")
+
+i <- 5
+df_g[, 2] <- df[i:(i + 99), 2]
+ggobi_display_save_picture(d, "time-series-2.png")
+
+i <- 10
+df_g[, 2] <- df[i:(i + 99), 2]
+ggobi_display_save_picture(d, "time-series-3.png")
+
+i <- 15
+df_g[, 2] <- df[i:(i + 99), 2]
+ggobi_display_save_picture(d, "time-series-4.png")
 
 
 # Edges example
@@ -16,9 +27,7 @@ for(i in 1:2000) {
 library(graph)
 library(SNAData)
 
-data(business)
-data(marital)
-data(florentineAttrs)
+data(business, marital, florentineAttrs)
 
 florentine <- data.frame(florentineAttrs, business.links = degree(business), marital.links = degree(marital))
 
