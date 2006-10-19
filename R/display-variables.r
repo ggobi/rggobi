@@ -29,8 +29,10 @@ display <- function(x, ...) UseMethod("display", x)
 #X display(g[1], vars=list(X=4, Y=5))
 #X display(g[1], vars=list(X="drat", Y="hp"))
 #X display(g[1], "Parallel Coordinates Display")
+#X \dontrun{
 #X display(g[1], "2D Tour")
 #X display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
+#X } 
 #X display(g[1], "Scatterplot Matrix")
 display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x)), ...) {
 	type <- pmodes()[pmode]
@@ -96,7 +98,7 @@ variables.GGobiDisplay <- function(x) {
 #X g <- ggobi(mtcars)
 #X d <- display(g[1], "Parallel Coordinates Display")
 #X variables(d)
-#X variables(d) <- list(x=1:8)
+#X variables(d) <- list(X=1:8)
 #X variables(d)
 "variables<-.GGobiDisplay" <- function(x, value) {
 	d <- dataset(x)

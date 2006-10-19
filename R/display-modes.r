@@ -72,7 +72,7 @@ pmodes <- function(x=NULL) UseMethod("pmodes", x)
 pmodes.default <- function(x) {
 	types <- ggobi_display_types()
 	modes <- lapply(types, pmodes)
-	unlist(mapply(
+	unlist(unname(mapply(
 		function(modes, type) {
 			all <- append(modes, type)
 			lookup <- rep(type, length=length(all))
@@ -80,7 +80,7 @@ pmodes.default <- function(x) {
 			lookup
 		}, 
 		modes, names(modes), SIMPLIFY=FALSE
-	))
+	)))
 }
 pmodes.GGobiDisplay <- function(x) pmodes(class(x)[1])
 pmodes.character <- function(x) .GGobiCall("getPModeNames", x)

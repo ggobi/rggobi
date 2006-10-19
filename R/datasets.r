@@ -208,8 +208,8 @@ summary.GGobiData <- function(object, ...) {
 	# figure out if any new columns have been added and add them.
 	
 	data[i, j] <- value
-	for(var in unique(vars)) {
-		x[[vars]] <- data[[vars]]
+	for(var in unique(j)) {
+		x[[var]] <- data[[var]]
 	}
 	x
 }

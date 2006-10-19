@@ -98,7 +98,7 @@ length.GGobiDisplay <- function(gd) {
 # @arguments if TRUE, save only plot, otherwise save surrounding GUI elements as well
 # @keyword hplot 
 #X g <- ggobi(mtcars)
-#X save_display(displays(g)[[1]], "test.png")
+#X ggobi_display_save_picture(displays(g)[[1]], "test.png")
 ggobi_display_save_picture <- function(display, path="ggobi_display.png", filetype="png", plot.only = FALSE) {
 	if (!require("RGtk2")) stop("RGtk2 required to save windows images to disk", .call=FALSE)
 
@@ -141,7 +141,7 @@ ggobi_display_make_type <- function(type) {
     types <- ggobi_display_types()
     id <- match(type, names(types))
     if(is.na(id)) {
-      id <- match(type, sapply(types, names))
+      id <- match(type, sapply(types, pmodes))
     }
 
     if(is.na(id))

@@ -32,7 +32,9 @@ display(g[1])
 display(g[1], vars=list(X=4, Y=5))
 display(g[1], vars=list(X="drat", Y="hp"))
 display(g[1], "Parallel Coordinates Display")
+\dontrun{
 display(g[1], "2D Tour")
 display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
+} 
 display(g[1], "Scatterplot Matrix")}
 \keyword{dynamic}

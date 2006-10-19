@@ -26,6 +26,6 @@ Generally, any invalid choices will be silently ignored.}
 \examples{g <- ggobi(mtcars)
 d <- display(g[1], "Parallel Coordinates Display")
 variables(d)
-variables(d) <- list(x=1:8)
+variables(d) <- list(X=1:8)
 variables(d)}
 \keyword{dynamic}

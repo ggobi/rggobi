@@ -12,7 +12,7 @@ ggobi <- function(data=NULL, ...) UseMethod("ggobi", data)
 # can use with rggobi:
 # 
 # \itemize{
-#   \item Data getting and setting: see \code{\link{[.GGobi}}, and \code{\link{[.GGobiDataset}}
+#   \item Data getting and setting: see \code{\link{[.GGobi}}, and \code{\link{[.GGobidata}}
 #   \item "Automatic" brushing: see \code{\link{glyph_colour}}, 
 #     \code{\link{glyph_size}},  \code{\link{glyph_type}},
 #     \code{\link{shadowed}},    \code{\link{excluded}}, and the associated
@@ -22,8 +22,8 @@ ggobi <- function(data=NULL, ...) UseMethod("ggobi", data)
 # }
 # 
 # You will generally spend most of your time working with 
-# \code{ggobDataset}s, you retrieve using \code{\link{$.GGobiDataset}}, 
-# \code{\link{[.GGobiDataset}}, or \code{\link{[[.GGobiDataset}}.
+# \code{ggobdata}s, you retrieve using \code{\link{$.GGobidata}}, 
+# \code{\link{[.GGobidata}}, or \code{\link{[[.GGobidata}}.
 # Most of the time these will operate like normal R datasets while
 # pointing to the data in GGobi so that all changes are kept in sync.  
 # If you need to force a ggobiDaataset to be an R \code{data.frame} use

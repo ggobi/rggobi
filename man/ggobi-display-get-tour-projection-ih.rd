@@ -20,9 +20,11 @@ data for later analysis.}
 
 \examples{g <- ggobi(mtcars)
 d <- displays(g)[[1]]
+\dontrun{
 pmode(d) <- "2D Tour"
 ggobi_display_get_tour_projection(d)
 variables(d) <- list(X=names(mtcars))
 ggobi_display_get_tour_projection(d)
-MASS::eqscplot(as.matrix(mtcars) \%*\% ggobi_display_get_tour_projection(d))}
+MASS::eqscplot(as.matrix(mtcars) \%*\% ggobi_display_get_tour_projection(d))
+}}
 \keyword{dynamic}

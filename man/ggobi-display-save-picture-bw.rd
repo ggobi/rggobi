@@ -21,5 +21,5 @@ vector (eg. pdf) output.  See \url{http://www.ggobi.org/describe-display}
 for more information}
 
 \examples{g <- ggobi(mtcars)
-save_display(displays(g)[[1]], "test.png")}
+ggobi_display_save_picture(displays(g)[[1]], "test.png")}
 \keyword{hplot}

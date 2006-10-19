@@ -12,11 +12,13 @@
 # @keyword dynamic
 #X g <- ggobi(mtcars)
 #X d <- displays(g)[[1]]
+#X \dontrun{
 #X pmode(d) <- "2D Tour"
 #X ggobi_display_get_tour_projection(d)
 #X variables(d) <- list(X=names(mtcars))
 #X ggobi_display_get_tour_projection(d)
 #X MASS::eqscplot(as.matrix(mtcars) \%*\% ggobi_display_get_tour_projection(d))
+#X }
 ggobi_display_get_tour_projection <- function(gd) {
   mat <- .GGobiCall("getTourProjection", gd, pmode(gd))
   
@@ -35,6 +37,7 @@ ggobi_display_get_tour_projection <- function(gd) {
 # @keyword dynamic
 #X g <- ggobi(mtcars)
 #X d <- displays(g)[[1]]
+#X \dontrun{
 #X pmode(d) <- "2D Tour"
 #X variables(d) <- list(X=names(mtcars))
 #X ggobi_display_get_tour_projection(d)
@@ -42,6 +45,7 @@ ggobi_display_get_tour_projection <- function(gd) {
 #X ggobi_display_set_tour_projection(d, pc)
 #X pc <- princomp(as.matrix(mtcars), cor=T)$loadings
 #X ggobi_display_set_tour_projection(d, pc)[,1:2]
+#X }
 ggobi_display_set_tour_projection <- function(gd, value) {
   normal <- all(colSums(value^2) - 1 < 1e-3)
   orthog <- all(crossprod(value, value) - diag(nrow(value)) < 1e-3)
