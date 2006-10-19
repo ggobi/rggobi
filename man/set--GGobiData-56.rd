@@ -6,30 +6,18 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-
+This functions allow one to treat a ggobi dataset as if it were a local data.frame.  One can extract and assign elements within the dataset.
 }
 \usage{"[<-.GGobiData"(x, i, j, value)}
 \arguments{
-\item{x}{row indices}
-\item{i}{column indices}
-\item{j}{new values}
-\item{value}{}
+\item{x}{ggobi dataset}
+\item{i}{row indices}
+\item{j}{column indices}
+\item{value}{new values}
 }
 
-\details{This functions allow one to treat a ggobi dataset as if it were a local
-data.frame.  One can extract and assign elements within the dataset.
-
-This method works by retrieving the entire dataset into
-R, subsetting that copy, and then returning any changes.
-
-@argument ggobi dataset
-@arguments row indices
-@arguments column indices
-@arguments new values
-@keyword manip
-@keyword internal
-@alias $<-.GGobiData
-@alias [[<-.GGobiData}
+\details{This method works by retrieving the entire dataset into
+R, subsetting that copy, and then returning any changes.}
 
 \examples{g <- ggobi(mtcars)
 x <- g["mtcars"]

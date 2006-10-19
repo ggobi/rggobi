@@ -181,14 +181,12 @@ summary.GGobiData <- function(object, ...) {
 }
 
 # Assignments for ggobi datasets
-#
-# This functions allow one to treat a ggobi dataset as if it were a local
-# data.frame.  One can extract and assign elements within the dataset.
+# This functions allow one to treat a ggobi dataset as if it were a local data.frame.  One can extract and assign elements within the dataset.
 # 
 # This method works by retrieving the entire dataset into
 # R, subsetting that copy, and then returning any changes.
-# 
-# @argument ggobi dataset
+#
+# @arguments ggobi dataset
 # @arguments row indices
 # @arguments column indices
 # @arguments new values
@@ -196,7 +194,6 @@ summary.GGobiData <- function(object, ...) {
 # @keyword internal 
 # @alias $<-.GGobiData
 # @alias [[<-.GGobiData
-#
 #X g <- ggobi(mtcars)
 #X x <- g["mtcars"]
 #X x[1:5, 1:5]

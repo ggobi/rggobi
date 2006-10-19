@@ -134,7 +134,7 @@ dataset <- function(x, .gobi = ggobi_get()) UseMethod("dataset", x)
 # @arguments which dataset to retrieve, an integer for positional matching or a character to match by name
 # @arguments GGobi instance
 # @value A list of \code{GGobiData} objects
-# @seealso \code{\link{$.GGobiDataset}} for user level selection of datasets
+# @seealso \code{\link{$.GGobiData}} for user level selection of datasets
 # @keyword manip 
 # @keyword internal
 # @alias dataset.character

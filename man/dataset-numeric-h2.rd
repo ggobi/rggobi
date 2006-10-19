@@ -17,7 +17,7 @@ Get an object representing an internal ggobi dataset
 dataset as if it were a regular R dataset.  This function allows one to
 get an \code{GGobiData} object that represents a particular
 dataset.}
-\seealso{\code{\link{$.GGobiDataset}} for user level selection of datasets}
+\seealso{\code{\link{$.GGobiData}} for user level selection of datasets}
 \examples{}
 \keyword{manip}
 \keyword{internal}
