@@ -21,6 +21,17 @@ df_g[, 2] <- df[i:(i + 99), 2]
 ggobi_display_save_picture(d, "time-series-4.png")
 
 
+# Hierarchical
+# ------------------------------------
+
+g <- ggobi(iris)
+clustering <- hclust(dist(iris[,1:4]), method="average")
+glyph_colour(g[1]) <- cuttree(clustering, 3)
+
+d <- displays(g)[[1]]
+ggobi_display_save_picture(d, "clustering.png")
+
+
 # Edges example
 # ------------------------------------
 
