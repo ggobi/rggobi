@@ -7,6 +7,7 @@ Author:  Duncan Temple Lang <duncan@research.bell-labs.com>,
 	 Hadley Wickham <hadley@iastate.edu>,
 	 Michael Lawrence <lawremi@iastate.edu>
 Depends: R (>= 2.2.0), RGtk2
+Suggests: reshape
 SystemRequirements: GGobi
 Maintainer: Hadley Wickham <hadley@iastate.edu>
 Description: An interface from R to GGobi for programmatic dynamic, interactive visualization.
