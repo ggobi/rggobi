@@ -21,12 +21,12 @@ typedef void* (*ElementConverter)(void *element);
 /* converts an array directly using the conversion function to an R list */
 #define asRArray(array, converter) \
 ({ \
-    _asRArray(array, converter, LIST); \
+    _asRArray(array, converter, LIST, VECTOR); \
 })
 
 #define asRArrayWithSize(array, converter, n) \
 ({ \
-    _asRArrayWithSize(array, converter, n, LIST); \
+    _asRArrayWithSize(array, converter, n, LIST, VECTOR); \
 })
 
 /* converts primitive (numeric, integer, logical) arrays to R vectors */
@@ -54,23 +54,23 @@ typedef void* (*ElementConverter)(void *element);
 })
 
 /* core converter, for converting string arrays and other arrays of pointer types */
-#define _asRArray(array, converter, TYPE) \
+#define _asRArray(array, converter, TYPE, SETTER_TYPE) \
 ({ \
     int n = 0; \
 	if (!array) \
 		NULL; \
     while(array[n++]); \
-    _asRArrayWithSize(array, converter, n-1, TYPE); \
+    _asRArrayWithSize(array, converter, n-1, TYPE, SETTER_TYPE); \
 })
 
-#define _asRArrayWithSize(array, converter, n, TYPE) \
+#define _asRArrayWithSize(array, converter, n, TYPE, SETTER_TYPE) \
 ({ \
     int i; \
     USER_OBJECT_ s_obj; \
     PROTECT(s_obj = NEW_ ## TYPE(n)); \
 \
     for (i = 0; i < n; i++) { \
-        SET_VECTOR_ELT(s_obj, i, converter(array[i])); \
+        SET_ ## SETTER_TYPE ## _ELT(s_obj, i, converter(array[i])); \
 	} \
 \
     UNPROTECT(1); \
@@ -81,12 +81,12 @@ typedef void* (*ElementConverter)(void *element);
 
 #define asRStringArray(array) \
 ({ \
-    _asRArray(array, COPY_TO_USER_STRING, CHARACTER); \
+    _asRArray(array, COPY_TO_USER_STRING, CHARACTER, STRING); \
 })
 
 #define asRStringArrayWithSize(array, n) \
 ({ \
-    _asRArrayWithSize(array, COPY_TO_USER_STRING, n, CHARACTER); \
+    _asRArrayWithSize(array, COPY_TO_USER_STRING, n, CHARACTER, STRING); \
 })
 
 #define asRIntegerArray(array) \

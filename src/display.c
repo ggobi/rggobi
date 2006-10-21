@@ -286,7 +286,7 @@ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJE
   /* refresh everything */
   varpanel_refresh(display, display->ggobi);
   display_tailpipe(display, FULL,  display->ggobi);
-  RS_GGOBI(limited_event_handle)(-1); /* ensure display is redrawn */
+  RS_INTERNAL_GGOBI(limited_event_handle)(-1); /* ensure display is redrawn */
   
   return(ans);
 }
