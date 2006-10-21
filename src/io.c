@@ -1,6 +1,8 @@
 #include "RSGGobi.h"
 #include <write_xml.h>
 
+extern XmlWriteInfo *updateXmlWriteInfo(GGobiData *d, ggobid *gg, XmlWriteInfo *info);
+
 USER_OBJECT_
 RS_GGOBI(writeDatasetsXML)(USER_OBJECT_ datasetIds, USER_OBJECT_ filename)
 {

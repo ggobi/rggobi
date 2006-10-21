@@ -15,8 +15,8 @@ extern __declspec(dllimport) void (*R_tcldo)();
 
 #include "R_ext/RS.h"
 
-extern void RS_GGOBI(event_handle)(void *data);
-void RS_GGOBI(limited_event_handle)(gint max);
+void RS_INTERNAL_GGOBI(event_handle)(void *data);
+void RS_INTERNAL_GGOBI(limited_event_handle)(gint max);
 
 /*XXX used to be R_IsNaNorNA, but no longer available for us.
       R_finite() excludes infinite values also. This is probably okay for now.
@@ -88,7 +88,7 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
   if (!gdk_display)
     error("GDK display not found - please make sure X11 is running");
   addInputHandler (R_InputHandlers, ConnectionNumber(gdk_display),
-                   RS_GGOBI(event_handle), -1);
+                   RS_INTERNAL_GGOBI(event_handle), -1);
 #endif
 
 	//registerErrorHandlers();
@@ -135,16 +135,16 @@ RS_GGOBI(getGGobi)(USER_OBJECT_ which)
    work correctly.
  */
 void
-RS_GGOBI(event_handle)(void *data)
+RS_INTERNAL_GGOBI(event_handle)(void *data)
 {
-  RS_GGOBI(limited_event_handle)(-1);
+  RS_INTERNAL_GGOBI(limited_event_handle)(-1);
 }
 
 /**
   Process max number of events and then terminate.
  */
 void
-RS_GGOBI(limited_event_handle)(gint max) {
+RS_INTERNAL_GGOBI(limited_event_handle)(gint max) {
   gint ctr = 0;
   gboolean block =  (max > -1);
 
@@ -301,7 +301,7 @@ quit_ggobi(ggobid *gg)
 void
 R_gtk_handle_events()
 {
-  RS_GGOBI(limited_event_handle)(-1);
+  RS_INTERNAL_GGOBI(limited_event_handle)(-1);
 }
 #endif
 
