@@ -31,10 +31,24 @@ ggobi_check_structs <- function() {
       ". You may have an incompatible version of GGobi installed.", .call=FALSE)
 		return(ok)
 	}
-
+  
 	TRUE
 }
 
+ggobi_check_versions <- function()
+{
+  versions <- c(rggobi = installed.packages()["rggobi", "Version"], 
+    ggobi = ggobi_version()$"version string")
+  ver_comp <- compareVersion(versions["rggobi"], versions["ggobi"])
+  if (ver_comp != 0) {
+    if (ver_comp < 0)
+      versions <- rev(versions)
+    warning("Your ", names(versions)[1], " (", versions[1], ") is newer than your ", 
+      names(versions)[2], " version (", versions[2], "). Please try to update your ", 
+      names(versions)[2], ".")
+  }
+  ver_comp == 0
+}
 
 .onLoad <- function(libname, pkgname) {
 #	library(methods)
@@ -43,6 +57,7 @@ ggobi_check_structs <- function() {
     stop("Could not load the rggobi library - please ensure GGobi is on the library path")
 
 	ggobi_check_structs()
-
+  ggobi_check_versions()
+  
 	TRUE
 }
