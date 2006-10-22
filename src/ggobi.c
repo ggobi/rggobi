@@ -91,7 +91,6 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
                    RS_INTERNAL_GGOBI(event_handle), -1);
 #endif
 
-	//registerErrorHandlers();
   GGobi_setMissingValueIdentifier(isMissingValue);
 
   gdk_flush();    
@@ -191,13 +190,14 @@ USER_OBJECT_
 RS_GGOBI(getDescription)(USER_OBJECT_ ggobiId)
 {
  ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
  GGobiData *d;
  gint numSlots = 3, numDatasets, i;
  DataMode mode;
  USER_OBJECT_ ans, names, tmp;
  const gchar *tmpname;
 
+ g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+ 
  if(gg == NULL) {
      RS_throwError("Invalid reference to GGobi instance");
  }
@@ -275,8 +275,8 @@ USER_OBJECT_
 RS_GGOBI(close)(USER_OBJECT_ gobi)
 {
   ggobid *gg = toGGobi(gobi);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NEW_LOGICAL(1);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
     LOGICAL_DATA(ans)[0] = GGOBI(close)(gg, true);
     gdk_flush();

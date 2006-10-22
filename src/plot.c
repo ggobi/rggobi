@@ -52,7 +52,6 @@ RS_GGOBI(setPlotRange)(USER_OBJECT_ s_min_x, USER_OBJECT_ s_min_y,
   displayd *display;
   USER_OBJECT_ ans;
   fcoords tfmin, tfmax;
-  gint xpan, ypan;
   splotd *sp;
   greal min_x = NUMERIC_DATA(s_min_x)[0], min_y = NUMERIC_DATA(s_min_y)[0];
   greal max_x = NUMERIC_DATA(s_max_x)[0], max_y = NUMERIC_DATA(s_max_y)[0];

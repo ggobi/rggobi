@@ -172,7 +172,7 @@ RS_GGOBI(setDisplayOptions)(USER_OBJECT_ which, USER_OBJECT_ values)
 {
   gint i;
   DisplayOptions *options;
-  displayd *display;
+  displayd *display = NULL;
   int apply = 0;
 
   g_return_val_if_fail(GET_LENGTH(values) == 8, NULL_USER_OBJECT);
@@ -271,8 +271,6 @@ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJE
 {
   displayd *display;
   USER_OBJECT_ ans = NULL_USER_OBJECT;
-  gint i, nplotted_vars;
-  gint *plotted_vars;
 
   display = toDisplay(dpy);
 	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
@@ -306,7 +304,7 @@ RS_GGOBI(getDisplayDataset)(USER_OBJECT_ dpy)
 USER_OBJECT_
 RS_axesValueMatrix(displayd *display) 
 {
-  // currently only works for Tour2D
+  /* currently only works for Tour2D */
   int n = display->t2d.nsubset, k, j;
   vartabled *vt;
   USER_OBJECT_ matrix;
@@ -315,10 +313,10 @@ RS_axesValueMatrix(displayd *display)
   for (k = 0; k < n; k++) {
     j = display->t2d.subset_vars.els[k];
     vt = vartable_element_get (j, display->d);
-    REAL(matrix)[k] = display->t2d.F.vals[0][j]; // x coeff
-    REAL(matrix)[k+n] = display->t2d.F.vals[1][j]; // y coeff
-    REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; // range
-    REAL(matrix)[k+3*n] = j+1; // variable index
+    REAL(matrix)[k] = display->t2d.F.vals[0][j]; /* x coeff */
+    REAL(matrix)[k+n] = display->t2d.F.vals[1][j]; /* y coeff */
+    REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; /* range */
+    REAL(matrix)[k+3*n] = j+1; /* variable index */
   }
   
   UNPROTECT(1);
@@ -403,10 +401,10 @@ RS_GGOBI(getTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
   PROTECT(matrix = allocMatrix(REALSXP, n, 3));
   for (k = 0; k < n; k++) {
     vartabled *vt = vartable_element_get (k, display->d);
-    REAL(matrix)[k] = x[k]; // x coeff
+    REAL(matrix)[k] = x[k]; /* x coeff */
     if (y)
-      REAL(matrix)[k+n] = y[k]; // y coeff
-    REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; // range
+      REAL(matrix)[k+n] = y[k]; /* y coeff */
+    REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; /* range */
   }
   
   UNPROTECT(1);
@@ -426,9 +424,9 @@ USER_OBJECT_
 RS_GGOBI(closeDisplay)(USER_OBJECT_ ref, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NEW_LOGICAL(1);
   displayd *display;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
   if(!gg)
     return(ans);

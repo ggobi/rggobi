@@ -73,14 +73,14 @@ RS_INTERNAL_GGOBI(getModeNames)(USER_OBJECT_ s_display_type, const gchar* s_mode
   
   display_class = g_type_class_peek(type);
 
-  doc = xmlParseDoc(display_class->mode_ui_get(NULL));
+  doc = xmlParseDoc(BAD_CAST(display_class->mode_ui_get(NULL)));
   ctx = xmlXPathNewContext(doc);
-  result = xmlXPathEvalExpression(expr, ctx);
+  result = xmlXPathEvalExpression(BAD_CAST(expr), ctx);
   
   PROTECT(ans = NEW_CHARACTER(xmlXPathNodeSetGetLength(result->nodesetval)));
   for (i = 0; i < GET_LENGTH(ans); i++) {
     xmlChar *str = xmlXPathCastNodeToString(xmlXPathNodeSetItem(result->nodesetval, i));
-    SET_STRING_ELT(ans, i, mkChar(str));
+    SET_STRING_ELT(ans, i, mkChar((gchar *)str));
     free(str);
   }
   

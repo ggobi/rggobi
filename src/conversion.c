@@ -164,7 +164,7 @@ R_internal_getInterfaces(GType type)
 {
     SEXP list;
     GType *interfaces;
-    int n, i;
+    guint n, i;
 
     interfaces = g_type_interfaces(type, &n);
     PROTECT(list = NEW_CHARACTER(n));

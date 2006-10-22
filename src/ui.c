@@ -58,8 +58,8 @@ RS_GGOBI(getDisplayPlotWidgets)(USER_OBJECT_ display)
 USER_OBJECT_
 RS_GGOBI(getMainMenubar)(USER_OBJECT_ gobi) {
   ggobid *gg = toGGobi(gobi);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NULL_USER_OBJECT;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg)
     ans = toRPointer(gg->main_menubar, "GtkWidget");
   return(ans);
@@ -78,8 +78,8 @@ USER_OBJECT_
 RS_GGOBI(getMainWindow)(USER_OBJECT_ gobiId)
 {
   ggobid *gg = toGGobi(gobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
   ans = toRPointer(gg->main_window, "GtkWindow");
 

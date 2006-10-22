@@ -197,7 +197,6 @@ RS_INTERNAL_GGOBI(getDataAttribute)(vector_b v)
 void
 RS_INTERNAL_GGOBI(setDataAttribute)(vector_b *v, USER_OBJECT_ vals, GGobiData *d)
 {
-  USER_OBJECT_ ans = NULL_USER_OBJECT;
  
   if(v) {
     gint i, n;
@@ -244,8 +243,8 @@ USER_OBJECT_
 RS_GGOBI(setExcludedIndices)(USER_OBJECT_ vals, USER_OBJECT_ datasetId)
 {
   GGobiData *d = toData(datasetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   ggobid *gg = d->gg;
+  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
   RS_INTERNAL_GGOBI(setDataAttribute)(&(d->excluded), vals, d);
   subset_apply(d, gg);
   GGOBI(update_data)(d, gg);
@@ -533,8 +532,8 @@ USER_OBJECT_
 RS_GGOBI(createEmptyData)(USER_OBJECT_ snrow, USER_OBJECT_ name, USER_OBJECT_ description, USER_OBJECT_ gobiId)
 {
   ggobid *gg = toGGobi(gobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   GGobiData *d;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
   if((gg = ValidateGGobiRef(gg, false)) == NULL) {
     return(R_NilValue);
@@ -653,11 +652,11 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
   InputDescription *desc;
 
   ggobid *gg = toGGobi(gobiID);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT); 
   GGobiData *d = NULL;
-  gint i, j, n;
-
+  gint i, j;
   USER_OBJECT_ num;
+  
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT); 
   
   desc = g_new0(InputDescription, 1);
   desc->fileName = g_strdup(asCString(description));
@@ -884,7 +883,6 @@ RS_GGOBI(setVariableTypes)(USER_OBJECT_ vars, USER_OBJECT_ values, USER_OBJECT_ 
 
   for (i = 0; i < num; i++) {
       which = INTEGER_DATA(vars)[i];
-      //INTEGER_DATA(ans)[i] = ggobi_data_set_var_type(d, INTEGER_DATA(vars)[i], INTEGER_DATA(values)[i]);
   }
 
   UNPROTECT(1);

@@ -5,10 +5,10 @@ USER_OBJECT_
 RS_GGOBI(getSymbolicEdges)(USER_OBJECT_ edgesetId)
 {
  GGobiData *e = toData(edgesetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
  USER_OBJECT_ ans, dim;
  gint i, ctr, n;
-
+ g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
+ 
  n = e->edge.n;
 
  if(!e) {
@@ -42,14 +42,15 @@ USER_OBJECT_
 RS_GGOBI(getConnectedEdges)(USER_OBJECT_ edgesetId, USER_OBJECT_ datasetId)
 {
  GGobiData *d = toData(datasetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
  GGobiData *e = toData(edgesetId);
-  g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
  gint ctr; 
  USER_OBJECT_ ans, dim;
  gint i, n;
  endpointsd *endpoints;
 
+ g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
+ g_return_val_if_fail(GGOBI_IS_DATA(e), NULL_USER_OBJECT);
+ 
  n = e->edge.n;
 
  endpoints = resolveEdgePoints(e, d);
@@ -81,8 +82,8 @@ USER_OBJECT_
 RS_GGOBI(createEdgeDataset)(USER_OBJECT_ numPoints, USER_OBJECT_ sname, USER_OBJECT_ ggobiId)
 {
    ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
    GGobiData *d;
+   g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
    if(!gg) {
       PROBLEM "Invalid reference to GGobi instance"
@@ -160,7 +161,6 @@ RS_GGOBI(setEdgeIndices)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append,
                           USER_OBJECT_ datasetId)
 {
   USER_OBJECT_ ans = NULL_USER_OBJECT;
-  ggobid *gg;
   GGobiData *e;
   int num = GET_LENGTH(x);
   gint i;
@@ -171,7 +171,7 @@ RS_GGOBI(setEdgeIndices)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append,
     return(ans);
 
   if(LOGICAL_DATA(append)[0] == FALSE) {
-     edges_free (e, gg);
+     edges_free (e, e->gg);
      e->edge.n = 0;
 #ifdef OLD_STYLE_IDS
      e->edge.old_endpoints = NULL;
@@ -188,7 +188,7 @@ RS_GGOBI(setEdgeIndices)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append,
    	means we have to tell setObservationEdge something
    	to avoid it reallocating space itself.
       */
-     GGOBI(setObservationEdge)(INTEGER_DATA(x)[i], INTEGER_DATA(y)[i], e, gg, false);
+     GGOBI(setObservationEdge)(INTEGER_DATA(x)[i], INTEGER_DATA(y)[i], e, e->gg, false);
 #endif
 #ifdef OLD_STYLE_IDS
      e->edge.old_endpoints[i].a = INTEGER_DATA(x)[i];
@@ -201,9 +201,9 @@ RS_GGOBI(setEdgeIndices)(USER_OBJECT_ x, USER_OBJECT_ y, USER_OBJECT_ append,
   setOldEdgePartners(e->edge.old_endpoints, e->edge.n);
 #endif
 
-  edgeset_add(gg->current_display);
+  edgeset_add(e->gg->current_display);
 
-  displays_plot(NULL, FULL, gg);
+  displays_plot(NULL, FULL, e->gg);
   gdk_flush();
 
   ans = RS_datasetInstance(e);

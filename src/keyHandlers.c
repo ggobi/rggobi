@@ -18,8 +18,9 @@ RS_GGOBI(setNumberedKeyHandler)(USER_OBJECT_ handler, USER_OBJECT_ sdescription,
 {
  extern void R_PreserveObject(USER_OBJECT_);
   ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NULL_USER_OBJECT;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+  
 
   if(GET_LENGTH(handler)) { 
     char *description = CHAR_DEREF(STRING_ELT(sdescription, 0));
@@ -83,8 +84,9 @@ RS_GGOBI(getNumberedKeyHandler)(USER_OBJECT_ ggobiId)
  USER_OBJECT_ ans = NULL_USER_OBJECT;
 
    ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
    KeyEventHandler *h;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+   
 
    if(gg == NULL) {
       PROBLEM "Error in accessing a ggobi instance"

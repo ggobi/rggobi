@@ -8,7 +8,6 @@
 static R_CMethodDef cmethods[] = {
     CENTRY(getNumGGobiInstances, 1),
     CENTRY(flush, 0)
-//    CENTRY(removeVariables)
 
    , {NULL}
 };

@@ -10,7 +10,7 @@ RS_GGOBI(writeDatasetsXML)(USER_OBJECT_ datasetIds, USER_OBJECT_ filename)
 	XmlWriteInfo info = {0, };
 	GGobiData *d;
 	ggobid *gg;
-	gint i;
+	gint i = 0;
 	
   g_return_val_if_fail(GET_LENGTH(datasetIds) > 0, NULL_USER_OBJECT);
   /* we take the ggobid from the first dataset */

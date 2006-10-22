@@ -5,9 +5,9 @@ USER_OBJECT_
 RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   int len;
   USER_OBJECT_ ans = NEW_INTEGER(1);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   if(gg) {
    len = g_list_length(gg->displays);
    INTEGER_DATA(ans)[0] = len;
@@ -20,9 +20,9 @@ USER_OBJECT_
 RS_GGOBI(getCurrentDisplayType)(USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans;
   const gchar *name = GGOBI(getCurrentDisplayType)(gg);
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
   PROTECT(ans = NEW_CHARACTER(1));
   SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(name));
@@ -52,7 +52,6 @@ RS_GGOBI(getDisplayTypes)()
   for( ; l ; l = l->next, n++) {
      GGobiExtendedDisplayClass *klass;
      klass = GGOBI_EXTENDED_DISPLAY_CLASS((GtkObjectClass*) l->data);
-     //SET_STRING_ELT(ans, n, COPY_TO_USER_STRING(klass->titleLabel));
 	 SET_STRING_ELT(names, n, COPY_TO_USER_STRING(klass->titleLabel));
      SET_VECTOR_ELT(ans, n, asRString(g_type_name(G_OBJECT_CLASS_TYPE(klass))));
   }
@@ -144,8 +143,8 @@ USER_OBJECT_
 RS_GGOBI(getCurrentDisplay)(USER_OBJECT_ gobiId)
 {
   ggobid *gg = toGGobi(gobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
   ans = toRPointer(gg->current_display, "GtkWidget");
 

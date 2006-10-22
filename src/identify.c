@@ -20,8 +20,9 @@ USER_OBJECT_
 RS_GGOBI(setIdentifyHandler)(USER_OBJECT_ func, USER_OBJECT_ ggobiId)
 {
   ggobid *gg = toGGobi(ggobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
   USER_OBJECT_ ans = NULL_USER_OBJECT;
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+  
 
   if(gg == NULL) {
       PROBLEM "Invalid ggobi identifier specified."

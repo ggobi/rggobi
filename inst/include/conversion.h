@@ -10,27 +10,32 @@ typedef void* (*ElementConverter)(void *element);
 /* converts an array, taking the reference of each element, so that conversion
 	functions taking a pointer parameter will work (array elements are values) */
 #define asRArrayRef(array, converter) \
+__extension__ \
 ({ \
     asRArray(&array, converter); \
 })
 
 #define asRArrayRefWithSize(array, converter, n) \
+__extension__ \
 ({ \
     asRArrayWithSize(&array, converter, n); \
 })
 /* converts an array directly using the conversion function to an R list */
 #define asRArray(array, converter) \
+__extension__ \
 ({ \
     _asRArray(array, converter, LIST, VECTOR); \
 })
 
 #define asRArrayWithSize(array, converter, n) \
+__extension__ \
 ({ \
     _asRArrayWithSize(array, converter, n, LIST, VECTOR); \
 })
 
 /* converts primitive (numeric, integer, logical) arrays to R vectors */
 #define _asRPrimArray(array, TYPE) \
+__extension__ \
 ({ \
     int n = 0; \
 	if (!array) \
@@ -40,6 +45,7 @@ typedef void* (*ElementConverter)(void *element);
 })
 
 #define _asRPrimArrayWithSize(array, n, TYPE) \
+__extension__ \
 ({ \
     int i; \
     USER_OBJECT_ s_obj; \
@@ -55,6 +61,7 @@ typedef void* (*ElementConverter)(void *element);
 
 /* core converter, for converting string arrays and other arrays of pointer types */
 #define _asRArray(array, converter, TYPE, SETTER_TYPE) \
+__extension__ \
 ({ \
     int n = 0; \
 	if (!array) \
@@ -64,6 +71,7 @@ typedef void* (*ElementConverter)(void *element);
 })
 
 #define _asRArrayWithSize(array, converter, n, TYPE, SETTER_TYPE) \
+__extension__ \
 ({ \
     int i; \
     USER_OBJECT_ s_obj; \
@@ -80,21 +88,25 @@ typedef void* (*ElementConverter)(void *element);
 /* Below are primitive array -> R vector converters */
 
 #define asRStringArray(array) \
+__extension__ \
 ({ \
     _asRArray(array, COPY_TO_USER_STRING, CHARACTER, STRING); \
 })
 
 #define asRStringArrayWithSize(array, n) \
+__extension__ \
 ({ \
     _asRArrayWithSize(array, COPY_TO_USER_STRING, n, CHARACTER, STRING); \
 })
 
 #define asRIntegerArray(array) \
+__extension__ \
 ({ \
     _asRPrimArray(array, INTEGER); \
 })
 
 #define asRIntegerArrayWithSize(array, size) \
+__extension__ \
 ({ \
     _asRPrimArrayWithSize(array, size, INTEGER); \
 })
@@ -102,32 +114,38 @@ typedef void* (*ElementConverter)(void *element);
 #define RAW_POINTER(x)	RAW(x)
 
 #define asRRawArray(array) \
+__extension__ \
 ({ \
     _asRPrimArray(array, RAW); \
 })
 
 #define asRRawArrayWithSize(array, size) \
+__extension__ \
 ({ \
     _asRPrimArrayWithSize(array, size, RAW); \
 })
 
 
 #define asRNumericArray(array) \
+__extension__ \
 ({ \
     _asRPrimArray(array, NUMERIC); \
 })
 
 #define asRNumericArrayWithSize(array, size) \
+__extension__ \
 ({ \
     _asRPrimArrayWithSize(array, size, NUMERIC); \
 })
 
 #define asRLogicalArray(array) \
+__extension__ \
 ({ \
     _asRPrimArray(array, LOGICAL); \
 })
 
 #define asRLogicalArrayWithSize(array, size) \
+__extension__ \
 ({ \
     _asRPrimArrayWithSize(array, size, LOGICAL); \
 })
@@ -135,10 +153,12 @@ typedef void* (*ElementConverter)(void *element);
 /* now from R to C */
 
 #define asCArrayRef(s, type, converter) \
+__extension__ \
 ({ \
     asCArray(s, type, * converter); \
 })
 #define asCArray(s_array, type, converter) \
+__extension__ \
 ({ \
     int i; \
 \
