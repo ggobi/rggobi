@@ -61,7 +61,6 @@
 # @arguments an object of class \code{ggobi} which refers to an internal ggobi instance.
 # @value \code{TRUE} if real object still exist, \code{FALSE} otherwise
 # @keyword dynamic 
-#
 #X g <- ggobi(mtcars)
 #X valid_ggobi(g)
 #X close(g)

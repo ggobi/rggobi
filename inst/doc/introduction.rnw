@@ -50,11 +50,10 @@ Adding more data sets to the GGobi instance is also easy: {\tt g\$mtcars2 <- mtc
 ggobi(ggobi_find_file("data", "olives.csv"))
 \end{alltt}
 
-
 \section{Modifying observation-level \\
 attributes, or automatic brushing}\label{sec:meta_data}
 
-Brushing lets you interactively change the colour, shape and size of points.  Brushing is linked which means these changes will propagate to every plot where the brushed observations are displayed.  Brushing includes shadowing, where points sit in the background and have less visual impact, and exclusion, where points are completed excluded from the plot.  You can brush points ``automatically'', from R, using the following functions:
+Brushing lets you interactively change the colour, shape and size of points.  Brushing is linked, which means that these changes will propagate to every plot in which the brushed observations are displayed.  Brushing includes shadowing, where points sit in the background and have less visual impact, and exclusion, where points are completed excluded from the plot.  You can brush points ``automatically'', from R, using the following functions to:
 
 \begin{itemize}
 	\item change glyph colour with {\tt glyph\_colour}
@@ -64,17 +63,18 @@ Brushing lets you interactively change the colour, shape and size of points.  Br
 	\item exclude and include points with {\tt excluded}
 \end{itemize}
 
-Each of these get or set the current values for the specified {\tt GGobiData}.  The getters are useful for retrieving information that you have created while brushing in GGobi, and the setters can be used to change the appearance of points based on model information, or to create animations.  They can also be used to store the results of a complicated sequence of brushing steps so they can be repeated later.
+Each of these get or set the current values for the specified {\tt GGobiData}.  The getters are useful for retrieving information that you have created while brushing in GGobi, and the setters can be used to change the appearance of points based on model information, or to create animations.  They can also be used to store then later recreate the results of a complicated sequence of brushing steps.
 
-This example demonstrates the use of the {\tt glyph\_colour} to show the results of clustering the infamous Iris data using hierachical clustering.  The graphic shows a single projection from the grand tour.
+This example demonstrates the use of the {\tt glyph\_colour} to show the results of clustering the infamous Iris data using hierachical clustering.  Using GGobi allows us to investigate the clustering in the original dimensions of the data, and the graphic shows a single projection from the grand tour.  
 
 \begin{verbatim}
 g <- ggobi(iris)
-clustering <- hclust(dist(iris[,1:4]), method="average")
+clustering <- hclust(dist(iris[,1:4]), 
+  method="average")
 glyph_colour(g[1]) <- cuttree(clustering, 3)  
 \end{verbatim}
 
-\includegraphics[width=2.4in]{clustering.png}
+\includegraphics[width=2in]{clustering.png}
 
 Another function {\tt selected}, returns a logical vector indicating if each point is currently under the brush.  This could be used to further explore interesting or unusual points.
 
@@ -82,7 +82,7 @@ Another function {\tt selected}, returns a logical vector indicating if each poi
 
 A {\tt GGobiDisplay} represents a window containing one or more related plots.  With rggobi you can to create new displays, change the interaction or projection mode of an existing plot, or change which variables are selected. 
 
-To retrieve a list of displays, use the {\tt displays} function.  To create a new display use the {\tt display} method on a {\tt GGobiData} object.  You'll need to specify the type of plot you want and which variables to include.  For example:
+To retrieve a list of displays, use the {\tt displays} function.  To create a new display use the {\tt display} method on a {\tt GGobiData} object.  You'll need to specify the type of plot you want (the default is a XY Plot) and which variables to include.  For example:
 
 \begin{verbatim}
 g <- ggobi(mtcars)
@@ -94,26 +94,31 @@ display(g[1], "2D Tour")
 
 The following types of displays are available in GGobi:
 
+\hspace{1em}
+
 \begin{tabular}{ll}
 Name & Variables\\
-\hline
-1D Plot                      & 1 X\\
-XY Plot                      & 1 X and 1 Y\\
-1D Tour                      & n X variables\\
-Rotation                     & 1 X, 1 Y and 1 Z\\
-2D Tour                      & n X\\
-2x1D Tour                    & n X and n Y\\
-Scatterplot Matrix           & n X\\
-Parallel Coordinates Display & n X\\
-Time Series                  & 1 X and n Y\\
-Barchart                     & 1 X\\
+\hline                      
+1D Plot                      & $1$ X\\
+XY Plot                      & $1$ X, $1$ Y\\
+1D Tour                      & $n$ X \\
+Rotation                     & $1$ X, $1$ Y, $1$ Z\\
+2D Tour                      & $n$ X\\
+2x1D Tour                    & $n$ X, $n$ Y\\
+Scatterplot Matrix           & $n$ X\\
+Parallel Coordinates Display & $n$ X\\
+Time Series                  & $1$ X, $n$ Y\\
+Barchart                     & $1$ X\\
 \end{tabular}
 
-Later on, you can get and set the variables in a plot using the {\tt variable} and {\tt variable<-} methods.  Because of the range of plot types in GGobi, variables should be specified as a list containing {\tt X}, {\tt Y} and {\tt Z} character vectors listing the variable or variables to be set in each component.
+\hspace{1em}
+
+Later on, you can get and set the variables in a plot using the {\tt variable} and {\tt variable<-} methods.  Because of the range of plot types in GGobi, variables should be specified as a list containing {\tt X}, {\tt Y} and {\tt Z} character vectors listing the variable or variables to be used for each component.
 
 \begin{verbatim}
 g <- ggobi(mtcars)
-d <- display(g[1], "Parallel Coordinates Display")
+d <- display(g[1], 
+  "Parallel Coordinates Display")
 variables(d)
 variables(d) <- list(X=8:6)
 variables(d) <- list(X=8:1)
@@ -135,7 +140,7 @@ g <- ggobi_longitudinal(df[1:100, ])
 
 df_g <- g[1]
 for(i in 1:1901) {
-	df_g[, 2] <- df[i:(i + 99), 2]
+  df_g[, 2] <- df[i:(i + 99), 2]
 }
 \end{verbatim}
 
@@ -183,7 +188,7 @@ ggobi_longitudinal(stormtracks, seasday, id)
 
 For regular time series data (already in order, with no grouping variables), just use {\tt ggobi\_longitudinal} with no other arguments.
 
-\includegraphics[width=2.5in]{stormtracks.png}
+\includegraphics[width=2in]{stormtracks.png}
 % subsection longitudinal_data (end)
 
 

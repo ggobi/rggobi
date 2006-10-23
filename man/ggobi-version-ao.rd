@@ -17,12 +17,7 @@ GGobi version information
 }
 \details{Return an object that describes the version of the ggobi
 library being used. This allows code to execute
-conditionally on certain version numbers, etc.
-
-@value the release date of the ggobi library
-@value a vector of 3 integers containing the major, minor and patch-level numbers.
-@value a string version of the major, minor and patch-level numbers,
-@keyword dynamic}
+conditionally on certain version numbers, etc.}
 
 \examples{ggobi_version()}
 \keyword{dynamic}

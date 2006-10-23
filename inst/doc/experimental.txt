@@ -1,3 +1,29 @@
+# Leave one out regression
+# ------------------------------------
+
+x <- mtcars$wt
+y <- mtcars$mpg
+
+y <- c(y, predict(lm(y ~ x), data.frame(x=range(x))))
+x <- c(x, range(x))
+
+g <- ggobi(data.frame(x=x, y=y))
+d <- g[1]
+
+extras <- rep(c(FALSE, TRUE), c(length(x) - 2, 2))
+edges(d) <- matrix(rownames(d)[extras], ncol=2)
+glyph_type(d) <- ifelse(extras, 1, 6)
+
+disp <- displays(g)[[1]]
+edges(disp) <- d
+imode(disp) <- "Identify"
+
+# gSignalConnect(g, "identify-point", 
+#   function(gg, plot, id, data) { 
+#     print(id)
+#   }
+# )
+
 # Scrolling along long time series
 # ------------------------------------
 

@@ -16,11 +16,7 @@ Terminates and discards a ggobi instance
 resources it uses. The function closes the display windows and
 variable panel window associated with this ggobi instance.
 It also resets the default ggobi instance to be the last
-one created.
-
-@arguments ggobi object to close
-@arguments ignored and for compatability generic function.
-@keyword dynamic}
+one created.}
 
 \examples{g1 <- ggobi(mtcars)
 g2 <- ggobi(mtcars)

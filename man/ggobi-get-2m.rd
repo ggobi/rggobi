@@ -13,11 +13,7 @@ Returns a ggobi reference
 }
 
 \details{This allows one to get a list of all the ggobi instances currently
-in existence in the R session.  Also, one can fetch particular instances.
-
-@arguments numeric vector indicating which ggobi instances to retrieve.  Use default if none specified
-@returns list of ggobi instances
-@keyword dynamic}
+in existence in the R session.  Also, one can fetch particular instances.}
 
 \examples{ggobi(mtcars)
 ggobi(Nile)

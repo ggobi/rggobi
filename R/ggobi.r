@@ -131,7 +131,6 @@ summary.GGobi <- function(object, ...) {
 # @arguments ggobi object to close 
 # @arguments ignored and for compatability generic function.
 # @keyword dynamic 
-#
 #X g1 <- ggobi(mtcars)
 #X g2 <- ggobi(mtcars)
 #X close(g2)
@@ -168,7 +167,6 @@ ggobi_count <- function() {
 # @arguments numeric vector indicating which ggobi instances to retrieve.  Use default if none specified
 # @returns list of ggobi instances
 # @keyword dynamic 
-#
 #X ggobi(mtcars)
 #X ggobi(Nile)
 #X ggobi_get(1)
@@ -191,7 +189,6 @@ ggobi_get <- function(id = ggobi_count(), drop=TRUE) {
 # @value a vector of 3 integers containing the major, minor and patch-level numbers.
 # @value a string version of the major, minor and patch-level numbers,
 # @keyword dynamic 
-#
 #X ggobi_version()
 ggobi_version <- function() {
 	info <- .GGobiCall("getVersionInfo", .gobi=NULL)
