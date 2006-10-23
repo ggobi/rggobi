@@ -35,7 +35,7 @@ ggobi_check_structs <- function() {
 	TRUE
 }
 
-ggobi_check_versions <- function()
+.check_versions <- function()
 {
   versions <- c(rggobi = installed.packages()["rggobi", "Version"], 
     ggobi = ggobi_version()$"version string")
@@ -57,7 +57,7 @@ ggobi_check_versions <- function()
     stop("Could not load the rggobi library - please ensure GGobi is on the library path")
 
 	ggobi_check_structs()
-  ggobi_check_versions()
+  .check_versions()
   
 	TRUE
 }
