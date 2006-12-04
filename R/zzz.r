@@ -35,11 +35,11 @@ ggobi_check_structs <- function() {
 	TRUE
 }
 
-.check_versions <- function()
-{
-  
-  versions <- c(rggobi = sub("-.*", "", packageDescription("rggobi", fields = c("Version"))), 
-    ggobi = ggobi_version()$"version string")
+.check_versions <- function() {
+  versions <- c(
+    rggobi = sub("-.*", "", packageDescription("rggobi", fields = c("Version"))), 
+    ggobi  = ggobi_version()$"version string"
+  )
   ver_comp <- compareVersion(versions["rggobi"], versions["ggobi"])
   if (ver_comp != 0) {
     if (ver_comp < 0)
