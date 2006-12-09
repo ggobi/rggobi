@@ -323,81 +323,81 @@ RS_GGOBI(getActiveColorScheme)(USER_OBJECT_ gobiId)
 USER_OBJECT_
 RS_GGOBI(setActiveColorScheme)(USER_OBJECT_ id, USER_OBJECT_ gobiId)
 {
-    USER_OBJECT_ ans;
-    char *tmp = NULL;
-    GList *schemes;
-    ggobid *gg = NULL;
-    colorschemed *newScheme = NULL;
+  USER_OBJECT_ ans;
+  char *tmp = NULL;
+  GList *schemes;
+  ggobid *gg = NULL;
+  colorschemed *newScheme = NULL;
 
-    if(GET_LENGTH(gobiId) == 0) {
-	if(sessionOptions) {
-	    tmp = sessionOptions->activeColorScheme;
-	    if(IS_INTEGER(id)) {
- 	        if(sessionOptions->colorSchemes) {
-		   newScheme = g_list_nth_data(sessionOptions->colorSchemes, INTEGER_DATA(id)[0]);
-		   if(newScheme)
-   	              sessionOptions->activeColorScheme = g_strdup(newScheme->name);
-		   else {
-  		      PROBLEM "No such color scheme available in the session options."
-       	              ERROR;
-		   }
-		} else {
-		   PROBLEM "No color schemes available in the session options."
-       	           ERROR;
-		}
-	    } else if(IS_CHARACTER(id)) {
-   	        sessionOptions->activeColorScheme = g_strdup(CHAR_DEREF(STRING_ELT(id, 0)));
- 	        if(sessionOptions->colorSchemes) {
-		   newScheme = findColorSchemeByName(sessionOptions->colorSchemes, sessionOptions->activeColorScheme);
-		}
-		if(!newScheme) {
-  	           PROBLEM "Setting default color scheme name in session options, but there is no such color scheme available."
-       	           WARN;
-		}
-	    }
-	} else {
-          PROBLEM "GGobi has not been initialized yet. Please initialize the engine (init.ggobi()) or create an instance (ggobi())!"
-	      ERROR;
-	}
+  if(GET_LENGTH(gobiId) == 0) {
+    if(sessionOptions) {
+      tmp = sessionOptions->activeColorScheme;
+      if(IS_INTEGER(id)) {
+        if(sessionOptions->colorSchemes) {
+          newScheme = g_list_nth_data(sessionOptions->colorSchemes, INTEGER_DATA(id)[0]);
+          if(newScheme)
+            sessionOptions->activeColorScheme = g_strdup(newScheme->name);
+          else {
+            PROBLEM "No such color scheme available in the session options."
+            ERROR;
+          }
+        } else {
+          PROBLEM "No color schemes available in the session options."
+          ERROR;
+        }
+      } else if(IS_CHARACTER(id)) {
+        sessionOptions->activeColorScheme = g_strdup(CHAR_DEREF(STRING_ELT(id, 0)));
+        if(sessionOptions->colorSchemes)
+          newScheme = findColorSchemeByName(sessionOptions->colorSchemes, sessionOptions->activeColorScheme);
+        if(!newScheme) {
+          PROBLEM "Setting default color scheme name in session options, but there is no such color scheme available."
+          WARN;
+        }
+      }
     } else {
-	gg = toGGobi(gobiId);
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
-	schemes = RSGGobi_Internal_getSchemeFromGGobi(gobiId);
-
-	if(!schemes) {
-	    PROBLEM "Cannot get color schemes list"
-		ERROR;
-	}
-
-	if(gg->activeColorScheme)
-	    tmp = gg->activeColorScheme->name;
-
-	if(IS_INTEGER(id)) {
-	   GList *el = g_list_nth(schemes, INTEGER_DATA(id)[0]);
-	   newScheme = gg->activeColorScheme = (colorschemed *) el->data;
-	} else if(IS_CHARACTER(id)) {
-	    char *tmp = CHAR_DEREF(STRING_ELT(id, 0));
-	    GList *el = g_list_find_custom(schemes, tmp, schemeNameCompare);
-	    newScheme = gg->activeColorScheme = (colorschemed *) el->data;
-	}
-
-	if(newScheme) {
-	    GGobiData *d = (GGobiData *) g_slist_nth_data(gg->d, 0);
-	    colorscheme_init(newScheme);
-	    displays_plot (NULL, FULL, gg);
-	    symbol_window_redraw (gg);
-	    cluster_table_update (d, gg);
-	    gdk_flush();
-	}
+      PROBLEM "GGobi has not been initialized yet. Please initialize the engine (init.ggobi()) or create an instance (ggobi())!"
+      ERROR;
     }
+  } else {
+    GList *scheme_el = NULL;
+    
+    gg = toGGobi(gobiId);
+    g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+    schemes = RSGGobi_Internal_getSchemeFromGGobi(gobiId);
+  
+    if(!schemes) {
+      PROBLEM "Cannot get color schemes list"
+      ERROR;
+    }
+  
+    if(gg->activeColorScheme)
+      tmp = gg->activeColorScheme->name;
+  
+    if(IS_INTEGER(id))
+      scheme_el = g_list_nth(schemes, INTEGER_DATA(id)[0]);
+    else if(IS_CHARACTER(id))
+      scheme_el = g_list_find_custom(schemes, CHAR_DEREF(STRING_ELT(id, 0)), 
+        schemeNameCompare);
+    
+    if (scheme_el)
+      newScheme = scheme_el->data;
+  
+    if(newScheme) {
+      GGobiData *d = (GGobiData *) g_slist_nth_data(gg->d, 0);
+      gg->activeColorScheme = newScheme;
+      colorscheme_init(newScheme);
+      displays_plot (NULL, FULL, gg);
+      symbol_window_redraw (gg);
+      cluster_table_update (d, gg);
+      gdk_flush();
+    }
+  }
 
-    if(tmp) {
-	PROTECT(ans = NEW_CHARACTER(1));
-	SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(sessionOptions->activeColorScheme ? sessionOptions->activeColorScheme : ""));
-	UNPROTECT(1);
-    } else
-	ans = NULL_USER_OBJECT;
+  if(tmp) {
+    PROTECT(ans = NEW_CHARACTER(1));
+    SET_STRING_ELT(ans, 0, COPY_TO_USER_STRING(gg->activeColorScheme->name));
+    UNPROTECT(1);
+  } else ans = NULL_USER_OBJECT;
 
-
-    return(ans);
+  return(ans);
 }
