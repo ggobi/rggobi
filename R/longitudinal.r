@@ -1,3 +1,5 @@
+
+
 # Create longitudinal dataset.
 # Instantiate new ggobi with a longitudinal data set.
 # 
@@ -20,21 +22,28 @@
 #X ggobi_longitudinal(stormtracks, seasday, id)
 #X ggobi_longitudinal(data.frame(x=1:100, y=sin(1:100)))
 ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
+	name <- deparse(substitute(data))
 	rows <- nrow(data)
 	time <- eval(substitute(time), data)
 	obsUnit <- eval(substitute(id), data)
-
+	
 	or <- order(obsUnit, time)
 	tmp <- data[or, ]
-	g <- ggobi(tmp)
+	g <- ggobi(tmp, name=name)
 	
 	edges <- cbind(rownames(tmp[-nrow(tmp), ]), rownames(tmp[-1, ]))
 	matching <- obsUnit[or][-1] == obsUnit[or][-nrow(tmp)]
 	edges[!matching, ] <- NA
 	
-	edges(g[1]) <- edges 
+	edges <- edges[complete.cases(edges),]
+	
+	#browser()
+	d <- data.frame(tmp[edges[,1], sapply(tmp, is.factor)])
+	g[paste(name, "edges", sep="-")] <- d
+	
+	edges(g[2]) <- edges 
   d <- displays(g)[[1]]
-  edges(d) <- g[1]
+  edges(d) <- g[2]
 
 	invisible(g)
 }

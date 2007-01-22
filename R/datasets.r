@@ -78,7 +78,7 @@ names.GGobiData <- function(x, ...) {
 # @keyword internal 
 variable_index <- function(x, names) {
 	if(length(names) == 0) return(integer(0))
-	if(is.integer(names)) return(names)
+	#if(is.integer(names)) return(as.integer(names - 1))
 	if(is.numeric(names)) return(as.integer(names - 1))
 	if(is.character(names)) return(as.integer(match(names, names(x)) - 1))
 	

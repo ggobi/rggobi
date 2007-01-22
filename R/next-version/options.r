@@ -42,7 +42,6 @@ goptions.GGobi <- function(x) {
 "goptions<-.GGobiDisplay" <- function(x, value) {
 	old <- goptions(x)
 	cur <- update(old, value)
-	browser()
 	.GGobiCall("setDisplayOptions", cur, x)
 
 	x

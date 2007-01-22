@@ -73,9 +73,10 @@ variables <- function(x) UseMethod("variables", x)
 # @seealso \code{\link{variables<-.GGobiDisplay}} for examples
 variables.GGobiDisplay <- function(x) {
   vars <- .GGobiCall("getDisplayVariables", x, .gobi=ggobi(x))
+
   # convert to names?
   #vars[[1]] <- colnames(dataset(display))[vars[[1]] + 1]
-  split(vars[[1]]+1, factor(vars[[2]], levels = c("X", "Y", "Z")))
+  split(vars[[1]], factor(vars[[2]], levels = c("X", "Y", "Z")))
 }
 
 # Set display variables 
@@ -93,14 +94,18 @@ variables.GGobiDisplay <- function(x) {
 # Generally, any invalid choices will be silently ignored.
 # 
 # @arguments GGobiDisplay object
-# @arguments list with x, y and z components
+# @arguments list with X, Y and Z components listing the variable indices to display, either as numeric position or character variable name
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X d <- display(g[1], "Parallel Coordinates Display")
 #X variables(d)
 #X variables(d) <- list(X=1:8)
+#X variables(d) <- list(X=c("mpg", "cyl"))
 #X variables(d)
 "variables<-.GGobiDisplay" <- function(x, value) {
+	stopifnot(is.list(value))
+	names(value) <- toupper(names(value))
+
 	d <- dataset(x)
 	prev_vars <- variable_index(d, variables(x))
 	new_vars <- variable_index(d, value)

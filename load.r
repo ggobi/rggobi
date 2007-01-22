@@ -1,3 +1,7 @@
 library(rggobi); library(butler)
 
-lapply(dir("~/ggobi/rggobi/R", "\\.[Sr]$", full.name=T), source)
+source.with.err <- function(path) {
+	tryCatch(source(path), error = function(x) {print(path); print(x)})
+}
+
+lapply(dir("~/ggobi/rggobi-2.1/rggobi/R/", "\\.[Sr]$", full.name=T), source.with.err)
