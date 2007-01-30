@@ -1,4 +1,6 @@
 2.1.4-5
 ---------
 
+ * ggobi_longitudinal now creates a separate dataset for the edges
+ * fixed variables() indexing problems and added more examples.
  * 

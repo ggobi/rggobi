@@ -217,7 +217,7 @@ toggle_display_variables(displayd *display, USER_OBJECT_ vars, gboolean active)
   for (j = 0; j < 3; j++) {
     USER_OBJECT_ varIds = VECTOR_ELT(vars, j);
     for (i = 0; i < GET_LENGTH(varIds); i++) {
-      gint var = INTEGER_DATA(varIds)[i] + 1;
+      gint var = INTEGER_DATA(varIds)[i];
       GtkWidget *wid = varpanel_widget_get_nth(j, var, display->d);
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(wid)) == active) {
         varsel(wid, &display->cpanel, display->current_splot, var, j, 

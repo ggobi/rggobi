@@ -38,7 +38,7 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
 	edges <- edges[complete.cases(edges),]
 	
 	#browser()
-	d <- data.frame(tmp[edges[,1], sapply(tmp, is.factor)])
+	d <- data.frame(tmp[edges[,1], sapply(tmp, is.factor), drop=FALSE])
 	g[paste(name, "edges", sep="-")] <- d
 	
 	edges(g[2]) <- edges 

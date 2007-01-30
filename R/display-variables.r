@@ -42,7 +42,7 @@ display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(
 	if (type != pmode) {
 		pmode(d) <- pmode
 	}
-	variables(d) <- vars
+	#variables(d) <- vars
 	d
 }
 
@@ -74,9 +74,8 @@ variables <- function(x) UseMethod("variables", x)
 variables.GGobiDisplay <- function(x) {
   vars <- .GGobiCall("getDisplayVariables", x, .gobi=ggobi(x))
 
-  # convert to names?
-  #vars[[1]] <- colnames(dataset(display))[vars[[1]] + 1]
-  split(vars[[1]], factor(vars[[2]], levels = c("X", "Y", "Z")))
+  names(vars[[1]]) <- colnames(dataset(x))[vars[[1]] + 1]
+  split(vars[[1]] + 1, factor(vars[[2]], levels = c("X", "Y", "Z")))
 }
 
 # Set display variables 
