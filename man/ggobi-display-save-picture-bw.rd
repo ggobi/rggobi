@@ -6,7 +6,7 @@
 \description{
 This allows you to make a static copy of a GGobiDisplay.
 }
-\usage{ggobi_display_save_picture(display, path="ggobi_display.png", filetype="png", plot.only = FALSE)}
+\usage{ggobi_display_save_picture(display=displays(ggobi_get())[[1]], path="ggobi_display.png", filetype="png", plot.only = FALSE)}
 \arguments{
 \item{display}{GGobiDisplay to save}
 \item{path}{path to save to}

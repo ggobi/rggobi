@@ -9,7 +9,7 @@ Set display variables with a list of x, y, and z component variable indices.
 \usage{"variables<-.GGobiDisplay"(x, value)}
 \arguments{
 \item{x}{GGobiDisplay object}
-\item{value}{list with x, y and z components}
+\item{value}{list with X, Y and Z components listing the variable indices to display, either as numeric position or character variable name}
 }
 
 \details{There are three types of variables in GGobi displays:
@@ -27,5 +27,6 @@ Generally, any invalid choices will be silently ignored.}
 d <- display(g[1], "Parallel Coordinates Display")
 variables(d)
 variables(d) <- list(X=1:8)
+variables(d) <- list(X=c("mpg", "cyl"))
 variables(d)}
 \keyword{dynamic}
