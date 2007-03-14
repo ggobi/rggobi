@@ -110,7 +110,10 @@ ggobi_display_save_picture <- function(display=displays(ggobi_get())[[1]], path=
 	}
 	
 	disp_size <- disp$getSize()
-	disp_pixbuf <- gdkPixbufGetFromDrawable(disp, NULL, 0, 0, 0, 0, disp_size$width, disp_size$height)
+
+	disp_pixbuf <- gdkPixbufGetFromDrawable(src = disp, cmap = NULL, 
+    src.x = 0, src.y = 0, dest.x = 0, dest.y = 0, 
+    width = disp_size$width, height = disp_size$height)
 	
 	disp_pixbuf$save(path, filetype)
 }
