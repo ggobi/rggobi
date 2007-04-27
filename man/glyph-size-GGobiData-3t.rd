@@ -7,10 +7,9 @@
 \description{
 Get glyph size
 }
-\usage{glyph_size.GGobiData(x, value)}
+\usage{glyph_size.GGobiData(x)}
 \arguments{
 \item{x}{GGobiData}
-\item{value}{}
 }
 
 \details{Glyph size is an integer between 1 and 6.}

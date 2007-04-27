@@ -6,9 +6,9 @@
 \description{
 Returns the number of plots within a given display
 }
-\usage{length.GGobiDisplay(gd)}
+\usage{length.GGobiDisplay(x)}
 \arguments{
-\item{gd}{GGobiDisplay object to close}
+\item{x}{GGobiDisplay object from which to retrieve the number of plots}
 }
 
 \details{}

@@ -78,7 +78,7 @@ glyph_type.GGobiData <- function(x) {
 # @arguments GGobiData
 # @keyword dynamic 
 # @seealso \code{\link{glyph_size<-}}
-glyph_size.GGobiData <- function(x, value) {
+glyph_size.GGobiData <- function(x) {
 	which <- 1:nrow(x)
 	.GGobiCall("getCaseGlyphs", as.integer(which - 1), x, .gobi = attr(x, "ggobi"))$size + 1
 }

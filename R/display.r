@@ -76,10 +76,10 @@ close.GGobiDisplay <- function(con, ...) {
 # Length method for GGobiDisplay
 # Returns the number of plots within a given display
 # 
-# @arguments GGobiDisplay object to close
+# @arguments GGobiDisplay object from which to retrieve the number of plots
 # @keyword internal 
-length.GGobiDisplay <- function(gd) {
-	.GGobiCall("getNumPlotsInDisplay",  gd)
+length.GGobiDisplay <- function(x) {
+	.GGobiCall("getNumPlotsInDisplay",  x)
 }
 
 
