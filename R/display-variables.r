@@ -34,11 +34,14 @@ display <- function(x, ...) UseMethod("display", x)
 #X display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
 #X } 
 #X display(g[1], "Scatterplot Matrix")
-display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x)), ...) {
+display.GGobiData <- function(x, pmode="Scatterplot Display", 
+  vars=list(X=names(x)), embed=FALSE, ...) 
+{
 	type <- pmodes()[pmode]
 	vars <- variable_index(x, vars)
+  embed <- as.logical(embed)
 
-	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), vars$X, x)
+	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), vars$X, x, !embed)
 	if (type != pmode) {
 		pmode(d) <- pmode
 	}

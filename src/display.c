@@ -6,13 +6,15 @@
 #include "vars.h"
 
 USER_OBJECT_
-RS_GGOBI(createDisplay)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ datasetId)
+RS_GGOBI(createDisplay)(USER_OBJECT_ stype, USER_OBJECT_ svars, 
+  USER_OBJECT_ datasetId, USER_OBJECT_ useWindow)
 {
   GGobiData *d;
   ggobid *gg;
   displayd *display = NULL;
   GType type;
   GGobiExtendedDisplayClass *klass;
+  gboolean use_window = asCLogical(useWindow);
 
   d = toData(datasetId);
   g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
@@ -32,9 +34,9 @@ RS_GGOBI(createDisplay)(USER_OBJECT_ stype, USER_OBJECT_ svars, USER_OBJECT_ dat
      vars = g_malloc(sizeof(gint)*nvars);
      for(i = 0; i < nvars; i++)
        vars[i] = INTEGER_DATA(svars)[i];
-     display = klass->createWithVars(false, nvars, vars, d, gg);
+     display = klass->createWithVars(use_window, false, nvars, vars, d, gg);
   } else if(klass->create)
-     display = klass->create(false, NULL, d, gg);
+     display = klass->create(use_window, false, NULL, d, gg);
 
   if(!display) {
     PROBLEM "Couldn't create the display"
