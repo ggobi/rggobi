@@ -47,11 +47,14 @@ ggobi_display_get_tour_projection <- function(gd) {
 #X ggobi_display_set_tour_projection(d, pc)[,1:2]
 #X }
 ggobi_display_set_tour_projection <- function(gd, value) {
-  normal <- all(colSums(value^2) - 1 < 1e-3)
-  orthog <- all(crossprod(value, value) - diag(nrow(value)) < 1e-3)
+  normal <- all(abs(colSums(value^2) - 1) < 1e-3)
+  orthog <- all(abs(crossprod(value, value) - diag(ncol(value))) < 1e-3)
   
   if (!normal) stop("Matrix is not normal (colSums do not equal 1)")
   if (!orthog) stop("Matrix is not orthogonal")
+  
+  scale <- .GGobiCall("getTourProjection", gd, pmode(gd))[,3]
+  value <- value * scale
   
   invisible(.GGobiCall("setTourProjection", gd, pmode(gd), value))
 }
