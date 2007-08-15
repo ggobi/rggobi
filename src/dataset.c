@@ -655,6 +655,7 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
   GGobiData *d = NULL;
   gint i, j;
   USER_OBJECT_ num;
+  gchar *logical_levels[] = { "FALSE", "TRUE" };
   
   g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT); 
   
@@ -682,6 +683,11 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
         ggobi_data_set_raw_value(d, j, i, (gdouble)INTEGER_DATA(vector)[j]);
 	  } else if (IS_NUMERIC(vector))
 		  ggobi_data_set_raw_values(d, i, NUMERIC_DATA(vector));
+    else if (IS_LOGICAL(vector)) {
+      vartable_element_categorical_init(vt, 2, logical_levels, NULL, NULL);
+      for (j = 0; j < LOGICAL_DATA(dims)[0]; j++)
+        ggobi_data_set_raw_value(d, j, i, (gdouble)LOGICAL_DATA(vector)[j]);
+    }
 	  else g_critical("Unknown R data type in column %d", i);
   }
 

@@ -63,7 +63,7 @@ names.GGobiData <- function(x, ...) {
 # @keyword attribute
 # @keyword internal 
 "names<-.GGobiData" <- function(x, value) {
-	.GGobiCall("setVariableNames", as.integer(1:ncol(x) -1 ), as.character(value), x)
+	colnames(x) <- value
 	x
 }
 
@@ -108,10 +108,9 @@ rownames.GGobiData <- function(x) {
 # @arguments new names
 # @keyword attribute
 # @keyword internal 
-"rownames<-.GGobiData" <- function(x, value) {
-	.GGobiCall("setRowNames", as.character(value), as.integer(1:length(value) - 1), x)
-	x
-}
+#"rownames<-.GGobiData" <- function(x, value) {
+#	
+#}
 
 # Get dimension names
 # Get row and column names for a ggobiDataget
@@ -121,6 +120,19 @@ rownames.GGobiData <- function(x) {
 # @keyword internal 
 dimnames.GGobiData <- function(x) {
   list(rownames.GGobiData(x), names(x))
+}
+
+# Set dim names
+# Set dim names for a GGobiData
+# 
+# @arguments GGobiData
+# @arguments new names
+# @keyword attribute
+# @keyword internal 
+"dimnames<-.GGobiData" <- function(x, value) {
+  .GGobiCall("setRowNames", as.character(value[[1]]), as.integer(1:length(value[[1]]) - 1), x)
+  .GGobiCall("setVariableNames", as.integer(1:ncol(x) -1 ), as.character(value[[2]]), x)
+  x
 }
 
 # Summarise GGobiData.
@@ -204,7 +216,11 @@ summary.GGobiData <- function(object, ...) {
 
 	# figure out if any new columns have been added and add them.
 	
-	data[i, j] <- value
+  if (missing(i))
+    data[,j] <- value
+  else if (missing(j))
+    data[i,] <- value
+  else data[i, j] <- value
 	for(var in unique(j)) {
 		x[[var]] <- data[[var]]
 	}
