@@ -6,11 +6,12 @@
 \description{
 Create a new display for the GGobiData object.
 }
-\usage{display.GGobiData(x, pmode="Scatterplot Display", vars=list(X=names(x)), ...)}
+\usage{display.GGobiData(x, pmode="Scatterplot Display", vars=list(X=names(x)), embed=FALSE, ...)}
 \arguments{
 \item{x}{projection mode to use}
 \item{pmode}{variables to display, see \code{\link{variables.GGobiDisplay}} for details}
-\item{vars}{}
+\item{vars}{If TRUE, returns widget for use with RGtk2}
+\item{embed}{}
 \item{...}{}
 }
 

@@ -35,8 +35,7 @@ display <- function(x, ...) UseMethod("display", x)
 #X display(g[1], "2x1D Tour", list(X=c(1,2,3), Y=c(4,5,6)))
 #X } 
 #X display(g[1], "Scatterplot Matrix")
-display.GGobiData <- function(x, pmode="Scatterplot Display", 
-  vars=list(X=names(x)), embed=FALSE, ...) 
+display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x)), embed=FALSE, ...) 
 {
 	type <- pmodes()[pmode]
 	vars <- variable_index(x, vars)
