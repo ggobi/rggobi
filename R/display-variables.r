@@ -22,6 +22,7 @@ display <- function(x, ...) UseMethod("display", x)
 # @argments GGobiData object
 # @arguments projection mode to use
 # @arguments variables to display, see \code{\link{variables.GGobiDisplay}} for details
+# @arguments If TRUE, returns widget for use with RGtk2
 # @seealso \code{\link{ggobi_display_types}} for a list of display types
 # @keyword dynamic
 #X g <- ggobi(mtcars)

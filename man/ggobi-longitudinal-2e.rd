@@ -6,11 +6,12 @@
 \description{
 Instantiate new ggobi with a longitudinal data set.
 }
-\usage{ggobi_longitudinal(data, time=1:rows, id=rep(1, rows))}
+\usage{ggobi_longitudinal(data, time=1:rows, id=rep(1, rows), g)}
 \arguments{
 \item{data}{data frame}
 \item{time}{time variable}
 \item{id}{id variable}
+\item{g}{ggobi instance, if you don't want to create a new one}
 }
 
 \details{This function allows you to load longitudinal data in

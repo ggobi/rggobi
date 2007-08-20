@@ -4,7 +4,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-Retrieve the dimension of an ggobi dataset
+Retrieve the dimension of a GGobiData
 }
 \usage{dim.GGobiData(x)}
 \arguments{

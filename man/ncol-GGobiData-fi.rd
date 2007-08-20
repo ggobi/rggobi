@@ -4,7 +4,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-Retrieve the number of columns in an ggobi dataset
+Retrieve the number of columns in a GGobiData
 }
 \usage{ncol.GGobiData(d)}
 \arguments{

@@ -18,7 +18,7 @@ print.GGobiData <- function(x, ...) {
 }
 
 # GGobiData dimensions
-# Retrieve the dimension of an ggobi dataset
+# Retrieve the dimension of a GGobiData
 # 
 # @arguments dataset
 # @keyword attribute
@@ -30,7 +30,7 @@ dim.GGobiData <- function(x) {
 }
 
 # GGobiData rows
-# Retrieve the number of row in an ggobi dataset
+# Retrieve the number of row in a GGobiData
 # 
 # @arguments dataset
 # @keyword attribute
@@ -38,7 +38,7 @@ dim.GGobiData <- function(x) {
 nrow.GGobiData <- function(d) dim(d)[2]
 
 # GGobiData columns
-# Retrieve the number of columns in an ggobi dataset
+# Retrieve the number of columns in a GGobiData
 # 
 # @arguments dataset
 # @keyword attribute
@@ -91,7 +91,7 @@ variable_index <- function(x, names) {
 }
 
 # Get row names
-# Get row names for a ggobiDataget
+# Get row names for a GGobiData
 # 
 # @arguments ggobiDataget
 # @arguments new names
@@ -108,12 +108,21 @@ rownames.GGobiData <- function(x) {
 # @arguments new names
 # @keyword attribute
 # @keyword internal 
-#"rownames<-.GGobiData" <- function(x, value) {
-#	
-#}
+#X g <- ggobi(mtcars)
+#X df <- g[1]
+#X rownames(df)
+#X rownames(df) <- tolower(rownames(df))
+#X rownames(df)
+"rownames<-.GGobiData" <- function(x, value) {
+	dims <- dimnames(x)
+	stopifnot(length(x) == length(dims[1]))
+	dims[1] <- value
+	dimnames(x) <- dims
+	x
+}
 
 # Get dimension names
-# Get row and column names for a ggobiDataget
+# Get row and column names for a GGobiData
 # 
 # @arguments ggobiDataget
 # @keyword attribute

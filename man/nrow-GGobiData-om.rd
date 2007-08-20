@@ -4,7 +4,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-Retrieve the number of row in an ggobi dataset
+Retrieve the number of row in a GGobiData
 }
 \usage{nrow.GGobiData(d)}
 \arguments{

@@ -14,6 +14,10 @@ Set row names for a GGobiData
 
 \details{}
 
-\examples{}
+\examples{g <- ggobi(mtcars)
+df <- g[1]
+rownames(df)
+rownames(df) <- tolower(rownames(df))
+rownames(df)}
 \keyword{attribute}
 \keyword{internal}

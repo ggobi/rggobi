@@ -4,7 +4,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-Get row and column names for a ggobiDataget
+Get row and column names for a GGobiData
 }
 \usage{dimnames.GGobiData(x)}
 \arguments{

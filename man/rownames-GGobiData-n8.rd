@@ -4,7 +4,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-Get row names for a ggobiDataget
+Get row names for a GGobiData
 }
 \usage{rownames.GGobiData(x)}
 \arguments{

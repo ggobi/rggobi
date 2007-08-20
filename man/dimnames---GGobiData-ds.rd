@@ -1,0 +1,19 @@
+\name{"dimnames<-.GGobiData"}
+\alias{dimnames<-.GGobiData}
+\title{Set dim names}
+\author{Hadley Wickham <h.wickham@gmail.com>}
+
+\description{
+Set dim names for a GGobiData
+}
+\usage{"dimnames<-.GGobiData"(x, value)}
+\arguments{
+\item{x}{GGobiData}
+\item{value}{new names}
+}
+
+\details{}
+
+\examples{}
+\keyword{attribute}
+\keyword{internal}
