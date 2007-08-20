@@ -16,12 +16,13 @@
 # @arguments data frame
 # @arguments time variable
 # @arguments id variable
+# @arguments ggobi instance, if you don't want to create a new one
 # @keyword dynamic 
 #X data(Oxboys, package="nlme")
 #X ggobi_longitudinal(Oxboys, Occasion, Subject)
 #X ggobi_longitudinal(stormtracks, seasday, id)
 #X ggobi_longitudinal(data.frame(x=1:100, y=sin(1:100)))
-ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
+ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows), g) {
 	name <- deparse(substitute(data))
 	rows <- nrow(data)
 	time <- eval(substitute(time), data)
@@ -29,7 +30,7 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows)) {
 	
 	or <- order(obsUnit, time)
 	tmp <- data[or, ]
-	g <- ggobi(tmp, name=name)
+	if (missing(g)) g <- ggobi(tmp, name=name)
 	
 	edges <- cbind(rownames(tmp[-nrow(tmp), ]), rownames(tmp[-1, ]))
 	matching <- obsUnit[or][-1] == obsUnit[or][-nrow(tmp)]

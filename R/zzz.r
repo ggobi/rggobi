@@ -28,7 +28,7 @@ ggobi_check_structs <- function() {
 	if(!all(ok)) {
 		warning("Some structs have different size: ", 
       paste(paste(names(ours)[!ok], "(", ours[!ok], "!=", theirs[which][!ok], ")"), collapse=", "), 
-      ". You may have an incompatible version of GGobi installed.", .call=FALSE)
+      ". You may have an incompatible version of GGobi installed.", call.=FALSE)
 		return(ok)
 	}
   
@@ -46,7 +46,7 @@ ggobi_check_structs <- function() {
       versions <- rev(versions)
     warning("Your ", names(versions)[1], " (", versions[1], ") is newer than your ", 
       names(versions)[2], " version (", versions[2], "). Please try to update your ", 
-      names(versions)[2], ".")
+      names(versions)[2], ".", call.=FALSE)
   }
   ver_comp == 0
 }
