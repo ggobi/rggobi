@@ -281,7 +281,7 @@ ggobi_data_add_variable <- function(x, vals, name, ...) {
 	values <- NULL
 
 	if(is.factor(vals)) {
-		levels <- summary(vals[!is.na(vals)])
+		levels <- table(vals)
 		values <- sort(unique(as.integer(vals)))
 	}
 
