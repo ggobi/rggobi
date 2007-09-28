@@ -66,7 +66,7 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
 
    c_args = g_malloc(sizeof(char *)*n);
    for(i = 0; i < n ; i++) {
-     c_args[i] = CHAR_DEREF(STRING_ELT(args, i));
+     c_args[i] = (char *)CHAR_DEREF(STRING_ELT(args, i));
    }
    if(LOGICAL_DATA(createInstance)[0]) {
      ggobid *gg;

@@ -175,7 +175,7 @@ gboolean asCLogical(USER_OBJECT_ s_log);
 int asCInteger(USER_OBJECT_ s_int);
 guchar asCRaw(USER_OBJECT_ s_raw);
 double asCNumeric(USER_OBJECT_ s_num);
-char * asCString(USER_OBJECT_ s_str);
+const char * asCString(USER_OBJECT_ s_str);
 char asCCharacter(USER_OBJECT_ s_char);
 
 USER_OBJECT_ asRLogical(Rboolean);

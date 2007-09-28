@@ -11,7 +11,7 @@ RS_GGOBI(setFile)(USER_OBJECT_ fileName, USER_OBJECT_ smode, USER_OBJECT_ add, U
  DataMode mode;
  ggobid *gg = toGGobi(gobiId);
  USER_OBJECT_ ans = NEW_INTEGER(1);
- gchar *modeName = NULL;
+ const gchar *modeName = NULL;
  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
 
  if(IS_CHARACTER(smode))

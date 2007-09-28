@@ -23,10 +23,10 @@ RS_GGOBI(setNumberedKeyHandler)(USER_OBJECT_ handler, USER_OBJECT_ sdescription,
   
 
   if(GET_LENGTH(handler)) { 
-    char *description = CHAR_DEREF(STRING_ELT(sdescription, 0));
+    const char *description = CHAR_DEREF(STRING_ELT(sdescription, 0));
     R_PreserveObject(handler);
     GGOBI(registerNumberedKeyEventHandler)(RS_GGOBI(GenericKeyPressHandler), handler, 
-                                           description, NULL, gg, R);
+                                           (char *)description, NULL, gg, R);
   } else {
     KeyEventHandler *old = GGOBI(removeNumberedKeyEventHandler)(gg);
     g_free(old->description);

@@ -12,7 +12,7 @@ asCStringArray(USER_OBJECT_ svec)
     if(n > 0) {
     els = (char **) R_alloc(n+1, sizeof(char*));
     for(i = 0; i < n; i++) {
-        els[i] = CHAR_DEREF(STRING_ELT(svec, i));
+        els[i] = (char *)CHAR_DEREF(STRING_ELT(svec, i));
     }
         els[n] = NULL;
     }
@@ -49,7 +49,7 @@ asCNumeric(USER_OBJECT_ s_num)
     return(NUMERIC_DATA(s_num)[0]);
 }
 /* This function takes a STRSXP or CHARSXP to a C string */
-char *
+const char *
 asCString(USER_OBJECT_ s_str)
 {
     if (IS_VECTOR(s_str)) {

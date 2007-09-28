@@ -335,12 +335,12 @@ RS_GGOBI(addVariable)(USER_OBJECT_ vals, USER_OBJECT_ name, USER_OBJECT_ levels,
      names = GET_NAMES(levels);
      levelValues = (char **) S_alloc(n, sizeof(char *));
      for(i = 0; i < n ; i++) {
-         levelValues[i] = CHAR_DEREF(STRING_ELT(names, i));
+         levelValues[i] = (char *)CHAR_DEREF(STRING_ELT(names, i));
      }
 
      INTEGER_DATA(ans)[0] = GGOBI(addCategoricalVariable)(NUMERIC_DATA(vals),
 							      GET_LENGTH(vals), 
-							      CHAR_DEREF(STRING_ELT(name,0)), 
+							      (char *)CHAR_DEREF(STRING_ELT(name,0)), 
 							      levelValues, 
  	 						      INTEGER_DATA(values), INTEGER_DATA(levels),
 							      n,
@@ -348,7 +348,7 @@ RS_GGOBI(addVariable)(USER_OBJECT_ vals, USER_OBJECT_ name, USER_OBJECT_ levels,
     } else {
          INTEGER_DATA(ans)[0] = GGOBI(addVariable)(NUMERIC_DATA(vals),
 					       GET_LENGTH(vals), 
-					       CHAR_DEREF(STRING_ELT(name,0)), 
+					       (char *)CHAR_DEREF(STRING_ELT(name,0)), 
 					       true, d, gg);
     }
     UNPROTECT(1);
@@ -434,8 +434,8 @@ RS_GGOBI(setVariableNames)(USER_OBJECT_ vars, USER_OBJECT_ names, USER_OBJECT_ d
   for (i = 0; i < num; i++) {
     which = INTEGER_DATA(vars)[i];
     SET_STRING_ELT(ans, i, COPY_TO_USER_STRING(curNames[which]));
-    GGOBI(setVariableName)(which, CHAR_DEREF(STRING_ELT(names,i)), false, d, gg);
-    GGOBI(setVariableName)(which, CHAR_DEREF(STRING_ELT(names,i)), true, d, gg);
+    GGOBI(setVariableName)(which, (char *)CHAR_DEREF(STRING_ELT(names,i)), false, d, gg);
+    GGOBI(setVariableName)(which, (char *)CHAR_DEREF(STRING_ELT(names,i)), true, d, gg);
   }
 
   UNPROTECT(1);
@@ -632,7 +632,7 @@ RS_GGOBI(setIDs)(USER_OBJECT_ ids, USER_OBJECT_ datasetId)
 	  n = GET_LENGTH(ids);
 	  g_ids = (gchar **) S_alloc(n , sizeof(gchar*));
 	  for(i = 0; i < n ; i++)
-		g_ids[i] = CHAR_DEREF(STRING_ELT(ids, i));
+		g_ids[i] = (char *)CHAR_DEREF(STRING_ELT(ids, i));
       datad_record_ids_set(d, g_ids, true);
   }
 }
@@ -664,7 +664,7 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
   desc->mode = Sprocess_data;
 
   d = ggobi_data_new(INTEGER_DATA(dims)[0], INTEGER_DATA(dims)[1]);
-  ggobi_data_set_name(d, asCString(name), NULL);
+  ggobi_data_set_name(d, (char *)asCString(name), NULL);
   
   ggobi_data_set_row_labels(d, asCStringArray(rowNames));
   datad_record_ids_set(d, asCStringArray(ids), true); /* ids MUST be given */
@@ -672,7 +672,7 @@ RS_GGOBI(addData)(USER_OBJECT_ values,
   for (i = 0; i < GET_LENGTH(values); i++) {
 	  USER_OBJECT_ vector = VECTOR_ELT(values, i);
 	  vartabled *vt = vartable_element_get(i, d);
-	  ggobi_data_set_col_name(d, i, asCString(STRING_ELT(colNames, i)));
+	  ggobi_data_set_col_name(d, i, (char *)asCString(STRING_ELT(colNames, i)));
 	  if (TYPEOF(vector) == INTSXP) {
 		  if (isFactor(vector)) {
 			  USER_OBJECT_ levels = getAttrib(vector, install("levels"));

@@ -223,7 +223,7 @@ RS_createGGobiScheme(USER_OBJECT_ sscheme, USER_OBJECT_ name)
  colorschemed *scheme;
  int n, i;
  USER_OBJECT_ colorNames;
- char *str;
+ const char *str;
  gchar *gstr;
  SEXP colors;
  gfloat *tmp;
