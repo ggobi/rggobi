@@ -42,11 +42,13 @@ ggobi_check_structs <- function() {
   )
   ver_comp <- compareVersion(versions["rggobi"], versions["ggobi"])
   if (ver_comp != 0) {
-    if (ver_comp < 0)
-      versions <- rev(versions)
-    warning("Your ", names(versions)[1], " (", versions[1], ") is newer than your ", 
-      names(versions)[2], " version (", versions[2], "). Please try to update your ", 
-      names(versions)[2], ".", call.=FALSE)
+    if (ver_comp > 0) versions <- rev(versions)
+    warning(
+      "Your ", names(versions)[1], " (", versions[1], ") ", 
+      "is newer than your ", names(versions)[2], " (", versions[2], "). ", 
+      "Please try to update your ", names(versions)[2], ".",
+      call.=FALSE
+    )
   }
   ver_comp == 0
 }
