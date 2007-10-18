@@ -108,7 +108,9 @@ connecting_edges <- function(x, y) {
     value <- t(edgeMatrix(value))
     value <- cbind(names[value[, 1]], names[value[, 2]])
   }
-  x[[name]] <- data.frame(id=1:nrow(value))
+  df <- data.frame(id=1:nrow(value))
+  rownames(df) <- paste(name, 1:nrow(df), sep="")
+  x[[name]] <- df
   y <- x[[name]]
   edges(y) <- value
 
