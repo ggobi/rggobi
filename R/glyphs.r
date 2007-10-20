@@ -9,14 +9,15 @@
 # @keyword dynamic 
 # @keyword internal 
 mapGlyphType <- function(types) {
-	if (!is.character(types)) return(as.integer(types))
-
-	sys.types <- getGlyphTypes.ggobi()
-	ids <- match(types, names(sys.types))
-	if (any(is.na(ids))) {
-		stop(paste("Invalid glyph name(s):",paste(types[is.na(ids)], collapse=", ")))
-	}
-	ids
+	if (!is.character(types)) 
+    return(as.integer(types))
+  stop("Character glyph types not yet supported")
+	#sys.types <- getGlyphTypes.ggobi()
+	#ids <- match(types, names(sys.types))
+	#if (any(is.na(ids))) {
+	#	stop(paste("Invalid glyph name(s):",paste(types[is.na(ids)], collapse=", ")))
+	#}
+	#ids
 }
 
 glyph_type <- function(x) UseMethod("glyph_type", x)

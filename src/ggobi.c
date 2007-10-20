@@ -64,6 +64,11 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
  int n = GET_LENGTH(args);
  USER_OBJECT_ ans;
 
+ #ifndef G_OS_WIN32
+ if (!gdk_display)
+    error("No displays found - cannot initialize GGobi.");
+ #endif
+ 
    c_args = g_malloc(sizeof(char *)*n);
    for(i = 0; i < n ; i++) {
      c_args[i] = (char *)CHAR_DEREF(STRING_ELT(args, i));
@@ -85,8 +90,6 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
 #ifdef G_OS_WIN32 
    R_tcldo = R_gtk_handle_events;
 #else
-  if (!gdk_display)
-    error("GDK display not found - please make sure X11 is running");
   addInputHandler (R_InputHandlers, ConnectionNumber(gdk_display),
                    RS_INTERNAL_GGOBI(event_handle), -1);
 #endif
