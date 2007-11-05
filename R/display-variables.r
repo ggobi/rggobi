@@ -38,14 +38,14 @@ display <- function(x, ...) UseMethod("display", x)
 display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(x)), embed=FALSE, ...) 
 {
 	type <- pmodes()[pmode]
-	vars <- variable_index(x, vars)
+	ivars <- variable_index(x, vars)
   embed <- as.logical(embed)
 
-	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), vars$X, x, !embed)
+	d <- .GGobiCall("createDisplay", ggobi_display_make_type(type), ivars$X, x, !embed)
 	if (type != pmode) {
 		pmode(d) <- pmode
 	}
-	#variables(d) <- vars
+  variables(d) <- vars
 	d
 }
 

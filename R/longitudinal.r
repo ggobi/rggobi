@@ -30,7 +30,11 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows), g = NULL) {
 	
 	or <- order(obsUnit, time)
 	tmp <- data[or, ]
-	if (is.null(g)) g <- ggobi(tmp, name=name)
+	if (is.null(g)) {
+	  g <- ggobi(tmp, name=name)
+	} else {
+	  g[name] <- tmp
+	}
 	
 	edges <- cbind(rownames(tmp[-nrow(tmp), ]), rownames(tmp[-1, ]))
 	matching <- obsUnit[or][-1] == obsUnit[or][-nrow(tmp)]
@@ -38,13 +42,15 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows), g = NULL) {
 	
 	edges <- edges[complete.cases(edges),]
 	
-	#browser()
 	d <- data.frame(tmp[edges[,1], sapply(tmp, is.factor), drop=FALSE])
+	rownames(d) <- paste(name, 1:nrow(d), sep="")
 	g[paste(name, "edges", sep="-")] <- d
-	
-	edges(g[2]) <- edges 
-  d <- displays(g)[[1]]
-  edges(d) <- g[2]
+	edges(g[paste(name, "edges", sep="-")]) <- edges 
+
+	if (!is.null(ggobi)) {
+    d <- displays(g)[[1]]
+    edges(d) <- g[2]
+  }
 
 	invisible(g)
 }
