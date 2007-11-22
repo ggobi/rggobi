@@ -112,6 +112,10 @@ variables.GGobiDisplay <- function(x) {
 	prev_vars <- variable_index(d, variables(x))
 	new_vars <- variable_index(d, value)
 
+  if (any(is.na(new_vars)))
+    stop("Variable(s) ", paste(value[is.na(new_vars)], collapse=", "), 
+      " not in dataset")
+  
   prev_vars <- mapply(setdiff, prev_vars, new_vars, SIMPLIFY=FALSE)
 
 	.GGobiCall("setDisplayVariables", new_vars, prev_vars, x, .gobi=ggobi(x))

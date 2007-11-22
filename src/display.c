@@ -221,6 +221,8 @@ toggle_display_variables(displayd *display, USER_OBJECT_ vars, gboolean active)
     for (i = 0; i < GET_LENGTH(varIds); i++) {
       gint var = INTEGER_DATA(varIds)[i];
       GtkWidget *wid = varpanel_widget_get_nth(j, var, display->d);
+      if (!GTK_IS_WIDGET(wid))
+        error("Unknown variable");
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(wid)) == active) {
         varsel(wid, &display->cpanel, display->current_splot, var, j, 
           -1, 0, 0, 0, display->d, display->ggobi);
@@ -271,11 +273,15 @@ RS_GGOBI(getDisplayVariables)(USER_OBJECT_ dpy)
 USER_OBJECT_
 RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJECT_ dpy)
 {
-  displayd *display;
+  displayd *display, *prev_display;
   USER_OBJECT_ ans = NULL_USER_OBJECT;
 
   display = toDisplay(dpy);
 	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
+  
+  /* ensure that display is current before changing variables */
+  prev_display = display->ggobi->current_display;
+  display_set_current(display, display->ggobi);
   
   /* If any of the requested variables AREN'T selected, select them */
   toggle_display_variables(display, vars, false);
@@ -287,6 +293,9 @@ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJE
   varpanel_refresh(display, display->ggobi);
   display_tailpipe(display, FULL,  display->ggobi);
   RS_INTERNAL_GGOBI(limited_event_handle)(-1); /* ensure display is redrawn */
+  
+  /* revert to previously selected display */
+  display_set_current(prev_display, prev_display->ggobi);
   
   return(ans);
 }
