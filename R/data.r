@@ -69,12 +69,20 @@ ggobi_set_data_file <- function(file, mode = "unknown", add = TRUE, .gobi = ggob
 # @returns GGobiData
 # @keyword manip 
 # @keyword internal
-ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), description = paste("R data frame", name), id = rownames(data), .gobi = ggobi_get()) {
+ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), description = paste("R data frame", name), id = NULL, .gobi = ggobi_get()) {
 	n <- dimnames(data)
-	if(length(id) != nrow(data)) {
-		id <- paste(seq(1, nrow(data)))
+	
+	if (is.null(id)) {
+	  if (.row_names_info(data) < 0) {
+	    id <- paste(name, seq(1, nrow(data)), sep="")
+	  } else {
+	    id <- rownames(data)
+	  }
+	} else {
+	  if (length(id) != nrow(data)) stop("Length of id does not match rows of data")
 	}
 
+  browser()
 	.data <- .GGobiCall("addData",
 		data,
 		n[[1]], n[[2]], dim(data), as.character(description),
