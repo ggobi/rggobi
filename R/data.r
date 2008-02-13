@@ -82,7 +82,6 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 	  if (length(id) != nrow(data)) stop("Length of id does not match rows of data")
 	}
 
-  browser()
 	.data <- .GGobiCall("addData",
 		data,
 		n[[1]], n[[2]], dim(data), as.character(description),
