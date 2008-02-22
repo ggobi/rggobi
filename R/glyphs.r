@@ -144,6 +144,7 @@ glyph_colour.GGobiData <- function(x)  {
 # ============================================================================ 
 
 # Get and set exclusion
+# Get and set the exclusion status of points
 #
 # @keyword internal
 # @alias excluded<-

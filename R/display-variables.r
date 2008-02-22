@@ -1,3 +1,4 @@
+# Display construction
 # Create a new display
 # 
 # @keyword internal 
@@ -51,12 +52,14 @@ display.GGobiData <- function(x, pmode="Scatterplot Display", vars=list(X=names(
 
 
 # Get variables
-# 
+# Get variable names from a container
+#
 # @keyword internal 
 variables <- function(x) UseMethod("variables", x)
 
 # Set variables
-# 
+# Set variable names in a container
+#
 # @keyword internal 
 "variables<-" <- function(x, value) UseMethod("variables<-", x)
 

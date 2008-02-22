@@ -1,7 +1,6 @@
-# Ggobi symbol
-# 
-# Used entirely within R to map the given name to the name of the 
-# corresponding C routine.
+
+# GGobi symbol creation
+# Maps the given name to the name of the corresponding C routine
 #
 # A simple way of generating the prefix for a symbol
 # used in this package/library so that we can hide
@@ -12,6 +11,7 @@
 # @value the name of the C routine corresponding to its argument
 .ggobi.symbol <- function(name) paste("RS_GGOBI", name, sep="_")
 
+# Calling native routines
 # Wrappers for calling C routines in the R-ggobi library.
 # 
 # \code{.GGobiC} and \code{.GGobiCall} convert the name and then call 
@@ -48,6 +48,7 @@
 	.C(.ggobi.symbol(.name), ..., .gobi, PACKAGE = "rggobi")
 }
 
+# Validity checking
 # Determines whether a reference to an internal ggobi object is valid
 #
 # One can create multiple, independent ggobi instances within a single

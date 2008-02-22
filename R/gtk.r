@@ -1,4 +1,5 @@
-# Cast to RGtk object
+# RGtk casting
+# Cast an object to an RGtk object
 # 
 # @keyword internal 
 as.RGtkObject <- function(x) {
