@@ -6,7 +6,7 @@
 \description{
 Instantiate new ggobi with a longitudinal data set.
 }
-\usage{ggobi_longitudinal(data, time=1:rows, id=rep(1, rows), g)}
+\usage{ggobi_longitudinal(data, time=1:rows, id=rep(1, rows), g = NULL)}
 \arguments{
 \item{data}{data frame}
 \item{time}{time variable}

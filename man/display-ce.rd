@@ -1,10 +1,10 @@
 \name{display}
 \alias{display}
-\title{Create a new display}
+\title{Display construction}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-
+Create a new display
 }
 \usage{display(x, ...)}
 \arguments{

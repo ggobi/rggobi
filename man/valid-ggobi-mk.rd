@@ -1,10 +1,10 @@
 \name{valid_ggobi}
 \alias{valid_ggobi}
-\title{Determines whether a reference to an internal ggobi object is valid}
+\title{Validity checking}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-
+Determines whether a reference to an internal ggobi object is valid
 }
 \usage{valid_ggobi(.gobi)}
 \arguments{

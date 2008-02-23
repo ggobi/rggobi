@@ -5,7 +5,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-
+Get and set the exclusion status of points
 }
 \usage{excluded(x)}
 \arguments{

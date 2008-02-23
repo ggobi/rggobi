@@ -1,11 +1,11 @@
 \name{.GGobiCall}
 \alias{.GGobiCall}
 \alias{.GGobiC}
-\title{Wrappers for calling C routines in the R-ggobi library.}
+\title{Calling native routines}
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-
+Wrappers for calling C routines in the R-ggobi library.
 }
 \usage{.GGobiCall(.name, ..., .gobi = ggobi_get(), .test=TRUE)}
 \arguments{

@@ -4,7 +4,7 @@
 \author{Hadley Wickham <h.wickham@gmail.com>}
 
 \description{
-
+Set variable names in a container
 }
 \usage{"variables<-"(x, value)}
 \arguments{
