@@ -66,7 +66,7 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
 
  #ifndef G_OS_WIN32
  if (!gdk_display)
-    error("No displays found - cannot initialize GGobi.");
+    error("No displays found. Please ensure R is running from an X11 terminal.");
  #endif
  
    c_args = g_malloc(sizeof(char *)*n);
