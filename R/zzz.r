@@ -37,14 +37,14 @@ ggobi_check_structs <- function() {
 
 # check that rggobi and GGobi by major.minor versions are the same
 # to ensure binary compatibility
-# also make sure GGobi is later than 2.1.7, since that is where
+# also make sure GGobi is later than 2.1.6, since that is where
 # we started the above version policy
 .check_versions <- function() {
   versions <- c(
     rggobi = packageDescription("rggobi", fields = c("Version")), 
     ggobi  = ggobi_version()$"version string"
   )
-  if (compareVersion(versions["ggobi"], "2.1.7") < 0)
+  if (compareVersion(versions["ggobi"], "2.1.6") < 0)
     warning("Your GGobi is too old - please update to the latest version")
   # strip micro version and rev
   versions <- sub("\\.[^.]*$", "", sub("-.*", "", versions))
