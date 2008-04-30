@@ -379,7 +379,7 @@ RS_GGOBI(setTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name,
   g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
   
   RS_INTERNAL_GGOBI(getTourVectorsFromMode)(display, mode, &x, &y);
-  g_return_val_if_fail(x != NULL && y != NULL, NULL_USER_OBJECT);
+  g_return_val_if_fail(x != NULL, NULL_USER_OBJECT);
   
   n = display->d->ncols;
   for (k = 0; k < n; k++) {
@@ -406,7 +406,7 @@ RS_GGOBI(getTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
   g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
   
   RS_INTERNAL_GGOBI(getTourVectorsFromMode)(display, mode, &x, &y);
-  g_return_val_if_fail(x != NULL && y != NULL, NULL_USER_OBJECT);
+  g_return_val_if_fail(x != NULL, NULL_USER_OBJECT);
   
   n = display->d->ncols;
   PROTECT(matrix = allocMatrix(REALSXP, n, 3));
@@ -415,6 +415,7 @@ RS_GGOBI(getTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
     REAL(matrix)[k] = x[k]; /* x coeff */
     if (y)
       REAL(matrix)[k+n] = y[k]; /* y coeff */
+    else REAL(matrix)[k+n] = 0;
     REAL(matrix)[k+2*n] = vt->lim.max - vt->lim.min; /* range */
   }
   
