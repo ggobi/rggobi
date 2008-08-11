@@ -15,9 +15,6 @@ extern __declspec(dllimport) void (*R_tcldo)();
 
 #include "R_ext/RS.h"
 
-void RS_INTERNAL_GGOBI(event_handle)(void *data);
-void RS_INTERNAL_GGOBI(limited_event_handle)(gint max);
-
 /*XXX used to be R_IsNaNorNA, but no longer available for us.
       R_finite() excludes infinite values also. This is probably okay for now.
 */
@@ -87,13 +84,6 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
    }
    g_free(c_args);
 
-#ifdef G_OS_WIN32 
-   R_tcldo = R_gtk_handle_events;
-#else
-  addInputHandler (R_InputHandlers, ConnectionNumber(gdk_display),
-                   RS_INTERNAL_GGOBI(event_handle), -1);
-#endif
-
   GGobi_setMissingValueIdentifier(isMissingValue);
 
   gdk_flush();    
@@ -125,64 +115,6 @@ RS_GGOBI(getGGobi)(USER_OBJECT_ which)
  UNPROTECT(1);
  return(ans);
 }
-
-/*
-   Handle all the events currently in the queue,
-   until there are no more.
-   This is called by the R event loop when input is 
-   detected on the file descriptor associated with the 
-   X connection.
-
-   This needs a little more finessing to make it
-   work correctly.
- */
-void
-RS_INTERNAL_GGOBI(event_handle)(void *data)
-{
-  RS_INTERNAL_GGOBI(limited_event_handle)(-1);
-}
-
-/**
-  Process max number of events and then terminate.
- */
-void
-RS_INTERNAL_GGOBI(limited_event_handle)(gint max) {
-  gint ctr = 0;
-  gboolean block =  (max > -1);
-
-  while(g_main_iteration(block)) {
-    /*  fprintf(stderr, "Event %d\n",ctr); */
-    /*
-    gtk_main_iteration_do(false);
-    */
-    /*   g_main_iteration((ctr < max));  */
-    ctr++;
-    block = max > -1 && ctr < max;
-
-    if(max > -1 && ctr >= max)
-       return;
-  }
-}
-
-
-
-
-/*
-  A version of the event handling mechanism that one can call 
-  directly from R to prohibit the prompt from 
-  Note that selecting the Quit menu item causes this loop
-  to exit and the routine to return control to the R event
-  handling. Hence the prompt will return.
-
-  Added for debugging purposes currently, but may have
-  some value under special circumstances.
- */
-void
-RS_GGOBI(blockingLoop)(void)
-{
-  gtk_main();
-}
-
 
 USER_OBJECT_
 RS_ggobiInstance(ggobid *gg) {
@@ -287,27 +219,6 @@ RS_GGOBI(close)(USER_OBJECT_ gobi)
 
  return(ans);
 }
-
-/*
-  Overrides the one in libGGobi.so 
-  which is called when a window is deleted or explicitly
-  closed.
- */
-/*void
-quit_ggobi(ggobid *gg)
-{
-  GGOBI(close)(gg, true);
-}*/
-
-#ifdef G_OS_WIN32
-
-void
-R_gtk_handle_events()
-{
-  RS_INTERNAL_GGOBI(limited_event_handle)(-1);
-}
-#endif
-
 
 #include "GGStructSizes.c"
 

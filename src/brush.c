@@ -5,16 +5,18 @@
 #include "vars.h"
 
 USER_OBJECT_
-RS_GGOBI(setBrushSize)(USER_OBJECT_ dims, USER_OBJECT_ datasetId)
+RS_GGOBI(setBrushSize)(USER_OBJECT_ dims, USER_OBJECT_ ggobiId)
 {
   ggobid *gg;
   GGobiData *d;
   gint wd, ht;
   USER_OBJECT_ ans;
 
-  d = toData(datasetId);
+  gg = toGGobi(ggobiId);
+  
+  /*d = toData(datasetId);
   g_return_val_if_fail(GGOBI_IS_DATA(d), NULL_USER_OBJECT);
-  gg = d->gg;
+  gg = d->gg;*/
 
   if(d) {  
 

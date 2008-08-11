@@ -292,7 +292,8 @@ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJE
   /* refresh everything */
   varpanel_refresh(display, display->ggobi);
   display_tailpipe(display, FULL,  display->ggobi);
-  RS_INTERNAL_GGOBI(limited_event_handle)(-1); /* ensure display is redrawn */
+  while(gtk_events_pending()) /* ensure display is redrawn */
+    gtk_main_iteration();
   
   /* revert to previously selected display */
   display_set_current(prev_display, prev_display->ggobi);

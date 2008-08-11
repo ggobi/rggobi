@@ -326,3 +326,6 @@ ids.GGobiData <- function(x) {
 	.GGobiCall("setIDs", as.character(value), .data=x)
 	x
 }
+
+## for S4 integration
+setOldClass("GGobiData")

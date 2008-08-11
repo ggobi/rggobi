@@ -24,8 +24,6 @@ int isMissingValue(double d);
 USER_OBJECT_ RS_INTERNAL_GGOBI(getVariableNames)(GGobiData *d);
 USER_OBJECT_ RS_INTERNAL_GGOBI(getColorName)(gint cid, ggobid *gg);
 
-void RS_INTERNAL_GGOBI(limited_event_handle)(gint max);
-
 #include "RSGGobiEntryPoints.h"
 
 #endif
