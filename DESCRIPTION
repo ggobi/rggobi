@@ -1,6 +1,6 @@
 Package: rggobi
-Version: 2.1.9
-Date:    2008-5-1
+Version: 2.1.10
+Date:    2008-8-13
 Title:   Interface between R and GGobi
 Author:  Duncan Temple Lang <duncan@research.bell-labs.com>,
 	 Debby Swayne <dfs@research.att.com>,
