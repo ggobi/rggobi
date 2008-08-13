@@ -6,7 +6,7 @@ Author:  Duncan Temple Lang <duncan@research.bell-labs.com>,
 	 Debby Swayne <dfs@research.att.com>,
 	 Hadley Wickham <hadley@iastate.edu>,
 	 Michael Lawrence <lawremi@iastate.edu>
-Depends: R (>= 2.5.1), RGtk2, utils
+Depends: R (>= 2.5.1), RGtk2, utils, methods
 Suggests: reshape
 SystemRequirements: GGobi
 Maintainer: Hadley Wickham <hadley@iastate.edu>
