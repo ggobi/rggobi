@@ -65,8 +65,8 @@ update_cb <- function()
       rep(FALSE, lives - deaths), rep(TRUE, deaths))
     #ggobi_data_set_variables(d, calc_lives(), "Lives")
   } else box[b,c(1,2)] <- ball + v
-  ggobi_data_set_variables(d, box[,1], "X")
-  ggobi_data_set_variables(d, box[,2], "Y")
+  d[,"X"] <- box[,1]
+  d[,"Y"] <- box[,2]
   return(TRUE)
 }
 
