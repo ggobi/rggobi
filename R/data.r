@@ -79,6 +79,10 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 	} else {
 	  if (length(id) != nrow(data)) stop("Length of id does not match rows of data")
 	}
+	
+	# Convert character columns to factors
+	char <- sapply(data, is.character)
+	data[char] <- lapply(data[char], factor)
 
 	.data <- .GGobiCall("addData",
 		data,
