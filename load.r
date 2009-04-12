@@ -1,4 +1,4 @@
-library(rggobi); library(butler)
+library(rggobi)
 
 source.with.err <- function(path) {
 	tryCatch(source(path), error = function(x) {print(path); print(x)})
