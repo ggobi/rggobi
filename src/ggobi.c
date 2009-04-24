@@ -61,11 +61,6 @@ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance)
  int n = GET_LENGTH(args);
  USER_OBJECT_ ans;
 
- #ifndef G_OS_WIN32
- if (!gdk_display)
-    error("No displays found. Please ensure R is running from an X11 terminal.");
- #endif
- 
    c_args = g_malloc(sizeof(char *)*n);
    for(i = 0; i < n ; i++) {
      c_args[i] = (char *)CHAR_DEREF(STRING_ELT(args, i));
