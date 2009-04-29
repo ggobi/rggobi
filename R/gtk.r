@@ -3,7 +3,6 @@
 # 
 # @keyword internal 
 as.RGtkObject <- function(x) {
- if(require(RGtk2)) class(x) <- c(class(x), "RGtkObject")
  x
 }
 
