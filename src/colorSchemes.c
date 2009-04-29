@@ -7,10 +7,10 @@
  */
 USER_OBJECT_ RSGGobi_Internal_getColorSchemes(GList *schemes);
 USER_OBJECT_ RSGGobi_Internal_getColorScheme(colorschemed *scheme);
-USER_OBJECT_ RSGGobi_Internal_getColor(gfloat *vals, colorscaletype type, int n);
+USER_OBJECT_ RSGGobi_Internal_getColor(gdouble *vals, colorscaletype type, int n);
 colorschemed *RS_createGGobiScheme(USER_OBJECT_ scheme, USER_OBJECT_ name);
 
-gfloat *RS_setGGobiColor(USER_OBJECT_ colors);
+gdouble *RS_setGGobiColor(USER_OBJECT_ colors);
 
 static GList *
 RSGGobi_Internal_getSchemeFromGGobi(USER_OBJECT_ gobiId)
@@ -175,7 +175,7 @@ RSGGobi_Internal_getColorScheme(colorschemed *scheme)
 }
 
 USER_OBJECT_ 
-RSGGobi_Internal_getColor(gfloat *vals, colorscaletype type, int n)
+RSGGobi_Internal_getColor(gdouble *vals, colorscaletype type, int n)
 {
     USER_OBJECT_ ans;
     int i;
@@ -226,7 +226,7 @@ RS_createGGobiScheme(USER_OBJECT_ sscheme, USER_OBJECT_ name)
  const char *str;
  gchar *gstr;
  SEXP colors;
- gfloat *tmp;
+ gdouble *tmp;
 
  scheme = alloc_colorscheme(sizeof(colorschemed));
  if(!scheme) {
@@ -244,7 +244,7 @@ RS_createGGobiScheme(USER_OBJECT_ sscheme, USER_OBJECT_ name)
  colors = GET_SLOT(sscheme, Rf_install("colors"));
  scheme->n = n = GET_LENGTH(colors);
  colorNames = GET_NAMES(colors);
- scheme->data = (gfloat **) g_malloc(sizeof(gfloat *) * n);
+ scheme->data = (gdouble **) g_malloc(sizeof(gdouble *) * n);
  for(i = 0; i < n; i++) {
     if(GET_LENGTH(colorNames) && (str = CHAR_DEREF(STRING_ELT(colorNames, i)))) {
 	gstr = g_strdup(str);
@@ -265,14 +265,14 @@ RS_createGGobiScheme(USER_OBJECT_ sscheme, USER_OBJECT_ name)
 }
 
 
-gfloat *
+gdouble *
 RS_setGGobiColor(USER_OBJECT_ colors)
 {
     int j, numVals;
-    gfloat *data;
+    gdouble *data;
     colors = GET_SLOT(colors, Rf_install(".Data"));
     numVals = GET_LENGTH(colors);
-    data = g_malloc(sizeof(gfloat) * numVals);
+    data = g_malloc(sizeof(gdouble) * numVals);
     for(j = 0; j < numVals ; j++) {
         double val;
         val = NUMERIC_DATA(colors)[j];
