@@ -10,17 +10,17 @@
 #include "tsdisplay.h"
 #include "barchartDisplay.h"
 
-gdouble
-RS_INTERNAL_GGOBI(tformToWorld)(GGobiData *d, gint j, gdouble min, gdouble max)
+greal
+RS_INTERNAL_GGOBI(tformToWorld)(GGobiData *d, gint j, greal min, greal max)
 {
   vartabled *var = vartable_element_get(j, d);
   gdouble var_min = var->lim.min, var_max = var->lim.max;
   gdouble mid = (max - min) / 2.0 + min;
-  gdouble ftmp;
+  greal ftmp;
 
-  ftmp = -1.0 + 2.0 * ((gdouble) mid - var_min) / (var_max - var_min);
+  ftmp = -1.0 + 2.0 * ((greal) mid - var_min) / (var_max - var_min);
   
-  return (gdouble) (PRECISION1 * ftmp);
+  return (greal) (PRECISION1 * ftmp);
 }
 
 void
@@ -53,9 +53,9 @@ RS_GGOBI(setPlotRange)(USER_OBJECT_ s_min_x, USER_OBJECT_ s_min_y,
   USER_OBJECT_ ans;
   fcoords tfmin, tfmax;
   splotd *sp;
-  gdouble min_x = NUMERIC_DATA(s_min_x)[0], min_y = NUMERIC_DATA(s_min_y)[0];
-  gdouble max_x = NUMERIC_DATA(s_max_x)[0], max_y = NUMERIC_DATA(s_max_y)[0];
-  gdouble scale_x, scale_y;
+  greal min_x = NUMERIC_DATA(s_min_x)[0], min_y = NUMERIC_DATA(s_min_y)[0];
+  greal max_x = NUMERIC_DATA(s_max_x)[0], max_y = NUMERIC_DATA(s_max_y)[0];
+  greal scale_x, scale_y;
   
   display = toDisplay(rdisplay);
 	g_return_val_if_fail(GGOBI_IS_DISPLAY(display), NULL_USER_OBJECT);
