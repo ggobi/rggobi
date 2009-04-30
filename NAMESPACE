@@ -1,5 +1,6 @@
 exportPattern("^[^\\.]")
 import(utils)
+import(RGtk2)
 
 S3method(print, GGobiData)
 S3method(dim, GGobiData)
