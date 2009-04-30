@@ -19,7 +19,7 @@
 # 
 # These functions map the simple name of a C routine into the
 # package-specific version of that name.  These allow use to hide the
-# use a name \textit{mangling} scheme of our choosing for the C level
+# use a name \emph{mangling} scheme of our choosing for the C level
 # routines in the shared library/DLL that provides the glue between R
 # and ggobi.  This is useful for avoiding name conflicts with other C
 # code in R or other packages.  These are only of relevance to the

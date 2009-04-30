@@ -185,9 +185,9 @@ ggobi_get <- function(id = ggobi_count(), drop=TRUE) {
 # library being used. This allows code to execute 
 # conditionally on certain version numbers, etc.
 # 
-# @value the release date of the ggobi library
-# @value a vector of 3 integers containing the major, minor and patch-level numbers.
-# @value a string version of the major, minor and patch-level numbers,
+# @value date the release date of the ggobi library
+# @value version a vector of 3 integers containing the major, minor and patch-level numbers.
+# @value versionstring a string version of the major, minor and patch-level numbers,
 # @keyword dynamic 
 #X ggobi_version()
 ggobi_version <- function() {

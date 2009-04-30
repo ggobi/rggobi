@@ -23,7 +23,7 @@ format in which they currently reside.
 
 The variables are as follows:
 
-\begin{itemize}	
+\itemize{
 	\item Name: Storm Name
 	\item Year: Year of report
 	\item Month: Month of report 
@@ -36,8 +36,7 @@ The variables are as follows:
 	\item Type: Storm classification (Tropical Depression, Tropical Storm, Hurricane,
 	\item Extratropical)
 	\item SeasDay: Day of the hurricane season (days since June 1)
-
-\end{itemize}
+}
 
 The Tropical Cyclone Reports had a variety of storm type designations and 
 there appeared to be no consistent naming convention for cyclones that were 

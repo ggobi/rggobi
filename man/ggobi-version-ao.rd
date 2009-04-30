@@ -11,9 +11,9 @@ GGobi version information
 
 }
 \value{
- \item{the release date of the ggobi library}
- \item{a vector of 3 integers containing the major, minor and patch-level numbers.}
- \item{a string version of the major, minor and patch-level numbers,}
+  \item{date}{the release date of the ggobi library}
+  \item{version}{a vector of 3 integers containing the major, minor and patch-level numbers.}
+  \item{versionstring}{a string version of the major, minor and patch-level numbers,}
 }
 \details{Return an object that describes the version of the ggobi
 library being used. This allows code to execute

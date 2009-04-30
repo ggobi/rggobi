@@ -14,7 +14,7 @@ Gets list of displays in the specified GGobi instance
 
 \details{A display basically corresponds to a window in GGobi.  A display
 may contain mutliple plots within it.  For example, the scatterplot
-matrix contains $p \times p$ plots.
+matrix contains $p * p$ plots.
 
 Use this function to obtain a reference to a display (they are
 numbered in the order they are created) so you can change
