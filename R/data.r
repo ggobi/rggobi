@@ -81,7 +81,7 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 	}
 	
 	# Convert character columns to factors
-	char <- sapply(data, is.character)
+	char <- unlist(lapply(data, is.character))
 	data[char] <- lapply(data[char], factor)
 
 	.data <- .GGobiCall("addData",
