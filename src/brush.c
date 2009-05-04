@@ -8,7 +8,7 @@ USER_OBJECT_
 RS_GGOBI(setBrushSize)(USER_OBJECT_ dims, USER_OBJECT_ ggobiId)
 {
   ggobid *gg;
-  GGobiData *d;
+  GGobiData *d = NULL;
   gint wd, ht;
   USER_OBJECT_ ans;
 
