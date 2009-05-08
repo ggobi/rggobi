@@ -3,7 +3,8 @@
 # 
 # @keyword internal 
 as.RGtkObject <- function(x) {
- x
+  class(x) <- c(class(x), "RGtkObject")
+  x
 }
 
 # Gtk main window
