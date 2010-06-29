@@ -196,7 +196,7 @@ toGGobi(USER_OBJECT_ s_ggobi)
 }
 
 void
-RS_GGOBI(getNumGGobiInstances)(glong *ans)
+RS_GGOBI(getNumGGobiInstances)(guint *ans)
 {
  ans[0] = GGOBI(getNumGGobis)();
 }

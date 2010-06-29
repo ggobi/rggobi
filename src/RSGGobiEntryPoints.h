@@ -1,7 +1,7 @@
 #ifndef RSGGOBI_ENTRY_POINTS
 #define RSGGOBI_ENTRY_POINTS
 
-void RS_GGOBI(getNumGGobiInstances)(glong *ans);
+void RS_GGOBI(getNumGGobiInstances)(guint *ans);
 
 USER_OBJECT_ RS_GGOBI(getNumDisplays)(USER_OBJECT_ ggobiId);
 USER_OBJECT_ RS_GGOBI(getNumberedKeyHandler)(USER_OBJECT_ ggobiId);
@@ -109,7 +109,7 @@ USER_OBJECT_ RS_GGOBI(init)(USER_OBJECT_ args, USER_OBJECT_ createInstance);
 SEXP RS_GGOBI(createPlots)(SEXP plotDescList, SEXP dims, SEXP cells, SEXP gobiId, SEXP rdisplay, SEXP dataset);
 USER_OBJECT_ RS_GGOBI(setDisplayVariables)(USER_OBJECT_ vars, USER_OBJECT_ varPrev, USER_OBJECT_ dpy);
 
-void RS_GGOBI(getNumGGobiInstances)(glong *ans);
+void RS_GGOBI(getNumGGobiInstances)(guint *ans);
 void RS_GGOBI(flush)();
 
 USER_OBJECT_ RS_GGOBI(setVariableTypes)(USER_OBJECT_ vars, USER_OBJECT_ values, USER_OBJECT_ datasetId);
