@@ -7,9 +7,7 @@
 GGobi version information
 }
 \usage{ggobi_version()}
-\arguments{
 
-}
 \value{
   \item{date}{the release date of the ggobi library}
   \item{version}{a vector of 3 integers containing the major, minor and patch-level numbers.}

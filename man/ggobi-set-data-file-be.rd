@@ -14,8 +14,8 @@ Open data file and add to ggobi datasets.
 \item{.gobi}{ggobi instance}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{manip}
 \keyword{internal}

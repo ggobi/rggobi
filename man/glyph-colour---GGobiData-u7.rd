@@ -14,7 +14,7 @@ Set glyph colour
 \item{value}{vector of new colours}
 }
 
-\details{}
+
 \seealso{\code{\link{glyph_colour}}}
-\examples{}
+
 \keyword{dynamic}

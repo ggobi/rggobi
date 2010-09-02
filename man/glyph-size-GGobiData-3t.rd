@@ -14,5 +14,5 @@ Get glyph size
 
 \details{Glyph size is an integer between 1 and 6.}
 \seealso{\code{\link{glyph_size<-}}}
-\examples{}
+
 \keyword{dynamic}

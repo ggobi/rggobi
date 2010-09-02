@@ -33,6 +33,7 @@ ggobi <- function(data=NULL, ...) UseMethod("ggobi", data)
 # @arguments a character vector of command-line arguments
 # @arguments data format GGobi should expect to read the data from, if reading from a file.
 # @arguments the name to use in GGobi for the dataset, if one is specified
+# @arguments ignored
 # @value A ggobi object 
 # @keyword dynamic 
 # @alias rggobi
@@ -67,7 +68,7 @@ ggobi.default <- function(data, args=character(0), mode=character(0), name = dep
 # GGobi names
 # Get dataset names
 # 
-# @argument ggobi instance
+# @arguments ggobi instance
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X names(g)
@@ -108,6 +109,7 @@ print.GGobi <- function(x, ...) {
 # Get a description of the global state of the GGobi session.
 # 
 # @arguments ggobi object
+# @arguments ignored
 # @keyword dynamic 
 #X g <- ggobi(mtcars)
 #X summary(g)
@@ -165,6 +167,7 @@ ggobi_count <- function() {
 # in existence in the R session.  Also, one can fetch particular instances. 
 # 
 # @arguments numeric vector indicating which ggobi instances to retrieve.  Use default if none specified
+# @arguments drop if possible?
 # @returns list of ggobi instances
 # @keyword dynamic 
 #X ggobi(mtcars)

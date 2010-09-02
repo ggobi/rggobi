@@ -11,7 +11,7 @@ Cast an object to an RGtk object
 \item{x}{}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{internal}

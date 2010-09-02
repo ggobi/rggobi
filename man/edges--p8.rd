@@ -12,7 +12,7 @@ Generic method, see methods for more details
 \item{value}{}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{internal}

@@ -14,5 +14,5 @@ Mock up a pcp plot using points and edges.
 
 \details{Experimental and may suggest ways to reduce PCP code in GGobi}
 
-\examples{}
+
 \keyword{internal}

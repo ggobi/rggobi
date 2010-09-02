@@ -20,10 +20,11 @@ display <- function(x, ...) UseMethod("display", x)
 # and then set the variables.  Hopefully this will be improved in a future
 # version of rggobi.
 #  
-# @argments GGobiData object
+# @arguments GGobiData object
 # @arguments projection mode to use
 # @arguments variables to display, see \code{\link{variables.GGobiDisplay}} for details
 # @arguments If TRUE, returns widget for use with RGtk2
+# @arguments ignored
 # @seealso \code{\link{ggobi_display_types}} for a list of display types
 # @keyword dynamic
 #X g <- ggobi(mtcars)

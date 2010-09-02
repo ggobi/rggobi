@@ -1,16 +1,15 @@
 Package: rggobi
-Version: 2.1.15
-Date:    2010-6-29
+Version: 2.1.16
 Title:   Interface between R and GGobi
 Author:  Duncan Temple Lang <duncan@research.bell-labs.com>,
 	 Debby Swayne <dfs@research.att.com>,
-	 Hadley Wickham <hadley@iastate.edu>,
+	 Hadley Wickham <hadley@rice.edu>,
 	 Michael Lawrence <lawremi@iastate.edu>
 Depends: R (>= 2.5.1)
 Suggests: reshape
 Imports: RGtk2, utils, methods
 SystemRequirements: GGobi
-Maintainer: Hadley Wickham <hadley@iastate.edu>
+Maintainer: Hadley Wickham <hadley@rice.edu>
 Description: The rggobi package provides a command-line interface to GGobi, an  interactive and dynamic graphics package. Rggobi complements GGobi's graphical user interface, providing a way to fluidly transition between analysis and exploration, as well as automating common tasks. 
 License: BSD
 LazyData: true

@@ -14,5 +14,5 @@ Set the exclusion status of points.
 
 \details{If a point is excluded it is not drawn.}
 \seealso{\code{\link{excluded}}}
-\examples{}
+
 \keyword{dynamic}

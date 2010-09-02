@@ -14,5 +14,5 @@ Retrieve RGtk object for menu bar
 \details{Useful for embedding in other applications or for listening
 to their signals via RGtk2.}
 
-\examples{}
+
 \keyword{internal}

@@ -12,7 +12,7 @@ Create a new display
 \item{...}{}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{internal}

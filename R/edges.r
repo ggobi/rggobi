@@ -99,6 +99,8 @@ connecting_edges <- function(x, y) {
 # Set edges
 # Create a new edges dataset and add to GGobi
 #
+# @arguments GGobi dataset
+# @arguments new edges
 # 
 # @keyword dynamic
 "edges<-.GGobi" <- function(x, value) {

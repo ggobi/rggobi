@@ -11,7 +11,7 @@ Get edges for a dataset
 \item{x}{ggobi dataset}
 }
 \value{A matrix of edge pairs}
-\details{}
 
-\examples{}
+
+
 \keyword{manip}

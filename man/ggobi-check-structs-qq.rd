@@ -7,9 +7,7 @@
 Validates GGobi and Rggobi views of internal data structures
 }
 \usage{ggobi_check_structs()}
-\arguments{
 
-}
 \value{TRUE if the sizes in the two libraries are the same, otherwise a named logical vector indicating which structures are different}
 \details{This function is called when the Rggobi library is loaded and it verifies
 that the sizes of the different internal data structures for GGobi are the
@@ -24,6 +22,6 @@ you need to re-install Rggobi against the version of GGobi you are using.
 
 @value TRUE if the sizes in the two libraries are the same, otherwise a named logical vector indicating which structures are different}
 
-\examples{}
+
 \keyword{programming}
 \keyword{internal}

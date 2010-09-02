@@ -13,7 +13,7 @@ Set row ids from a GGobiData
 \item{value}{new values}
 }
 
-\details{}
+
 \seealso{\code{\link{ids}}}
-\examples{}
+
 \keyword{manip}

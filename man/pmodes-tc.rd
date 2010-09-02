@@ -21,5 +21,5 @@ These generic methods retrieves possible projection/interaction modes.
 the character methods retrieve modes for a given display type, and
 the GGobiDisplay methods return possible modes for a given display}
 
-\examples{}
+
 \keyword{internal}

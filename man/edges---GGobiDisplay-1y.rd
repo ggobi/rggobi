@@ -15,5 +15,5 @@ Set edges for a display
 \details{This sets the dataset that a GGobiDisplay uses
 to display edges.}
 
-\examples{}
+
 \keyword{dynamic}

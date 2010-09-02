@@ -30,6 +30,6 @@ The mapping of the name to its corresponding C routine name
 is done in conjunction with the pre-processor macro
 \code{RS_GGOBI}. These  must be synchronized.}
 \seealso{\code{\link{.C}}, \code{\link{.Call}}}
-\examples{}
+
 \keyword{dynamic}
 \keyword{internal}

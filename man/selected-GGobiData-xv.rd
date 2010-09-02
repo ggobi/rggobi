@@ -13,7 +13,7 @@ Returns logical vector indicating if each point is under the brush
 \item{}{logical vector}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{dynamic}

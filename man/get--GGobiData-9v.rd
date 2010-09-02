@@ -10,10 +10,10 @@ Subsetting for ggobi datasets
 }
 \usage{"[.GGobiData"(x, i, j, drop=FALSE)}
 \arguments{
-\item{x}{arguments for generic data.frame subset function}
-\item{i}{drop dimensions?}
-\item{j}{}
-\item{drop}{}
+\item{x}{ggobi dataset}
+\item{i}{rows}
+\item{j}{cols}
+\item{drop}{drop dimensions?}
 }
 \value{desired subset from data.frame}
 \details{This functions allow one to treat a ggobi dataset as if it were a local

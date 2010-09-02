@@ -14,7 +14,7 @@ Creates a new ggobi instance
 \item{args}{a character vector of command-line arguments}
 \item{mode}{data format GGobi should expect to read the data from, if reading from a file.}
 \item{name}{the name to use in GGobi for the dataset, if one is specified}
-\item{...}{}
+\item{...}{ignored}
 }
 \value{A ggobi object}
 \details{This function creates a new instance of GGobi with or without new data.  Use

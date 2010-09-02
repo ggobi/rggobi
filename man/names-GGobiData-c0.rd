@@ -12,8 +12,8 @@ Get column names for a GGobiData
 \item{...}{}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{attribute}
 \keyword{internal}

@@ -11,8 +11,8 @@ Retrieve the number of row in a GGobiData
 \item{d}{dataset}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{attribute}
 \keyword{internal}

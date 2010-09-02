@@ -12,8 +12,8 @@ Conveniently retrieve ggobi dataset.
 \arguments{
 \item{x}{GGobi object}
 \item{i}{name of dataset to retrive}
-\item{...}{}
-\item{drop}{}
+\item{...}{ignored}
+\item{drop}{if TRUE, return vector is possible}
 }
 
 \details{It is convenient to be able to refer to and operate on a ggobi

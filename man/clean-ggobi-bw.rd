@@ -14,6 +14,6 @@ Clean arguments for ggobi
 \details{Arguments for ggobi need to be in specific format.
 This function helps ensure that.}
 
-\examples{}
+
 \keyword{dynamic}
 \keyword{internal}

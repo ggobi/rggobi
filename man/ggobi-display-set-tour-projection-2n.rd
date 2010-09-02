@@ -8,8 +8,8 @@ Set the tour projection from a GGobi tour.
 }
 \usage{ggobi_display_set_tour_projection(gd, value)}
 \arguments{
-\item{gd}{}
-\item{value}{}
+\item{gd}{GGobiDisplay object running tour}
+\item{value}{tour projection}
 }
 
 \details{If you know the projection you would like to see

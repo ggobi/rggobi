@@ -8,7 +8,7 @@
 # This can be used to record interesting projections of your
 # data for later analysis.
 #
-# @argument GGobiDisplay object running tour
+# @arguments GGobiDisplay object running tour
 # @keyword dynamic
 #X g <- ggobi(mtcars)
 #X d <- displays(g)[[1]]
@@ -33,7 +33,8 @@ ggobi_display_get_tour_projection <- function(gd) {
 # example illustrates setting the projection to show
 # the first two principle components.
 #
-# @argument GGobiDisplay object running tour
+# @arguments GGobiDisplay object running tour
+# @arguments tour projection
 # @keyword dynamic
 #X g <- ggobi(mtcars)
 #X d <- displays(g)[[1]]

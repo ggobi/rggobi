@@ -12,7 +12,7 @@ Finds a file stored somewhere in the ggobi installation.
 \item{check}{}
 }
 
-\details{}
+
 
 \examples{ggobi_find_file("data","tips.xml")}
 \keyword{dynamic}

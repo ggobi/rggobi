@@ -148,6 +148,7 @@ dimnames.GGobiData <- function(x) {
 # Summarise a GGobiData with dimensions, mode and variable names.
 # 
 # @arguments GGobiData
+# @arguments ignored
 # @keyword attribute
 summary.GGobiData <- function(object, ...) {
 	list(dim = dim(object), mode = mode(object), variables = names(object))
@@ -162,8 +163,9 @@ summary.GGobiData <- function(object, ...) {
 # This method works by retrieving the entire dataset into
 # R, and then subsetting with R.
 # 
-# @argument ggobi dataset
-# @arguments arguments for generic data.frame subset function
+# @arguments ggobi dataset
+# @arguments rows
+# @arguments cols
 # @arguments drop dimensions?
 # @value desired subset from data.frame
 # @alias [[.GGobiData

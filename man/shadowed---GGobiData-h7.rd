@@ -16,5 +16,5 @@ Set the exclusion status of points.
 \details{If a point is shadowed it is drawn in a dark gray colour,
 behind all non-shadowed points.  It cannot be selected.}
 \seealso{\code{\link{shadowed}}}
-\examples{}
+
 \keyword{dynamic}

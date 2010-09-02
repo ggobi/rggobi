@@ -107,6 +107,8 @@ ggobi_set_data_frame <- function(data, name = deparse(sys.call()[[2]]), descript
 # 
 # @arguments GGobi object
 # @arguments name of dataset to retrive
+# @arguments ignored
+# @arguments if TRUE, return vector is possible
 # @keyword manip 
 # @alias [[.GGobi
 # @alias $.GGobi

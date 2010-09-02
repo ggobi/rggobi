@@ -14,7 +14,7 @@ Set the variable values for a column in a GGobiData
 \item{update}{update?}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{internal}

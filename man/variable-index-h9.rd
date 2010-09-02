@@ -12,8 +12,8 @@ Return indices corresponding to variable names
 \item{names}{variable names}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{attribute}
 \keyword{internal}

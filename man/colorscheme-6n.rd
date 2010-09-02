@@ -11,7 +11,7 @@ Get name of the active colour scheme
 \item{x}{GGobi object}
 }
 
-\details{}
+
 
 \examples{g <- ggobi(mtcars)
 colorscheme(g)}

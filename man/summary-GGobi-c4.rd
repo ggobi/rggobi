@@ -9,10 +9,10 @@ Get a description of the global state of the GGobi session.
 \usage{summary.GGobi(object, ...)}
 \arguments{
 \item{object}{ggobi object}
-\item{...}{}
+\item{...}{ignored}
 }
 
-\details{}
+
 
 \examples{g <- ggobi(mtcars)
 summary(g)}

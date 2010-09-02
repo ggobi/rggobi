@@ -11,7 +11,7 @@ Used to convert between friendly plot name and internal GGobi name.
 \item{type}{}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{internal}

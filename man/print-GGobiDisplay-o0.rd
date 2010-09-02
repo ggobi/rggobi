@@ -12,7 +12,7 @@ Shows display type (first element in class vector)
 \item{...}{}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{internal}

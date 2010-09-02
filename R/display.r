@@ -34,6 +34,7 @@ displays.GGobi <- function(x) {
 # See \code{\link{[.GGobi}} for more information on 
 # 
 # @arguments GGobiDisplay object
+# @arguments ggobi reference
 # @keyword manip 
 #X g <- ggobi(mtcars)
 #X d <- displays(g)[[1]]

@@ -12,8 +12,8 @@ Set dim names for a GGobiData
 \item{value}{new names}
 }
 
-\details{}
 
-\examples{}
+
+
 \keyword{attribute}
 \keyword{internal}
