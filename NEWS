@@ -1,0 +1,4 @@
+Version 2.1.17 
+--------------
+
+* Updated windows makefile to work with new version of ggobi
