@@ -426,6 +426,16 @@ RS_GGOBI(getTourProjection)(USER_OBJECT_ s_display, USER_OBJECT_ s_mode_name)
 }
 
 USER_OBJECT_
+RS_GGOBI(getDisplayWidget)(USER_OBJECT_ r_display) {
+  displayd *display  = (displayd *) toDisplay(r_display);
+  GtkWidget *widget = GTK_WIDGET(display);
+  if (GGOBI_IS_WINDOW_DISPLAY(display) &&
+      GGOBI_WINDOW_DISPLAY(display)->useWindow)
+    widget = gtk_bin_get_child(GTK_BIN(GGOBI_WINDOW_DISPLAY(display)->window));
+  return toRPointer(widget, "GtkWidget");
+}
+
+USER_OBJECT_
 RS_displayInstance(displayd *display)
 {
   USER_OBJECT_ ans;

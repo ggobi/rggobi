@@ -101,23 +101,31 @@ length.GGobiDisplay <- function(x) {
 #X g <- ggobi(mtcars)
 #X ggobi_display_save_picture(displays(g)[[1]], "test.png")
 ggobi_display_save_picture <- function(display=displays(ggobi_get())[[1]], path="ggobi_display.png", filetype="png", plot.only = FALSE) {
-	display <- as.RGtkObject(display)	
+	display_widget <- ggobi_display_get_widget(as.RGtkObject(display))
 	if (plot.only) {
-		disp <- display$getChildren()[[2]]$getChildren()[[3]][["widget"]][["window"]]
-	} else {
-		disp <- display[["window"]]
-	}
-	
-	disp_size <- disp$getSize()
+          if (inherits(display, "GGobiScatmatDisplay"))
+            display_widget <- display_widget[[2]][[1]]
+          display_widget <- display_widget[[2]][[3]][["widget"]]
+        }
+        if (boundGTKVersion() >= "2.14.0")
+          drawable <- display_widget$getSnapshot()
+        else drawable <- display_widget[["window"]]
+        
+	widget_size <- drawable$getSize()
 
-	disp_pixbuf <- gdkPixbufGetFromDrawable(src = disp, cmap = NULL, 
-    src.x = 0, src.y = 0, dest.x = 0, dest.y = 0, 
-    width = disp_size$width, height = disp_size$height)
+	pixbuf <- gdkPixbufGetFromDrawable(src = drawable, cmap = NULL, 
+                                           src.x = 0, src.y = 0,
+                                           dest.x = 0, dest.y = 0, 
+                                           width = widget_size$width,
+                                           height = widget_size$height)
 	
-	disp_pixbuf$save(path, filetype)
+	pixbuf$save(path, filetype)
+        invisible(path)
 }
 
-
+ggobi_display_get_widget <- function(display) {
+  .GGobiCall("getDisplayWidget", display)
+}
 
 
 # =========================================================
