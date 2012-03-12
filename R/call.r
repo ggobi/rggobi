@@ -45,7 +45,10 @@
 
 .GGobiC <- function(.name, ..., .gobi = ggobi_get(), .test=TRUE) {
 	if (.test && !is.null(.gobi) && !valid_ggobi(.gobi)) stop("Invalid ggobi reference", call.=FALSE)
-	.C(.ggobi.symbol(.name), ..., .gobi, PACKAGE = "rggobi")
+        sym <- .ggobi.symbol(.name)
+        if (!is.null(.gobi))
+          .C(sym, ..., .gobi, PACKAGE = "rggobi")
+        else .C(sym, ..., PACKAGE = "rggobi")
 }
 
 # Validity checking
