@@ -1,3 +1,7 @@
 PKG_CPPFLAGS=-D_R_=1 -DUSE_R=1 -mms-bitfields -I$(GGOBI_PATH)/include/gtk-2.0 -I$(GGOBI_PATH)/include/gdk-pixbuf-2.0 -I$(GGOBI_PATH)/../lib/gtk-2.0/include -I$(GGOBI_PATH)/include/atk-1.0 -I$(GGOBI_PATH)/include/cairo -I$(GGOBI_PATH)/include/pango-1.0 -I$(GGOBI_PATH)/include/glib-2.0 -I$(GGOBI_PATH)/../lib/glib-2.0/include -I$(GGOBI_PATH)/include/libxml2 -I$(GGOBI_PATH)/include -I$(GGOBI_PATH)/include/ggobi -I$(R_HOME)/include -I$(GGOBI_PATH)/include/libxml
 
-PKG_LIBS=-L$(GGOBI_PATH)/lib -lgtk-win32-2.0-0 -lgdk-win32-2.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lpangowin32-1.0-0 -lgdi32 -lpangocairo-1.0-0 -lpango-1.0-0 -lcairo-2 -lgobject-2.0-0 -lgmodule-2.0-0 -lglib-2.0-0 -lintl -liconv -lxml2 -lzlib1 -lws2_32 -L$(GGOBI_PATH)/../lib -L$(GGOBI_PATH)/../ -lggobi  -I$(GGOBI_PATH)/lib
+ifeq "$(WIN)" "64"
+PKG_LIBS=-L$(GGOBI_PATH)/lib -lgtk-win32-2.0-0 -lgdk-win32-2.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lpangowin32-1.0-0 -lgdi32 -lpangocairo-1.0-0 -lpango-1.0-0 -lcairo-2 -lgobject-2.0-0 -lgmodule-2.0-0 -lglib-2.0-0 -lintl-8 -lxml2-2 -lzlib1 -lws2_32 -L$(GGOBI_PATH)/../lib -L$(GGOBI_PATH)/../ -lggobi
+else
+PKG_LIBS=-L$(GGOBI_PATH)/lib -lgtk-win32-2.0-0 -lgdk-win32-2.0-0 -latk-1.0-0 -lgdk_pixbuf-2.0-0 -lpangowin32-1.0-0 -lgdi32 -lpangocairo-1.0-0 -lpango-1.0-0 -lcairo-2 -lgobject-2.0-0 -lgmodule-2.0-0 -lglib-2.0-0 -lintl -liconv -lxml2 -lzlib1 -lws2_32 -L$(GGOBI_PATH)/../lib -L$(GGOBI_PATH)/../ -lggobi
+endif
