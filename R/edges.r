@@ -63,7 +63,7 @@ connecting_edges <- function(x, y) {
   if (is.null(value)) return(invisible(.GGobiCall("setEdges", character(0), character(0), FALSE, x)))
   
   if(is(value, "graphNEL")) {
-    value <- matrix(nodes(value)[t(edgeMatrix(value))], ncol=2)
+    value <- matrix(graph::nodes(value)[t(graph::edgeMatrix(value))], ncol=2)
   }
 
   src  <- value[,1]
@@ -106,8 +106,8 @@ connecting_edges <- function(x, y) {
 "edges<-.GGobi" <- function(x, value) {
   name <- deparse(substitute(value))
   if(is(value, "graphNEL")) {
-    names <- nodes(value)
-    value <- t(edgeMatrix(value))
+    names <- graph::nodes(value)
+    value <- t(graph::edgeMatrix(value))
     value <- cbind(names[value[, 1]], names[value[, 2]])
   }
   df <- data.frame(id=1:nrow(value))

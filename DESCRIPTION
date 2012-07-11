@@ -6,7 +6,7 @@ Author:  Duncan Temple Lang <duncan@research.bell-labs.com>,
 	 Hadley Wickham <hadley@rice.edu>,
 	 Michael Lawrence <lawremi@iastate.edu>
 Depends: R (>= 2.5.1)
-Suggests: reshape
+Suggests: reshape, graph
 Imports: RGtk2, utils, methods
 SystemRequirements: GGobi
 Maintainer: Hadley Wickham <hadley@rice.edu>
