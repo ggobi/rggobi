@@ -101,7 +101,7 @@ length.GGobiDisplay <- function(x) {
 #X g <- ggobi(mtcars)
 #X ggobi_display_save_picture(displays(g)[[1]], "test.png")
 ggobi_display_save_picture <- function(display=displays(ggobi_get())[[1]], path="ggobi_display.png", filetype="png", plot.only = FALSE) {
-	display_widget <- ggobi_display_get_widget(as.RGtkObject(display))
+	display_widget <- .ggobi_display_get_widget(as.RGtkObject(display))
 	if (plot.only) {
           if (inherits(display, "GGobiScatmatDisplay"))
             display_widget <- display_widget[[2]][[1]]
@@ -123,7 +123,7 @@ ggobi_display_save_picture <- function(display=displays(ggobi_get())[[1]], path=
         invisible(path)
 }
 
-ggobi_display_get_widget <- function(display) {
+.ggobi_display_get_widget <- function(display) {
   .GGobiCall("getDisplayWidget", display)
 }
 
