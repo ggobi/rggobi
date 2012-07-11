@@ -1,10 +1,10 @@
 Package: rggobi
-Version: 2.1.18
+Version: 2.1.19
 Title:   Interface between R and GGobi
 Author:  Duncan Temple Lang <duncan@research.bell-labs.com>,
 	 Debby Swayne <dfs@research.att.com>,
 	 Hadley Wickham <hadley@rice.edu>,
-	 Michael Lawrence <lawremi@iastate.edu>
+	 Michael Lawrence <michafla@gene.com>
 Depends: R (>= 2.5.1)
 Suggests: reshape, graph, nlme
 Imports: RGtk2, utils, methods
