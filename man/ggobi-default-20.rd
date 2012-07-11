@@ -8,7 +8,7 @@
 \description{
 Creates a new ggobi instance
 }
-\usage{ggobi.default(data, args=character(0), mode=character(0), name = deparse(sys.call()[[2]]), ...)}
+\usage{\S3method{ggobi}{default}(data, args=character(0), mode=character(0), name = deparse(sys.call()[[2]]), ...)}
 \arguments{
 \item{data}{the name of a file containing the data, or a data frame or matrix containing the values}
 \item{args}{a character vector of command-line arguments}

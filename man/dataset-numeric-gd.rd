@@ -7,7 +7,7 @@
 \description{
 Get an object representing an internal ggobi dataset
 }
-\usage{dataset.numeric(x, .gobi = ggobi_get())}
+\usage{\S3method{dataset}{numeric}(x, .gobi = ggobi_get())}
 \arguments{
 \item{x}{which dataset to retrieve, an integer for positional matching or a character to match by name}
 \item{.gobi}{GGobi instance}
