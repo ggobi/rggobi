@@ -7,7 +7,7 @@
 \description{
 Set glyph type
 }
-\usage{\S3method{glyph_type{GGobiData}(x) <- value}
+\usage{\S3method{glyph_type}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{vector of new types}

@@ -6,7 +6,7 @@
 \description{
 Set edges for a dataset.
 }
-\usage{\S3method{edges}{.GGobiData}(x) <- value}
+\usage{\S3method{edges}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{matrix, data frame, or graph containing of edges.  First column should be from edge, second column to edge.}
