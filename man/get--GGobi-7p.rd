@@ -8,7 +8,7 @@
 \description{
 Conveniently retrieve ggobi dataset.
 }
-\usage{"[.GGobi"(x, i, ..., drop=TRUE)}
+\usage{\S3method{[}{GGobi}(x, i, ..., drop=TRUE)}
 \arguments{
 \item{x}{GGobi object}
 \item{i}{name of dataset to retrive}

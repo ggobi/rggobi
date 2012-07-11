@@ -6,7 +6,7 @@
 \description{
 Set edges for a display
 }
-\usage{"edges<-.GGobiDisplay"(x, value)}
+\usage{\S3method{edges}{GGobiDisplay}(x) <- value}
 \arguments{
 \item{x}{GGobiDisplay object}
 \item{value}{GGobiData object that contains edges}

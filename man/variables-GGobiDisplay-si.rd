@@ -6,7 +6,7 @@
 \description{
 List the variables used in a given display
 }
-\usage{variables.GGobiDisplay(x)}
+\usage{\S3method{variables}{GGobiDisplay}(x)}
 \arguments{
 \item{x}{GGobiDisplay object}
 }

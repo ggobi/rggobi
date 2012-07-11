@@ -6,10 +6,10 @@
 \description{
 Closes the referenced display.  The R variable will be invalid after this call.
 }
-\usage{close.GGobiDisplay(con, ...)}
+\usage{\S3method{close}{GGobiDisplay}(con, \dots)}
 \arguments{
 \item{con}{GGobiDisplay object to close}
-\item{...}{}
+\item{\dots}{}
 }
 
 

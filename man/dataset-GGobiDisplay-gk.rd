@@ -6,7 +6,7 @@
 \description{
 Returns a link to the GGobiData (dataset) object associated with this display.
 }
-\usage{dataset.GGobiDisplay(x, .gobi=ggobi(x))}
+\usage{\S3method{dataset}{GGobiDisplay}(x, .gobi=ggobi(x))}
 \arguments{
 \item{x}{GGobiDisplay object}
 \item{.gobi}{ggobi reference}

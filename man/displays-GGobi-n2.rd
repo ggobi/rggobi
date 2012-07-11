@@ -7,7 +7,7 @@
 \description{
 Gets list of displays in the specified GGobi instance
 }
-\usage{displays.GGobi(x)}
+\usage{\S3method{displays}{GGobi}(x)}
 \arguments{
 \item{x}{GGobi object}
 }

@@ -6,7 +6,7 @@
 \description{
 Get dataset names
 }
-\usage{names.GGobi(x)}
+\usage{\S3method{names}{GGobi}(x)}
 \arguments{
 \item{x}{ggobi instance}
 }

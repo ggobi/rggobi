@@ -6,7 +6,7 @@
 \description{
 Create a new display for the GGobiData object.
 }
-\usage{display.GGobiData(x, pmode="Scatterplot Display", vars=list(X=names(x)), embed=FALSE, ...)}
+\usage{\S3method{display}{GGobiData}(x, pmode="Scatterplot Display", vars=list(X=names(x)), embed=FALSE, ...)}
 \arguments{
 \item{x}{GGobiData object}
 \item{pmode}{projection mode to use}

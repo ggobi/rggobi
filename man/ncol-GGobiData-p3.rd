@@ -6,7 +6,7 @@
 \description{
 Retrieve the number of columns in a GGobiData
 }
-\usage{ncol.GGobiData(d)}
+\usage{\S3method{ncol}{GGobiData}(d)}
 \arguments{
 \item{d}{dataset}
 }

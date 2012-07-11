@@ -6,10 +6,10 @@
 \description{
 Summarise a GGobiData with dimensions, mode and variable names.
 }
-\usage{summary.GGobiData(object, ...)}
+\usage{\S3method{summary}{GGobiData}(object, \dots)}
 \arguments{
 \item{object}{GGobiData}
-\item{...}{ignored}
+\item{\dots}{ignored}
 }
 
 

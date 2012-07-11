@@ -6,10 +6,10 @@
 \description{
 Prints summary of ggobi object by instance
 }
-\usage{print.GGobi(x, ...)}
+\usage{\S3method{print}{GGobi}(x, \dots)}
 \arguments{
 \item{x}{ggobi object}
-\item{...}{}
+\item{\dots}{}
 }
 
 

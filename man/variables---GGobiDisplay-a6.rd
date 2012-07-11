@@ -6,7 +6,7 @@
 \description{
 Set display variables with a list of x, y, and z component variable indices.
 }
-\usage{"variables<-.GGobiDisplay"(x, value)}
+\usage{\S3method{variables}{GGobiDisplay}(x) <- value}
 \arguments{
 \item{x}{GGobiDisplay object}
 \item{value}{list with X, Y and Z components listing the variable indices to display, either as numeric position or character variable name}

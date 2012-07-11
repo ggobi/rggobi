@@ -6,7 +6,7 @@
 \description{
 Retrieve the dimension of a GGobiData
 }
-\usage{dim.GGobiData(x)}
+\usage{\S3method{dim}{GGobiData}(x)}
 \arguments{
 \item{x}{dataset}
 }

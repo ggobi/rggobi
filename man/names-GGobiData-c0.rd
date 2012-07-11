@@ -6,10 +6,10 @@
 \description{
 Get column names for a GGobiData
 }
-\usage{names.GGobiData(x, ...)}
+\usage{\S3method{names}{GGobiData}(x, \dots)}
 \arguments{
 \item{x}{dataset}
-\item{...}{}
+\item{\dots}{}
 }
 
 

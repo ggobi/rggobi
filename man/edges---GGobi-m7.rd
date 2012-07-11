@@ -6,7 +6,7 @@
 \description{
 Create a new edges dataset and add to GGobi
 }
-\usage{"edges<-.GGobi"(x, value)}
+\usage{\S3method{edges}{GGobi}(x) <- value}
 \arguments{
 \item{x}{GGobi dataset}
 \item{value}{new edges}

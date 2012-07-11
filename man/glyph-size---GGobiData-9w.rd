@@ -7,7 +7,7 @@
 \description{
 Set glyph size
 }
-\usage{"glyph_size<-.GGobiData"(x, value)}
+\usage{\S3method{glyph_size}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{vector of new sizes}

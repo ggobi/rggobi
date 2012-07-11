@@ -7,7 +7,7 @@
 \description{
 Retrive row ids from a GGobiData
 }
-\usage{ids.GGobiData(x)}
+\usage{\S3method{ids}{GGobiData}(x)}
 \arguments{
 \item{x}{GGobiData}
 }

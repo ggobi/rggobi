@@ -7,7 +7,7 @@
 \description{
 Returns logical vector indicating if each point is under the brush
 }
-\usage{selected.GGobiData(x)}
+\usage{\S3method{selected}{GGobiData}(x)}
 \arguments{
 \item{x}{GGobiData}
 \item{}{logical vector}

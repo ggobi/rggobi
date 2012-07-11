@@ -6,7 +6,7 @@
 \description{
 Get row and column names for a GGobiData
 }
-\usage{dimnames.GGobiData(x)}
+\usage{\S3method{dimnames}{GGobiData}(x)}
 \arguments{
 \item{x}{ggobiDataget}
 }

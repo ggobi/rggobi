@@ -8,7 +8,7 @@
 \description{
 This functions allow one to treat a ggobi dataset as if it were a local data.frame.  One can extract and assign elements within the dataset.
 }
-\usage{"[<-.GGobiData"(x, i, j, value)}
+\usage{\S3method{[}{GGobiData}(x, i, j) <- value}
 \arguments{
 \item{x}{ggobi dataset}
 \item{i}{row indices}

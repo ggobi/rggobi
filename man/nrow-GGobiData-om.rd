@@ -6,7 +6,7 @@
 \description{
 Retrieve the number of row in a GGobiData
 }
-\usage{nrow.GGobiData(d)}
+\usage{\S3method{nrow}{GGobiData}(d)}
 \arguments{
 \item{d}{dataset}
 }

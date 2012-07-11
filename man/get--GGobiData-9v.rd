@@ -8,7 +8,7 @@
 \description{
 Subsetting for ggobi datasets
 }
-\usage{"[.GGobiData"(x, i, j, drop=FALSE)}
+\usage{\S3method{[}{GGobiData}(x, i, j, drop=FALSE)}
 \arguments{
 \item{x}{ggobi dataset}
 \item{i}{rows}

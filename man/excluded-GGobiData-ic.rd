@@ -6,7 +6,7 @@
 \description{
 Get the exclusion status of points.
 }
-\usage{excluded.GGobiData(x)}
+\usage{\S3method{excluded}{GGobiData}(x)}
 \arguments{
 \item{x}{ggobiDataget}
 }

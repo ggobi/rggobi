@@ -8,7 +8,7 @@
 \description{
 Get glyph colour
 }
-\usage{glyph_colour.GGobiData(x)}
+\usage{\S3method{glyph_colour}{GGobiData}(x)}
 \arguments{
 \item{x}{GGobiData}
 }

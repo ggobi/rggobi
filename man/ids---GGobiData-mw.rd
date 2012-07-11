@@ -7,7 +7,7 @@
 \description{
 Set row ids from a GGobiData
 }
-\usage{"ids<-.GGobiData"(x, value)}
+\usage{\S3method{ids}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{new values}

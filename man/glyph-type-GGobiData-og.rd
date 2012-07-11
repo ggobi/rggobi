@@ -7,7 +7,7 @@
 \description{
 Get glyph type.
 }
-\usage{glyph_type.GGobiData(x)}
+\usage{\S3method{glyph_type}{GGobiData}(x)}
 \arguments{
 \item{x}{GGobiData}
 }

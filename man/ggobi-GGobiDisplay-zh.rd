@@ -6,10 +6,10 @@
 \description{
 Returns a link to the GGobi object associated with this display
 }
-\usage{ggobi.GGobiDisplay(data, ...)}
+\usage{\S3method{ggobi}{GGobiDisplay}(data, \dots)}
 \arguments{
 \item{data}{GGobiDisplay object}
-\item{...}{}
+\item{\dots}{}
 }
 
 

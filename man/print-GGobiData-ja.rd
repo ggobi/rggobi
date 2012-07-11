@@ -6,10 +6,10 @@
 \description{
 Print GGobiData
 }
-\usage{print.GGobiData(x, ...)}
+\usage{\S3method{print}{GGobiData}(x, \dots)}
 \arguments{
 \item{x}{GGobi dataset to retrieve}
-\item{...}{}
+\item{\dots}{}
 }
 
 \details{By default printing a GGobiData acts like

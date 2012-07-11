@@ -8,7 +8,7 @@
 \description{
 Set glyph colour
 }
-\usage{"glyph_colour<-.GGobiData"(x, value)}
+\usage{\S3method{glyph_colour}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{vector of new colours}

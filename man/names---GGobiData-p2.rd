@@ -6,7 +6,7 @@
 \description{
 Set column names for a GGobiData
 }
-\usage{"names<-.GGobiData"(x, value)}
+\usage{\S3method{names}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{new names}

@@ -6,10 +6,10 @@
 \description{
 Terminates and discards a ggobi instance
 }
-\usage{close.GGobi(con, ...)}
+\usage{\S3method{close}{GGobi}(con, \dots)}
 \arguments{
 \item{con}{ggobi object to close}
-\item{...}{ignored and for compatability generic function.}
+\item{\dots}{ignored and for compatability generic function.}
 }
 
 \details{This allows the caller to close a ggobi instance and discard the

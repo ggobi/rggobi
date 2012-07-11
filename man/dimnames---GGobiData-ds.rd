@@ -6,7 +6,7 @@
 \description{
 Set dim names for a GGobiData
 }
-\usage{"dimnames<-.GGobiData"(x, value)}
+\usage{\S3method{dimnames}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{new names}

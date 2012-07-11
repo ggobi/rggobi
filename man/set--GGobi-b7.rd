@@ -8,7 +8,7 @@
 \description{
 Add data to ggobi instance.
 }
-\usage{"[<-.GGobi"(x, i, value)}
+\usage{\S3method{[}{GGobi}(x, i) <- value}
 \arguments{
 \item{x}{ggobi instance}
 \item{i}{name of data frame}

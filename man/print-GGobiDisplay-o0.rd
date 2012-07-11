@@ -6,10 +6,10 @@
 \description{
 Shows display type (first element in class vector)
 }
-\usage{print.GGobiDisplay(x, ...)}
+\usage{\S3method{print}{GGobiDisplay}(x, \dots)}
 \arguments{
 \item{x}{GGobiDisplay object}
-\item{...}{}
+\item{\dots}{}
 }
 
 

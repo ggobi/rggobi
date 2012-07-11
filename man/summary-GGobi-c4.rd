@@ -6,10 +6,10 @@
 \description{
 Get a description of the global state of the GGobi session.
 }
-\usage{summary.GGobi(object, ...)}
+\usage{\S3method{summary}{GGobi}(object, \dots)}
 \arguments{
 \item{object}{ggobi object}
-\item{...}{ignored}
+\item{\dots}{ignored}
 }
 
 

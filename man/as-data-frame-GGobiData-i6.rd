@@ -7,10 +7,10 @@
 \description{
 Convert a GGobiData to a regular R data.frame or matrix
 }
-\usage{"as.data.frame.GGobiData"(x, ...)}
+\usage{\S3method{as.data.frame}{GGobiData}(x, \dots)}
 \arguments{
 \item{x}{GGobiData}
-\item{...}{}
+\item{\dots}{}
 }
 
 

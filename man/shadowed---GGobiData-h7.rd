@@ -7,7 +7,7 @@
 \description{
 Set the exclusion status of points.
 }
-\usage{"shadowed<-.GGobiData"(x, value)}
+\usage{\S3method{shadowed}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{logical vector}

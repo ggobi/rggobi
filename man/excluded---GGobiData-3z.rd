@@ -6,7 +6,7 @@
 \description{
 Set the exclusion status of points.
 }
-\usage{"excluded<-.GGobiData"(x, value)}
+\usage{\S3method{excluded}{GGobiData}(x) <- value}
 \arguments{
 \item{x}{GGobiData}
 \item{value}{logical vector}

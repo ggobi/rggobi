@@ -6,7 +6,7 @@
 \description{
 Get row names for a GGobiData
 }
-\usage{rownames.GGobiData(x)}
+\usage{\S3method{rownames}{GGobiData}(x)}
 \arguments{
 \item{x}{ggobiDataget}
 \item{}{new names}

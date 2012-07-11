@@ -6,7 +6,7 @@
 \description{
 Returns the number of plots within a given display
 }
-\usage{length.GGobiDisplay(x)}
+\usage{\S3method{length}{GGobiDisplay}(x)}
 \arguments{
 \item{x}{GGobiDisplay object from which to retrieve the number of plots}
 }

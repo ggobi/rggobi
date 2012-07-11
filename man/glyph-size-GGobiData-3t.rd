@@ -7,7 +7,7 @@
 \description{
 Get glyph size
 }
-\usage{glyph_size.GGobiData(x)}
+\usage{\S3method{glyph_size}{GGobiData}(x)}
 \arguments{
 \item{x}{GGobiData}
 }
