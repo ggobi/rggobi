@@ -19,7 +19,7 @@ RS_GGOBI(setFile)(USER_OBJECT_ fileName, USER_OBJECT_ smode, USER_OBJECT_ add, U
  else if(IS_INTEGER(smode)) {
   mode = INTEGER_DATA(smode)[0];
   if(mode < 0)
-    mode = unknown_data;
+    error("unknown data mode: %d", mode);
  }
 
   if(fileset_read_init(CHAR_DEREF(STRING_ELT(fileName, 0)), modeName, NULL, gg)) {
