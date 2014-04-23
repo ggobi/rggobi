@@ -61,10 +61,6 @@ ggobi_check_structs <- function() {
 }
 
 .onLoad <- function(libname, pkgname) {
-	result <- try(library.dynam("rggobi", pkgname, libname))
-  if (inherits(result, "try-error"))
-    stop("Could not load the rggobi library - please ensure GGobi is on the library path")
-
 	ggobi_check_structs()
   .check_versions()
 
