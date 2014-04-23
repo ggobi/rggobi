@@ -18,8 +18,6 @@ RS_GGOBI(setFile)(USER_OBJECT_ fileName, USER_OBJECT_ smode, USER_OBJECT_ add, U
 	 modeName = CHAR_DEREF(STRING_ELT(smode, 0));
  else if(IS_INTEGER(smode)) {
   mode = INTEGER_DATA(smode)[0];
-  if(mode < 0)
-    error("unknown data mode: %d", mode);
  }
 
   if(fileset_read_init(CHAR_DEREF(STRING_ELT(fileName, 0)), modeName, NULL, gg)) {
@@ -55,12 +53,12 @@ RS_GGOBI(getDatasetNames)(USER_OBJECT_ gobiId)
   GGobiData *d;
   GSList *tmp;
   int n;
-  
-  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);  
-  
+
+  g_return_val_if_fail(GGOBI_IS_GGOBI(gg), NULL_USER_OBJECT);
+
   tmp = gg->d;
   n = g_slist_length(gg->d);
-  
+
   PROTECT(ans = NEW_CHARACTER(n));
   for(i = 0; i < n ; i++) {
     d =(GGobiData *) tmp->data;
@@ -92,14 +90,14 @@ RS_GGOBI(getData)(USER_OBJECT_ datasetId)
 
  if(nr == 0 || nc == 0)
    return(NULL_USER_OBJECT);
- 
+
  PROTECT(colnames = NEW_CHARACTER(nc));
  PROTECT(ans = NEW_LIST(nc));
 
  for(j = 0; j < nc; j++) {
     vt = vartable_element_get(j, d);
     SET_STRING_ELT(colnames, j, COPY_TO_USER_STRING(ggobi_data_get_col_name(d, j)));
-    
+
     PROTECT(el = NEW_NUMERIC(nr));
     for (m = 0; m < nr; m++) {
       if(ggobi_data_is_missing(d, m, j))
@@ -132,7 +130,7 @@ RS_GGOBI(getDataset)(USER_OBJECT_ which, USER_OBJECT_ gobiID)
     return(ans);
 
   n = GET_LENGTH(which);
-  PROTECT(ans = NEW_LIST(n)); 
+  PROTECT(ans = NEW_LIST(n));
   for(i = 0; i < n; i++) {
     int val = INTEGER_DATA(which)[i];
     GGobiData *d = (GGobiData *) g_slist_nth_data(gg->d, val);
