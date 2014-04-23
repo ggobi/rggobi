@@ -40,7 +40,7 @@ isSameRef(USER_OBJECT_ x, USER_OBJECT_ y)
 void
 RS_throwError(char *msg)
 {
-  PROBLEM msg
+  PROBLEM "%s", msg
   ERROR;
 }
 
