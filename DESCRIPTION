@@ -17,8 +17,7 @@ Suggests:
     nlme
 Imports:
     RGtk2,
-    utils,
-    methods
+    utils
 SystemRequirements: GGobi
 License: MIT + file LICENSE
 LazyData: true

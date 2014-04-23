@@ -1,6 +1,6 @@
 # Check structs
 # Validates GGobi and Rggobi views of internal data structures
-# 
+#
 # This function is called when the Rggobi library is loaded and it verifies
 # that the sizes of the different internal data structures for GGobi are the
 # same for both the GGobi shared library/DLL and the Rggobi package. This is
@@ -8,14 +8,14 @@
 # different compilation flags, etc. that make them incompatible. This
 # function simply compares the sizes of the two views of the structures and
 # raises a warning if they do not agree.
-# 
+#
 # Essentially, you should never notice this function. A warning implies that
 # you need to re-install Rggobi against the version of GGobi you are using.
-# 
+#
 # @value TRUE if the sizes in the two libraries are the same, otherwise a named logical vector indicating which structures are different
-# 
+#
 # @keyword programming
-# @keyword internal 
+# @keyword internal
 ggobi_check_structs <- function() {
 	ours   <- .Call(.ggobi.symbol("getStructSizes"), TRUE,  PACKAGE = "rggobi")
 	theirs <- .Call(.ggobi.symbol("getStructSizes"), FALSE, PACKAGE = "rggobi")
@@ -26,12 +26,12 @@ ggobi_check_structs <- function() {
 
 	ok <- ours == theirs[which]
 	if(!all(ok)) {
-		warning("Some structs have different size: ", 
-      paste(paste(names(ours)[!ok], "(", ours[!ok], "!=", theirs[which][!ok], ")"), collapse=", "), 
+		warning("Some structs have different size: ",
+      paste(paste(names(ours)[!ok], "(", ours[!ok], "!=", theirs[which][!ok], ")"), collapse=", "),
       ". You may have an incompatible version of GGobi installed.", call.=FALSE)
 		return(ok)
 	}
-  
+
 	TRUE
 }
 
@@ -41,7 +41,7 @@ ggobi_check_structs <- function() {
 # we started the above version policy
 .check_versions <- function() {
   versions <- c(
-    rggobi = packageDescription("rggobi", fields = c("Version")), 
+    rggobi = packageDescription("rggobi", fields = c("Version")),
     ggobi  = ggobi_version()$"version string"
   )
   if (compareVersion(versions["ggobi"], "2.1.6") < 0)
@@ -61,13 +61,12 @@ ggobi_check_structs <- function() {
 }
 
 .onLoad <- function(libname, pkgname) {
-#	library(methods)
 	result <- try(library.dynam("rggobi", pkgname, libname))
   if (inherits(result, "try-error"))
     stop("Could not load the rggobi library - please ensure GGobi is on the library path")
 
 	ggobi_check_structs()
   .check_versions()
-  
+
 	TRUE
 }
