@@ -19,7 +19,7 @@ Imports:
     RGtk2,
     utils
 SystemRequirements: GGobi
-License: MIT + file LICENSE
+License: BSD_3_clause + file LICENSE
 LazyData: true
 URL: http://www.ggobi.org/rggobi
 Acknowledgments: Di Cook, Nicholas Lewin-Koh, Xuejing Chen.
