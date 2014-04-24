@@ -1,5 +1,5 @@
 Package: rggobi
-Version: 2.1.20
+Version: 2.1.21
 Title: Interface between R and GGobi
 Author: Duncan Temple Lang <duncan@research.bell-labs.com>,
     Debby Swayne <dfs@research.att.com>,
