@@ -40,7 +40,7 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows), g = NULL) {
 	matching <- obsUnit[or][-1] == obsUnit[or][-nrow(tmp)]
 	edges[!matching, ] <- NA
 
-	edges <- edges[complete.cases(edges),]
+	edges <- edges[stats::complete.cases(edges),]
 
 	d <- data.frame(tmp[edges[,1], sapply(tmp, is.factor), drop=FALSE])
 	rownames(d) <- paste(name, 1:nrow(d), sep="")
@@ -62,9 +62,11 @@ ggobi_longitudinal <- function(data, time=1:rows, id=rep(1, rows), g = NULL) {
 #
 # @keyword internal
 ggobi_pcp <- function(data, type="range") {
-  if (!require(reshape)) stop("Must have reshape package installed")
+  if (!requireNamespace("reshape", quietly = TRUE))
+    stop("Must have reshape package installed")
+
   data$CASEID <- factor(1:nrow(data))
-  datam <- melt(rescaler(data, type=type), id = "CASEID")
+  datam <- reshape::melt(reshape::rescaler(data, type=type), id = "CASEID")
 
   g <- ggobi_longitudinal(datam, id=CASEID)
   g$raw <- data
