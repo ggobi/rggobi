@@ -3,3 +3,4 @@
 ^\.Rproj\.user$
 ^test$
 ^aclocal\.m4$
+^cran-comments\.md$
