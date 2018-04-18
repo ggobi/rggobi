@@ -18,6 +18,7 @@ Currently, the easiest way to get rggobi on OS X is to build Gtk2 and ggobi from
 ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
 # Install ggobi from source
+brew tap brewsci/science
 brew install ggobi
 brew install libxml2
 
