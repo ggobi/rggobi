@@ -1,18 +1,6 @@
 #include "RSGGobi.h"
 #include "RUtils.h"
 
-#ifndef G_OS_WIN32
-#include <sys/time.h>
-#include "R_ext/eventloop.h"
-#include <gdk/gdkx.h>
-#else
-#include <process.h>
-/*static void __cdecl GtkEventThreadHandler(void *display);*/
-void R_gtk_handle_events();
-extern void (*R_gtkdo)();
-extern __declspec(dllimport) void (*R_tcldo)();
-#endif
-
 #include "R_ext/RS.h"
 
 /*XXX used to be R_IsNaNorNA, but no longer available for us.
