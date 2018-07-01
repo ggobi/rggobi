@@ -38,3 +38,4 @@
 /src/ui.o
 /src/utils.o
 .Rproj.user
+/src/rggobi_init.o
