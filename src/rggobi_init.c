@@ -12,6 +12,7 @@ extern SEXP RS_GGOBI_addVariable(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RS_GGOBI_close(SEXP);
 extern SEXP RS_GGOBI_closeDisplay(SEXP, SEXP);
 extern SEXP RS_GGOBI_createDisplay(SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP RS_GGOBI_createPlots(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP RS_GGOBI_datasetDim(SEXP, SEXP);
 extern SEXP RS_GGOBI_getActiveColorScheme(SEXP);
 extern SEXP RS_GGOBI_getCaseColors(SEXP, SEXP, SEXP);
@@ -45,6 +46,7 @@ extern SEXP RS_GGOBI_getTourProjection(SEXP, SEXP, SEXP);
 extern SEXP RS_GGOBI_getVariableNames(SEXP, SEXP, SEXP);
 extern SEXP RS_GGOBI_getVersionInfo(SEXP);
 extern SEXP RS_GGOBI_ggobi_find_data_file(SEXP, SEXP);
+extern SEXP RS_GGOBI_init(SEXP, SEXP);
 extern SEXP RS_GGOBI_isValid(SEXP);
 extern SEXP RS_GGOBI_setActiveColorScheme(SEXP, SEXP);
 extern SEXP RS_GGOBI_setCaseColors(SEXP, SEXP, SEXP, SEXP);
@@ -74,6 +76,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"RS_GGOBI_close",                (DL_FUNC) &RS_GGOBI_close,                1},
     {"RS_GGOBI_closeDisplay",         (DL_FUNC) &RS_GGOBI_closeDisplay,         2},
     {"RS_GGOBI_createDisplay",        (DL_FUNC) &RS_GGOBI_createDisplay,        5},
+    {"RS_GGOBI_createPlots",          (DL_FUNC) &RS_GGOBI_createDisplay,        6},
     {"RS_GGOBI_datasetDim",           (DL_FUNC) &RS_GGOBI_datasetDim,           2},
     {"RS_GGOBI_getActiveColorScheme", (DL_FUNC) &RS_GGOBI_getActiveColorScheme, 1},
     {"RS_GGOBI_getCaseColors",        (DL_FUNC) &RS_GGOBI_getCaseColors,        3},
@@ -107,6 +110,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"RS_GGOBI_getVariableNames",     (DL_FUNC) &RS_GGOBI_getVariableNames,     3},
     {"RS_GGOBI_getVersionInfo",       (DL_FUNC) &RS_GGOBI_getVersionInfo,       1},
     {"RS_GGOBI_ggobi_find_data_file", (DL_FUNC) &RS_GGOBI_ggobi_find_data_file, 2},
+    {"RS_GGOBI_init"   ,              (DL_FUNC) &RS_GGOBI_init,                 2},
     {"RS_GGOBI_isValid",              (DL_FUNC) &RS_GGOBI_isValid,              1},
     {"RS_GGOBI_setActiveColorScheme", (DL_FUNC) &RS_GGOBI_setActiveColorScheme, 2},
     {"RS_GGOBI_setCaseColors",        (DL_FUNC) &RS_GGOBI_setCaseColors,        4},
