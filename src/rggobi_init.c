@@ -4,7 +4,7 @@
 #include <R_ext/Rdynload.h>
 
 /* .C calls */
-extern void RS_GGOBI_getNumGGobiInstances(void *, void *);
+extern void RS_GGOBI_getNumGGobiInstances(void *);
 
 /* .Call calls */
 extern SEXP RS_GGOBI_addData(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
@@ -66,7 +66,7 @@ extern SEXP RS_GGOBI_setVariableNames(SEXP, SEXP, SEXP, SEXP);
 extern SEXP RS_GGOBI_setVariableValues(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 
 static const R_CMethodDef CEntries[] = {
-    {"RS_GGOBI_getNumGGobiInstances", (DL_FUNC) &RS_GGOBI_getNumGGobiInstances, 2},
+    {"RS_GGOBI_getNumGGobiInstances", (DL_FUNC) &RS_GGOBI_getNumGGobiInstances, 1},
     {NULL, NULL, 0}
 };
 
