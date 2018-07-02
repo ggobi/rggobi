@@ -1,3 +1,4 @@
+^R/syms\.r$
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
