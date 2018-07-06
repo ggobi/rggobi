@@ -8,5 +8,6 @@ addons:
   apt:
     packages:
       - libxml2-dev
+      - libgtk-3-dev
       - ggobi
 
