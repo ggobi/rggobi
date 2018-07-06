@@ -11,14 +11,11 @@ autoconf
 
 ## ggobi/rggobi on OS X
 
-Currently, the easiest way to get rggobi on OS X is to build Gtk2 and ggobi from source using homebrew. This is relatively simple:
+Currently, the easiest way to get rggobi on OS X is to get Gtk2 from homebrew, then install ggobi [from source](https://github.com/ggobi/ggobi):
 
 ```
 # Install homebrew (if you don't already have it)
-ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-
-# Install ggobi from source
-brew install ggobi
+brew install gtk+
 brew install libxml2
 
 # Set up PKG_CONFIG_PATH so rggobi can find all the pieces
