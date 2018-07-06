@@ -21,5 +21,6 @@ Imports:
 SystemRequirements: GGobi
 License: BSD_3_clause + file LICENSE
 LazyData: true
-URL: http://www.ggobi.org/rggobi
 Acknowledgments: Di Cook, Nicholas Lewin-Koh, Xuejing Chen.
+URL: http://www.ggobi.org/rggobi, https://github.com/ggobi/rggobi
+BugReports: https://github.com/ggobi/rggobi/issues
