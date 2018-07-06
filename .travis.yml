@@ -11,3 +11,6 @@ addons:
       - libgtk2.0-dev
       - ggobi
 
+before_script:
+- aclocal
+- autoconf
