@@ -14,7 +14,9 @@ Returns a link to the GGobiData (dataset) object associated with this display.
 
 \details{See \code{\link{[.GGobi}} for more information on}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 d <- displays(g)[[1]]
-dataset(d)}
+dataset(d)}}
 \keyword{manip}

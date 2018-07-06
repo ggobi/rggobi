@@ -19,9 +19,11 @@ from an S object. Since the C level object can be destroyed while the S
 object still refers to them, this function allows one to check whether the
 internal object to which R refers is still in existence.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 valid_ggobi(g)
 close(g)
-valid_ggobi(g) }
+valid_ggobi(g) }}
 \keyword{dynamic}
 \keyword{internal}

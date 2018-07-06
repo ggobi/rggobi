@@ -17,8 +17,11 @@ in the tour, you can use this function to set it.  The
 example illustrates setting the projection to show
 the first two principle components.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 d <- displays(g)[[1]]
+}
 \dontrun{
 pmode(d) <- "2D Tour"
 variables(d) <- list(X=names(mtcars))

@@ -22,7 +22,9 @@ specified by the edge dataset.
 
 To remove edges, set edges to NULL.}
 \seealso{\code{\link{ggobi_longitudinal}} for creating edges which simulate time series plots}
-\examples{cc<-cor(t(swiss),use="p", method="s") 
+\examples{
+if (interactive()) {
+cc<-cor(t(swiss),use="p", method="s") 
 ccd<-sqrt(2*(1-cc)) 
 a <- which(lower.tri(ccd), arr.ind=TRUE)
 src <- row.names(swiss)[a[,2]]
@@ -32,5 +34,5 @@ gg <- ggobi(swiss)
 gg$cor <- data.frame(weight)
 edges(gg$cor) <- cbind(src, dest)
 edges(gg$cor)
-edges(gg$cor) <- NULL}
+edges(gg$cor) <- NULL}}
 \keyword{manip}

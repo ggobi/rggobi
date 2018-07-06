@@ -25,7 +25,8 @@ categorical brushing on the id variable, so that the entire
 series is selected for an observation.}
 
 \examples{data(Oxboys, package="nlme")
+if (interactive()) {
 ggobi_longitudinal(Oxboys, Occasion, Subject)
 ggobi_longitudinal(stormtracks, seasday, id)
-ggobi_longitudinal(data.frame(x=1:100, y=sin(1:100)))}
+ggobi_longitudinal(data.frame(x=1:100, y=sin(1:100)))}}
 \keyword{dynamic}

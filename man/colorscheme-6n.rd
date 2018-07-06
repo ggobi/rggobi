@@ -13,6 +13,9 @@ Get name of the active colour scheme
 
 
 
-\examples{g <- ggobi(mtcars)
-colorscheme(g)}
+\examples{
+if (interactive()) {
+
+g <- ggobi(mtcars)
+colorscheme(g)}}
 \keyword{color}

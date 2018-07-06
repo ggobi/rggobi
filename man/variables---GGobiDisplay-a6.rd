@@ -23,10 +23,12 @@ Currently, there is no checking done to ensure that you are
 sending a sensible set of variables for the given display type.
 Generally, any invalid choices will be silently ignored.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 d <- display(g[1], "Parallel Coordinates Display")
 variables(d)
 variables(d) <- list(X=1:8)
 variables(d) <- list(X=c("mpg", "cyl"))
-variables(d)}
+variables(d)}}
 \keyword{dynamic}

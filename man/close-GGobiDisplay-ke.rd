@@ -14,8 +14,10 @@ Closes the referenced display.  The R variable will be invalid after this call.
 
 
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 displays(g)
 close(displays(g)[[1]])
-displays(g)}
+displays(g)}}
 \keyword{internal}

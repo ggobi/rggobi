@@ -13,6 +13,8 @@ Get dataset names
 
 
 
-\examples{g <- ggobi(mtcars)
-names(g)}
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
+names(g)}}
 \keyword{dynamic}

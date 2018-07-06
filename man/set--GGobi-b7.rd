@@ -18,7 +18,9 @@ Add data to ggobi instance.
 \details{This function allows you to add (and eventually) replace
 GGobiData objects in a GGobi instance.}
 
-\examples{g <- ggobi()
+\examples{
+if (interactive()) {
+g <- ggobi()
 g["a"] <- mtcars
-g$b <- mtcars}
+g$b <- mtcars}}
 \keyword{manip}

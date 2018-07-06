@@ -22,9 +22,11 @@ You can see the list of available interaction modes
 using the \code{\link{imodes}} function.  This accepts
 either a GGobiDisplay, or the name of the display type.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 d <- displays(g)[[1]]
 imode(d)
 imodes(d)
-imode(d) <- "Brush"}
+imode(d) <- "Brush"}}
 \keyword{dynamic}

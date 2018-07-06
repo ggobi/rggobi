@@ -18,8 +18,11 @@ can run commands).
 This can be used to record interesting projections of your
 data for later analysis.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 d <- displays(g)[[1]]
+}
 \dontrun{
 pmode(d) <- "2D Tour"
 ggobi_display_get_tour_projection(d)

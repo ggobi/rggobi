@@ -20,9 +20,11 @@ You can see the list of available projection modes
 using the \code{\link{pmodes}} function.  This accepts
 either a GGobiDisplay, or the name of the display type.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 d <- displays(g)[[1]]
 pmode(d)
 pmodes(d)
-pmode(d) <- "1D Plot"}
+pmode(d) <- "1D Plot"}}
 \keyword{dynamic}

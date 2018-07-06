@@ -18,8 +18,10 @@ variable panel window associated with this ggobi instance.
 It also resets the default ggobi instance to be the last
 one created.}
 
-\examples{g1 <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g1 <- ggobi(mtcars)
 g2 <- ggobi(mtcars)
 close(g2)
-close(ggobi_get())}
+close(ggobi_get())}}
 \keyword{dynamic}

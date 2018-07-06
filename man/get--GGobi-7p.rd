@@ -21,10 +21,12 @@ dataset as if it were a regular R dataset.  This function allows one to
 get an \code{GGobiData} object that represents a particular
 dataset.}
 
-\examples{g <- ggobi(ChickWeight)
+\examples{
+if (interactive()) {
+g <- ggobi(ChickWeight)
 g["cars"] <- mtcars
 g[1:2]
 g["ChickWeight"]
 g["cars"]
-g$cars}
+g$cars}}
 \keyword{manip}

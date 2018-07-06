@@ -13,7 +13,9 @@ Retrieve the dimension of a GGobiData
 
 
 
-\examples{g <- ggobi(mtcars)
-dim(g[1])}
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
+dim(g[1])}}
 \keyword{attribute}
 \keyword{internal}

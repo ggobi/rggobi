@@ -15,8 +15,10 @@ Returns a ggobi reference
 \details{This allows one to get a list of all the ggobi instances currently
 in existence in the R session.  Also, one can fetch particular instances.}
 
-\examples{ggobi(mtcars)
+\examples{
+if (interactive()) {
+ggobi(mtcars)
 ggobi(Nile)
 ggobi_get(1)
-ggobi_get(1:2)}
+ggobi_get(1:2)}}
 \keyword{dynamic}

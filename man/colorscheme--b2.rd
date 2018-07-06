@@ -14,7 +14,9 @@ Specify the active color scheme in a GGobi instance or the  session options.
 \value{The name of the previously active color scheme.}
 \details{This makes a particular color scheme active within a GGobi instance.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 colorscheme(g) <- "Set1 8"
-colorscheme(g) <- 1}
+colorscheme(g) <- 1}}
 \keyword{color}

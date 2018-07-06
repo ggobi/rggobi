@@ -21,8 +21,10 @@ numbered in the order they are created) so you can change
 display mode, set variables (\code{\link{variables<-.GGobiDisplay}}),
 or save a static image to disk.}
 \seealso{\code{\link{display}} to create displays}
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 displays(g)
 display(g[1])
-displays(g)}
+displays(g)}}
 \keyword{dynamic}

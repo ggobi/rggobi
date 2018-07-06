@@ -17,5 +17,7 @@ The different ggobi instances are maintained as C  level structures.
 This function accesses a variable that stores how many are in existence
 when the function is invoked.}
 
-\examples{ggobi_count()}
+\examples{
+if (interactive()) {
+ggobi_count()}}
 \keyword{dynamic}

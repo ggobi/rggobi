@@ -19,10 +19,12 @@ This functions allow one to treat a ggobi dataset as if it were a local data.fra
 \details{This method works by retrieving the entire dataset into
 R, subsetting that copy, and then returning any changes.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
 x <- g["mtcars"]
 x[1:5, 1:5]
 x[1:5, 1] <- 1:5
-x[1:5, 1:5]}
+x[1:5, 1:5]}}
 \keyword{manip}
 \keyword{internal}

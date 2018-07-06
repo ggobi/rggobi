@@ -14,6 +14,8 @@ Get a description of the global state of the GGobi session.
 
 
 
-\examples{g <- ggobi(mtcars)
-summary(g)}
+\examples{
+if (interactive()) {
+g <- ggobi(mtcars)
+summary(g)}}
 \keyword{dynamic}

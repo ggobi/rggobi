@@ -22,9 +22,12 @@ data.frame.  One can extract and assign elements within the dataset.
 This method works by retrieving the entire dataset into
 R, and then subsetting with R.}
 
-\examples{g <- ggobi(mtcars)
+\examples{
+if (interactive()) {
+
+g <- ggobi(mtcars)
 x <- g$mtcars
 x[1:5, 1:5]
 x[[1]]
-x$cyl}
+x$cyl}}
 \keyword{manip}
