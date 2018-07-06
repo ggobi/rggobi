@@ -43,7 +43,7 @@
     stop("Invalid ggobi reference", call. = FALSE)
   
   sym <- .ggobi.symbol(.name)
-  .Call(sym, ..., .gobi, PACKAGE = "rggobi")
+  .DotCall(sym, ..., .gobi, PACKAGE = "rggobi")
 }
 
 .GGobiC <- function(.name, ..., .gobi = ggobi_get(), .test = TRUE) {
@@ -52,11 +52,18 @@
   
   sym <- .ggobi.symbol(.name)
   if (!is.null(.gobi)) {
-    .C(sym, ..., .gobi, PACKAGE = "rggobi")
+    .DotC(sym, ..., .gobi, PACKAGE = "rggobi")
   } else {
-    .C(sym, ..., PACKAGE = "rggobi")
+    .DotC(sym, ..., PACKAGE = "rggobi")
   }
 }
+
+# Hack to silence R CMD check warnings about function registration
+# GGobi uses ... which we can not easily remove without changing
+# a very large number of function calls
+.DotCall <- .Call
+.DotC <- .C
+
 # Validity checking
 # Determines whether a reference to an internal ggobi object is valid
 #
