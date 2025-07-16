@@ -4,7 +4,7 @@ Title: Interface Between R and 'GGobi'
 Author: Duncan Temple Lang <duncan@research.bell-labs.com>,
     Debby Swayne <dfs@research.att.com>,
     Hadley Wickham <h.wickham@gmail.com>,
-    Michael Lawrence <michafla@gene.com>
+    Michael Lawrence <lawremi@gmail.com>
 Maintainer: Hadley Wickham <h.wickham@gmail.com>
 Description: A command-line interface to 'GGobi', an interactive and dynamic
     graphics package. 'Rggobi' complements the graphical user interface of
